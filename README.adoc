@@ -1,3 +1,66 @@
 Spring Cloud Data Flow Admin for Apache Yarn
 --------------------------------------------
 
+Build and skip all tests:
+```
+mvn clean package -DskipTests
+```
+
+Or build project and run tests(tests take long time to run):
+```
+mvn clean package 
+```
+
+All needed artifacts are packaged in a distribution file `spring-cloud-dataflow-admin-yarn-dist/target/spring-cloud-dataflow-admin-yarn-dist-1.0.0.BUILD-SNAPSHOT.zip`.
+
+```
+# unzip spring-cloud-dataflow-admin-yarn-dist-1.0.0.BUILD-SNAPSHOT.zip
+# find .
+./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT
+./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin
+./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-shell
+./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-yarn-cli
+./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-admin-yarn
+./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/config
+./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/config/servers.yml
+./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/lib
+./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT.jar
+./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-yarn-client-1.0.0.BUILD-SNAPSHOT.jar
+./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-yarn-container-1.0.0.BUILD-SNAPSHOT.jar
+./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-shell-1.0.0.BUILD-SNAPSHOT.jar
+./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-yarn-appmaster-1.0.0.BUILD-SNAPSHOT.jar
+```
+
+Configure `servers.yml` for `hadoop` and `redis` settings.
+
+Start admin server:
+```
+spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-admin-yarn
+```
+
+Start shell:
+```
+spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-shell
+```
+
+Create stream:
+```
+dataflow:>stream create --name ticktock --definition "time|hdfs --rollover=100" --deploy
+dataflow:>stream destroy --name ticktock
+```
+
+You can kill running application from CLI:
+
+```
+spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-yarn-cli shell
+
+
+$ submitted
+  APPLICATION ID                  USER          NAME                            QUEUE    TYPE      STARTTIME       FINISHTIME  STATE    FINALSTATUS  ORIGINAL TRACKING URL
+  ------------------------------  ------------  ------------------------------  -------  --------  --------------  ----------  -------  -----------  --------------------------
+  application_1447944262603_0003  jvalkealahti  spring-cloud-dataflow-yarn-app  default  DATAFLOW  19/11/15 15:49  N/A         RUNNING  UNDEFINED    http://172.16.14.143:45566
+
+$ kill -a application_1447944262603_0003
+Kill request for application_1447944262603_0003 sent
+```
+
