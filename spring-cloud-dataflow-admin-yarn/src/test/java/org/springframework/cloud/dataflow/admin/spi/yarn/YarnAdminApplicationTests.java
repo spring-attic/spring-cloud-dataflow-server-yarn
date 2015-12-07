@@ -22,7 +22,8 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 import org.springframework.boot.SpringApplication;
-import org.springframework.cloud.dataflow.module.deployer.yarn.YarnModuleDeployer;
+import org.springframework.cloud.dataflow.module.deployer.yarn.YarnStreamModuleDeployer;
+import org.springframework.cloud.dataflow.module.deployer.yarn.YarnTaskModuleDeployer;
 import org.springframework.context.ConfigurableApplicationContext;
 
 public class YarnAdminApplicationTests {
@@ -30,10 +31,12 @@ public class YarnAdminApplicationTests {
 	@Test
 	public void testSimpleBootstrap() {
 		SpringApplication app = new SpringApplication(YarnAdminApplication.class);
-		ConfigurableApplicationContext context = app
-				.run(new String[] {"--spring.cloud.bootstrap.name=admin", "--server.port=0" });
+		ConfigurableApplicationContext context = app.run(new String[] { "--spring.cloud.bootstrap.name=admin",
+				"--server.port=0", "--spring.cloud.dataflow.yarn.version=fake" });
 		assertThat(context.containsBean("processModuleDeployer"), is(true));
-		assertThat(context.getBean("processModuleDeployer"), instanceOf(YarnModuleDeployer.class));
+		assertThat(context.getBean("processModuleDeployer"), instanceOf(YarnStreamModuleDeployer.class));
+		assertThat(context.containsBean("taskModuleDeployer"), is(true));
+		assertThat(context.getBean("taskModuleDeployer"), instanceOf(YarnTaskModuleDeployer.class));
 		context.close();
 	}
 

@@ -4,7 +4,7 @@ spring:
   hadoop:
     fsUri: hdfs://localhost:8020
     resourceManagerHost: localhost
-    resourceManagerPort: 8050
+    resourceManagerPort: 8032
     resourceManagerSchedulerAddress: localhost:8030
   redis:
     port: 6379

@@ -17,6 +17,7 @@
 package org.springframework.cloud.dataflow.module.deployer.yarn;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,22 +32,23 @@ public interface YarnCloudAppService {
 	 *
 	 * @return the applications
 	 */
-	Collection<CloudAppInfo> getApplications();
+	Collection<CloudAppInfo> getApplications(CloudAppType cloudAppType);
 
 	/**
 	 * Get running application instances.
 	 *
 	 * @return the instances
 	 */
-	Collection<CloudAppInstanceInfo> getInstances();
+	Collection<CloudAppInstanceInfo> getInstances(CloudAppType cloudAppType);
 
 	/**
 	 * Push new application into hdfs. Push operation is copying needed
 	 * files into hdfs without trying to start a new application instance.
 	 *
 	 * @param appVersion the app version
+	 * @param cloudAppType the cloud app type
 	 */
-	void pushApplication(String appVersion);
+	void pushApplication(String appVersion, CloudAppType cloudAppType);
 
 	/**
 	 * Submit new application instance into yarn. Prior to calling a new
@@ -54,9 +56,29 @@ public interface YarnCloudAppService {
 	 * i.e. using {@link #pushApplication(String)} method.
 	 *
 	 * @param appVersion the app version
+	 * @param cloudAppType the cloud app type
 	 * @return the application id
 	 */
-	String submitApplication(String appVersion);
+	String submitApplication(String appVersion, CloudAppType cloudAppType);
+
+	/**
+	 * Submit new application instance into yarn. Prior to calling a new
+	 * submit operation, application has to exist in hdfs which can be done
+	 * i.e. using {@link #pushApplication(String)} method.
+	 *
+	 * @param appVersion the app version
+	 * @param cloudAppType the cloud app type
+	 * @param contextRunArgs the context run arguments
+	 * @return the application id
+	 */
+	String submitApplication(String appVersion, CloudAppType cloudAppType, List<String> contextRunArgs);
+
+	/**
+	 * Kill all applications matching given application name.
+	 *
+	 * @param appName the application name
+	 */
+	void killApplications(String appName, CloudAppType cloudAppType);
 
 	/**
 	 * Creates the container cluster.
@@ -135,11 +157,13 @@ public interface YarnCloudAppService {
 
 		private final String applicationId;
 		private final String name;
+		private final String state;
 		private final String address;
 
-		public CloudAppInstanceInfo(String applicationId, String name, String address) {
+		public CloudAppInstanceInfo(String applicationId, String name, String state, String address) {
 			this.applicationId = applicationId;
 			this.name = name;
+			this.state = state;
 			this.address = address;
 		}
 
@@ -151,10 +175,25 @@ public interface YarnCloudAppService {
 			return name;
 		}
 
+		public String getState() {
+			return state;
+		}
+
 		public String getAddress() {
 			return address;
 		}
 
+		@Override
+		public String toString() {
+			return "CloudAppInstanceInfo [applicationId=" + applicationId + ", name=" + name + ", state=" + state + ", address=" + address
+					+ "]";
+		}
+
+	}
+
+	public enum CloudAppType {
+		STREAM,
+		TASK
 	}
 
 }
