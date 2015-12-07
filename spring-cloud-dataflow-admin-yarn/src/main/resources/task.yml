@@ -1,0 +1,26 @@
+logging:
+  level:
+    org.springframework.cloud.dataflow.module.deployer.yarn: DEBUG
+    org.springframework.statemachine: DEBUG
+spring:
+  main:
+    show_banner: false
+  cloud:
+    dataflow:
+      yarn:
+        version: "@project.version@"
+  yarn:
+    appType: DATAFLOW
+    applicationBaseDir: /dataflow/apps/task/
+    client:
+      clientClass: org.springframework.yarn.client.DefaultApplicationYarnClient
+      files:
+        - "file:${dataflow.yarn.app.appmaster.path:lib}/spring-cloud-dataflow-yarn-taskappmaster-*.jar"
+        - "file:${dataflow.yarn.app.container.path:lib}/spring-cloud-dataflow-yarn-taskcontainer-*.jar"
+        - "file:${dataflow.yarn.app.config.path:config}/servers.yml"
+      launchcontext:
+        arguments:
+          -Dspring.config.location: servers.yml
+        archiveFile: spring-cloud-dataflow-yarn-taskappmaster-${spring.cloud.dataflow.yarn.version}.jar
+      resource:
+        memory: 1g

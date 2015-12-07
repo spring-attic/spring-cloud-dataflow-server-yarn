@@ -26,8 +26,10 @@
 			<outputFileNameMapping>${artifact.artifactId}-${artifact.baseVersion}.${artifact.extension}</outputFileNameMapping>
 			<includes>
 				<include>org.springframework.cloud:spring-cloud-dataflow-admin-yarn</include>
-				<include>org.springframework.cloud:spring-cloud-dataflow-yarn-appmaster</include>
-				<include>org.springframework.cloud:spring-cloud-dataflow-yarn-container</include>
+				<include>org.springframework.cloud:spring-cloud-dataflow-yarn-streamappmaster</include>
+				<include>org.springframework.cloud:spring-cloud-dataflow-yarn-taskappmaster</include>
+				<include>org.springframework.cloud:spring-cloud-dataflow-yarn-streamcontainer</include>
+				<include>org.springframework.cloud:spring-cloud-dataflow-yarn-taskcontainer</include>
 				<include>org.springframework.cloud:spring-cloud-dataflow-yarn-client</include>
 				<include>org.springframework.cloud:spring-cloud-dataflow-shell</include>
 			</includes>

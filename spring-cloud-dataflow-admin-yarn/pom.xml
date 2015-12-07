@@ -60,6 +60,8 @@
 				<filtering>true</filtering>
 				<includes>
 					<include>admin.yml</include>
+					<include>task.yml</include>
+					<include>stream.yml</include>
 					<include>banner.txt</include>
 				</includes>
 			</resource>

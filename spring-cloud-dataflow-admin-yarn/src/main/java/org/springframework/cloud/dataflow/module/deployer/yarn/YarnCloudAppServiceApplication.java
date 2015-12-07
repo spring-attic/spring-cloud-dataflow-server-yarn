@@ -29,6 +29,7 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.yarn.api.records.ApplicationId;
 import org.apache.hadoop.yarn.api.records.ApplicationReport;
 import org.apache.hadoop.yarn.conf.YarnConfiguration;
+import org.apache.hadoop.yarn.util.ConverterUtils;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.actuate.autoconfigure.EndpointAutoConfiguration;
@@ -68,7 +69,7 @@ import org.springframework.yarn.support.console.ContainerClusterReport.ClustersI
  * from 'org.springframework.yarn.boot.app'. Allows to instantiate context only
  * once making individual command execution much faster still providing all
  * goodies from boot.
- * 
+ *
  * @author Janne Valkealahti
  *
  */
@@ -94,7 +95,7 @@ public class YarnCloudAppServiceApplication implements InitializingBean, Disposa
 			appProperties.setProperty("spring.yarn.applicationVersion", applicationVersion);
 		}
 		if (StringUtils.hasText(dataflowVersion)) {
-			appProperties.setProperty("spring.cloud.dataflow.yarn.version", dataflowVersion);			
+			appProperties.setProperty("spring.cloud.dataflow.yarn.version", dataflowVersion);
 		}
 		if (StringUtils.hasText(configFileName) && configFileProperties != null) {
 			configFilesContents.put(configFileName, configFileProperties);
@@ -164,9 +165,9 @@ public class YarnCloudAppServiceApplication implements InitializingBean, Disposa
 
 	public Collection<CloudAppInstanceInfo> getSubmittedApplications() {
 		List<CloudAppInstanceInfo> appIds = new ArrayList<CloudAppInstanceInfo>();
-		for (ApplicationReport report : yarnClient.listRunningApplications("DATAFLOW")) {
+		for (ApplicationReport report : yarnClient.listApplications("DATAFLOW")) {
 			appIds.add(new CloudAppInstanceInfo(report.getApplicationId().toString(), report.getName(),
-					report.getOriginalTrackingUrl()));
+					report.getYarnApplicationState().toString(), report.getOriginalTrackingUrl()));
 		}
 		return appIds;
 	}
@@ -181,6 +182,10 @@ public class YarnCloudAppServiceApplication implements InitializingBean, Disposa
 		appId = yarnClient.submitApplication(
 				new ApplicationDescriptor(resolveApplicationdir(springYarnProperties, applicationName)));
 		return appId != null ? appId.toString() : null;
+	}
+
+	public void killApplication(String applicationId) {
+		yarnClient.killApplication(ConverterUtils.toApplicationId(applicationId));
 	}
 
 	public Collection<String> getClustersInfo(ApplicationId applicationId) {
