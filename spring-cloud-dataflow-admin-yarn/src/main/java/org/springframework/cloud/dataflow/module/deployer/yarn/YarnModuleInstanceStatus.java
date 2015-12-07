@@ -19,9 +19,8 @@ package org.springframework.cloud.dataflow.module.deployer.yarn;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.cloud.dataflow.module.DeploymentState;
 import org.springframework.cloud.dataflow.module.ModuleInstanceStatus;
-import org.springframework.cloud.dataflow.module.ModuleStatus;
-import org.springframework.cloud.dataflow.module.ModuleStatus.State;
 
 /**
  * {@link ModuleInstanceStatus} for modules deployed into yarn.
@@ -33,13 +32,13 @@ public class YarnModuleInstanceStatus implements ModuleInstanceStatus {
 
 	private final String id;
 
-	private final ModuleStatus.State state;
+	private final DeploymentState state;
 
 	private final Map<String, String> attributes = new HashMap<String, String>();
 
 	public YarnModuleInstanceStatus(String id, boolean deployed, Map<String, String> attributes) {
 		this.id = id;
-		this.state = deployed ? ModuleStatus.State.deployed : ModuleStatus.State.unknown;
+		this.state = deployed ? DeploymentState.deployed : DeploymentState.unknown;
 		if (attributes != null) {
 			this.attributes.putAll(attributes);
 		}
@@ -51,7 +50,7 @@ public class YarnModuleInstanceStatus implements ModuleInstanceStatus {
 	}
 
 	@Override
-	public State getState() {
+	public DeploymentState getState() {
 		return state;
 	}
 
