@@ -53,10 +53,11 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 		Properties instanceProperties = new Properties();
 		instanceProperties.setProperty("spring.yarn.applicationVersion", "app");
 		instanceProperties.setProperty("spring.cloud.dataflow.yarn.version", getProjectVersion());
+		String[] runArgs = new String[] { "--spring.config.name=stream" };
 		ApplicationContextInitializer<?>[] initializers = new ApplicationContextInitializer<?>[] {
 				new HadoopConfigurationInjectingInitializer(getConfiguration()) };
 		YarnCloudAppServiceApplication app = new YarnCloudAppServiceApplication("app", getProjectVersion(),
-				"application.properties", instanceProperties, null, initializers);
+				"application.properties", instanceProperties, runArgs, initializers);
 
 		app.afterPropertiesSet();
 		setYarnClient(app.getContext().getBean(YarnClient.class));
@@ -67,7 +68,7 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 
 		String appId = app.submitApplication("app");
 		ApplicationId applicationId = ConverterUtils.toApplicationId(appId);
-		ApplicationInfo info = waitState(applicationId, 60, TimeUnit.SECONDS, YarnApplicationState.RUNNING);
+		ApplicationInfo info = waitState(applicationId, 3, TimeUnit.MINUTES, YarnApplicationState.RUNNING);
 		assertThat(info.getYarnApplicationState(), is(YarnApplicationState.RUNNING));
 
 		Collection<CloudAppInstanceInfo> submittedApplications = app.getSubmittedApplications();
@@ -103,10 +104,11 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 		instanceProperties.setProperty("spring.yarn.applicationVersion", "app");
 		instanceProperties.setProperty("spring.cloud.dataflow.yarn.version", getProjectVersion());
 		instanceProperties.setProperty("spring.hadoop.fsUri", fsUri);
+		String[] runArgs = new String[] { "--spring.config.name=stream" };
 		ApplicationContextInitializer<?>[] initializers = new ApplicationContextInitializer<?>[] {
 				new HadoopConfigurationInjectingInitializer(getConfiguration()) };
 		YarnCloudAppServiceApplication app = new YarnCloudAppServiceApplication("app", getProjectVersion(),
-				"application.properties", instanceProperties, null, initializers);
+				"application.properties", instanceProperties, runArgs, initializers);
 
 		app.afterPropertiesSet();
 		setYarnClient(app.getContext().getBean(YarnClient.class));
@@ -117,7 +119,7 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 
 		String appId = app.submitApplication("app");
 		ApplicationId applicationId = ConverterUtils.toApplicationId(appId);
-		ApplicationInfo info = waitState(applicationId, 60, TimeUnit.SECONDS, YarnApplicationState.RUNNING);
+		ApplicationInfo info = waitState(applicationId, 3, TimeUnit.MINUTES, YarnApplicationState.RUNNING);
 		assertThat(info.getYarnApplicationState(), is(YarnApplicationState.RUNNING));
 
 		Collection<CloudAppInstanceInfo> submittedApplications = app.getSubmittedApplications();
@@ -144,6 +146,33 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 		assertWaitFileContent(2, TimeUnit.MINUTES, applicationId, "Started TimeSourceApplication");
 
 		waitHdfsFile("/tmp/hdfs-sink/data-0.txt", 2, TimeUnit.MINUTES);
+
+		app.destroy();
+	}
+
+	@Test
+	public void testTask1() throws Exception {
+		Properties instanceProperties = new Properties();
+		instanceProperties.setProperty("spring.yarn.applicationVersion", "app");
+		instanceProperties.setProperty("spring.cloud.dataflow.yarn.version", getProjectVersion());
+		String[] runArgs = new String[] { "--spring.config.name=task",
+				"--spring.yarn.client.launchcontext.arguments.--dataflow.module.coordinates=org.springframework.cloud.task.module:timestamp-task:jar:exec:1.0.0.BUILD-SNAPSHOT" };
+		ApplicationContextInitializer<?>[] initializers = new ApplicationContextInitializer<?>[] {
+				new HadoopConfigurationInjectingInitializer(getConfiguration()) };
+		YarnCloudAppServiceApplication app = new YarnCloudAppServiceApplication("app", getProjectVersion(),
+				"application.properties", instanceProperties, runArgs, initializers);
+
+		app.afterPropertiesSet();
+		setYarnClient(app.getContext().getBean(YarnClient.class));
+
+		app.pushApplication("app");
+		Collection<CloudAppInfo> pushedApplications = app.getPushedApplications();
+		assertThat(pushedApplications.size(), is(1));
+
+		String appId = app.submitApplication("app");
+		ApplicationId applicationId = ConverterUtils.toApplicationId(appId);
+		ApplicationInfo info = waitState(applicationId, 3, TimeUnit.MINUTES, YarnApplicationState.FINISHED, YarnApplicationState.FAILED);
+		assertThat(info.getYarnApplicationState(), is(YarnApplicationState.FINISHED));
 
 		app.destroy();
 	}

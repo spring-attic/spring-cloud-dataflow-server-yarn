@@ -16,6 +16,7 @@ out
 spring-shell.log
 target/
 test-output
+spring-*/bin
 
 # Eclipse artifacts, including WTP generated manifests
 .classpath
