@@ -25,6 +25,13 @@ import org.springframework.cloud.dataflow.yarn.common.DataflowModuleYarnProperti
 import org.springframework.util.Assert;
 import org.springframework.yarn.am.StaticEventingAppmaster;
 
+/**
+ * Spring YARN application master class which does a specific
+ * handling of a task containers.
+ *
+ * @author Janne Valkealahti
+ *
+ */
 public class DataFlowTaskAppmaster extends StaticEventingAppmaster {
 
 	@Autowired
@@ -42,7 +49,7 @@ public class DataFlowTaskAppmaster extends StaticEventingAppmaster {
 		list.add(Math.max(list.size() - 2, 0), "--dataflow.module.coordinates=" + dataflowModuleYarnProperties.getCoordinates());
 		if (dataflowModuleYarnProperties.getParameters() != null) {
 			for (Entry<String, String> entry : dataflowModuleYarnProperties.getParameters().entrySet()) {
-				list.add(Math.max(list.size() - 2, 0), "--dataflow.module.parameters." + entry.getKey() + "=" + entry.getValue());
+				list.add(Math.max(list.size() - 2, 0), "--dataflow.module.parameters." + entry.getKey() + "='" + entry.getValue() + "'");
 			}
 		}
 		return list;

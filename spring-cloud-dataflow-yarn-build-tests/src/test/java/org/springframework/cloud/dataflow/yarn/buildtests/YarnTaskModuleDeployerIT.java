@@ -79,6 +79,7 @@ public class YarnTaskModuleDeployerIT extends AbstractCliBootYarnClusterTests {
 				.setGroup("task")
 				.setName("timestamp")
 				.setParameter("spring.cloud.stream.bindings.output", "task.0")
+				.setParameter("format", "yyyy-MM-dd HH:mm:ss.SSS Z")
 				.build();
 		ArtifactCoordinates taskCoordinates = new ArtifactCoordinates.Builder()
 				.setGroupId(GROUP_ID)

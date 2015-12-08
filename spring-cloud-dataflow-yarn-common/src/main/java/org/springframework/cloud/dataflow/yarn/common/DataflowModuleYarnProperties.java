@@ -20,24 +20,50 @@ import java.util.Map;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * Shared boot configuration properties for "dataflow.module".
+ *
+ * @author Janne Valkealahti
+ *
+ */
 @ConfigurationProperties(value = "dataflow.module")
 public class DataflowModuleYarnProperties {
 
 	private String coordinates;
 	private Map<String, String> parameters;
 
+	/**
+	 * Gets the module maven coordinates.
+	 *
+	 * @return the coordinates
+	 */
 	public String getCoordinates() {
 		return coordinates;
 	}
 
+	/**
+	 * Sets the module maven coordinates.
+	 *
+	 * @param coordinates the new coordinates
+	 */
 	public void setCoordinates(String coordinates) {
 		this.coordinates = coordinates;
 	}
 
+	/**
+	 * Gets the module parameters.
+	 *
+	 * @return the parameters
+	 */
 	public Map<String, String> getParameters() {
 		return parameters;
 	}
 
+	/**
+	 * Sets the module parameters.
+	 *
+	 * @param parameters the parameters
+	 */
 	public void setParameters(Map<String, String> parameters) {
 		this.parameters = parameters;
 	}

@@ -81,7 +81,7 @@ public class YarnTaskModuleDeployer implements ModuleDeployer {
 		contextRunArgs.add("--spring.yarn.client.launchcontext.arguments.--dataflow.module.coordinates=" + module);
 		contextRunArgs.add("--spring.yarn.appName=" + appName);
 		for (Entry<String, String> entry : definitionParameters.entrySet()) {
-			contextRunArgs.add("--spring.yarn.client.launchcontext.arguments.--dataflow.module.parameters." + entry.getKey() + ".=" + entry.getValue());
+			contextRunArgs.add("--spring.yarn.client.launchcontext.arguments.--dataflow.module.parameters." + entry.getKey() + ".='" + entry.getValue() + "'");
 		}
 
 		Message<Events> message = MessageBuilder.withPayload(Events.DEPLOY)

@@ -32,6 +32,12 @@ import org.springframework.cloud.stream.module.launcher.ModuleLauncherConfigurat
 import org.springframework.context.annotation.Import;
 import org.springframework.util.Assert;
 
+/**
+ * Yarn application bootstrapping task container.
+ *
+ * @author Janne Valkealahti
+ *
+ */
 @SpringBootApplication
 @Import(ModuleLauncherConfiguration.class)
 @EnableConfigurationProperties(DataflowModuleYarnProperties.class)
