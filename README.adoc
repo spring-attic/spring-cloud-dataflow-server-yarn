@@ -1,4 +1,8 @@
-= Spring Cloud Data Flow Admin for Apache Yarn image:https://badge.waffle.io/spring-cloud/spring-cloud-dataflow-admin-yarn.svg?label=ready&title=Ready[Stories in Ready, link=http://waffle.io/spring-cloud/spring-cloud-dataflow-admin-yarn] image:https://badge.waffle.io/spring-cloud/spring-cloud-dataflow-admin-yarn.svg?label=In%20Progress&title=In%20Progress[Stories in Progress, link=http://waffle.io/spring-cloud/spring-cloud-dataflow-admin-yarn]
+== Spring Cloud Data Flow Admin for Apache Yarn 
+
+image:https://build.spring.io/plugins/servlet/buildStatusImage/SCD-YARNBMASTER[Build Status, link=https://build.spring.io/browse/SCD-YARNBMASTER] image:https://badge.waffle.io/spring-cloud/spring-cloud-dataflow-admin-yarn.svg?label=ready&title=Ready[Stories in Ready, link=http://waffle.io/spring-cloud/spring-cloud-dataflow-admin-yarn] image:https://badge.waffle.io/spring-cloud/spring-cloud-dataflow-admin-yarn.svg?label=In%20Progress&title=In%20Progress[Stories in Progress, link=http://waffle.io/spring-cloud/spring-cloud-dataflow-admin-yarn]
+
+=== Building 
 
 Build and skip all tests:
 ```
@@ -10,7 +14,11 @@ Or build project and run tests(tests take long time to run):
 mvn clean package 
 ```
 
+=== Running the YARN Admin
+
 All needed artifacts are packaged in a distribution file `spring-cloud-dataflow-admin-yarn-dist/target/spring-cloud-dataflow-admin-yarn-dist-1.0.0.BUILD-SNAPSHOT.zip`.
+
+. Unzip the dist
 
 ```
 # unzip spring-cloud-dataflow-admin-yarn-dist-1.0.0.BUILD-SNAPSHOT.zip
@@ -30,26 +38,29 @@ All needed artifacts are packaged in a distribution file `spring-cloud-dataflow-
 ./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-yarn-appmaster-1.0.0.BUILD-SNAPSHOT.jar
 ```
 
-Configure `servers.yml` for `hadoop` and `redis` settings.
-
+. Configure `servers.yml` for `hadoop` and `redis` settings.
++
 Start admin server:
++
 ```
 spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-admin-yarn
 ```
-
-Start shell:
++
+. Start the Admin Shell:
++
 ```
 spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-shell
 ```
-
-Create stream:
++
+. Create a stream:
++
 ```
 dataflow:>stream create --name ticktock --definition "time|hdfs --rollover=100" --deploy
 dataflow:>stream destroy --name ticktock
 ```
-
-You can kill running application from CLI:
-
++
+. Killing a running application from the command line:
++
 ```
 spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-yarn-cli shell
 
