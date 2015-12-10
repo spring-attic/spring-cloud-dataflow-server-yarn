@@ -77,11 +77,23 @@ public class YarnTaskModuleDeployer implements ModuleDeployer {
 		logger.info("definitionParameters: " + definitionParameters);
 		logger.info("deploymentProperties: " + deploymentProperties);
 
+		// contextRunArgs are passed to boot app ran to control yarn apps
+		// we pass needed args to control module coordinates and params,
+		// weird format with '--' is just straight pass to container
 		ArrayList<String> contextRunArgs = new ArrayList<String>();
 		contextRunArgs.add("--spring.yarn.client.launchcontext.arguments.--dataflow.module.coordinates=" + module);
 		contextRunArgs.add("--spring.yarn.appName=" + appName);
 		for (Entry<String, String> entry : definitionParameters.entrySet()) {
 			contextRunArgs.add("--spring.yarn.client.launchcontext.arguments.--dataflow.module.parameters." + entry.getKey() + ".='" + entry.getValue() + "'");
+		}
+
+		// deployment properties override servers.yml which overrides application.yml
+		for (Entry<String, String> entry : deploymentProperties.entrySet()) {
+			if (entry.getKey().startsWith("dataflow.yarn.app.taskcontainer")) {
+				contextRunArgs.add("--spring.yarn.client.launchcontext.arguments.--" + entry.getKey() + "=" + entry.getValue());
+			} else if (entry.getKey().startsWith("dataflow.yarn.app.taskappmaster")) {
+				contextRunArgs.add("--" + entry.getKey() + "=" + entry.getValue());
+			}
 		}
 
 		Message<Events> message = MessageBuilder.withPayload(Events.DEPLOY)

@@ -19,8 +19,15 @@ spring:
         - "file:${dataflow.yarn.app.container.path:lib}/spring-cloud-dataflow-yarn-taskcontainer-*.jar"
         - "file:${dataflow.yarn.app.config.path:config}/servers.yml"
       launchcontext:
+        options:
+          - ${dataflow.yarn.app.taskappmaster.javaOpts:}
         arguments:
           -Dspring.config.location: servers.yml
         archiveFile: spring-cloud-dataflow-yarn-taskappmaster-${spring.cloud.dataflow.yarn.version}.jar
+      localizer:
+        patterns:
+          - "spring-cloud-dataflow-yarn-taskappmaster-*.jar"
+          - "servers.yml"
       resource:
-        memory: 1g
+        memory: ${dataflow.yarn.app.taskappmaster.memory:512m}
+        virtualCores: ${dataflow.yarn.app.taskappmaster.virtualCores:1}

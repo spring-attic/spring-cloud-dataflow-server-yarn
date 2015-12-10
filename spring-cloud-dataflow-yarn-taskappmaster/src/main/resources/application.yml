@@ -20,14 +20,15 @@ spring:
       appmasterClass: org.springframework.cloud.dataflow.yarn.taskappmaster.DataFlowTaskAppmaster
       localizer:
         patterns:
-          - "spring-cloud-dataflow-yarn-container-*.jar"
           - "spring-cloud-dataflow-yarn-taskcontainer-*.jar"
           - "servers.yml"
       resource:
-        priority: 10
-        memory: 64
-        virtualCores: 1
+        priority: ${dataflow.yarn.app.taskcontainer.priority:10}
+        memory: ${dataflow.yarn.app.taskcontainer.memory:256m}
+        virtualCores: ${dataflow.yarn.app.taskcontainer.virtualCores:1}
       launchcontext:
+        options:
+          - ${dataflow.yarn.app.taskcontainer.javaOpts:}
         arguments:
           -Dserver.port: 0
           -Dspring.jmx.enabled: false              

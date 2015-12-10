@@ -28,10 +28,12 @@ spring:
         clusters:
           module-template:
             resource:
-              priority: 10
-              memory: 64
-              virtualCores: 1
+              priority: ${dataflow.yarn.app.streamcontainer.priority:5}
+              memory: ${dataflow.yarn.app.streamcontainer.memory:256m}
+              virtualCores: ${dataflow.yarn.app.streamcontainer.virtualCores:1}
             launchcontext:
+              options:
+                - ${dataflow.yarn.app.streamcontainer.javaOpts:}
               arguments:
                 -Dserver.port: 0
                 -Dspring.jmx.enabled: false              

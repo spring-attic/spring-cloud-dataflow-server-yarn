@@ -23,5 +23,10 @@ spring:
         arguments:
           -Dspring.config.location: servers.yml
         archiveFile: spring-cloud-dataflow-yarn-streamappmaster-${spring.cloud.dataflow.yarn.version}.jar
+      localizer:
+        patterns:
+          - "spring-cloud-dataflow-yarn-streamappmaster-*.jar"
+          - "servers.yml"
       resource:
-        memory: 1g
+        memory: ${dataflow.yarn.app.streamappmaster.memory:512m}
+        virtualCores: ${dataflow.yarn.app.streamappmaster.virtualCores:1}

@@ -9,4 +9,22 @@ spring:
   redis:
     port: 6379
     host: localhost
-
+#dataflow:
+#  yarn:
+#    app:
+#      streamappmaster:
+#        memory: 512m
+#        virtualCores: 1
+#      streamcontainer:
+#        priority: 5
+#        memory: 256m
+#        virtualCores: 1
+#        javaOpts: "-Xms64m -Xmx256m"
+#      taskappmaster:
+#        memory: 512m
+#        virtualCores: 1
+#      taskcontainer:
+#        priority: 10
+#        memory: 256m
+#        virtualCores: 1
+#        javaOpts: "-Xms64m -Xmx256m"
