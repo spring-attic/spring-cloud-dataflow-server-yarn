@@ -20,6 +20,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.dataflow.yarn.common.DataflowModuleYarnProperties;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.yarn.YarnSystemConstants;
+import org.springframework.yarn.am.AppmasterTrackService;
 
 /**
  * Yarn application bootstrapping appmaster.
@@ -30,6 +34,15 @@ import org.springframework.cloud.dataflow.yarn.common.DataflowModuleYarnProperti
 @SpringBootApplication
 @EnableConfigurationProperties({ DataflowModuleYarnProperties.class })
 public class TaskAppmasterApplication {
+
+	@Configuration
+	public static class Config {
+
+		@Bean(name=YarnSystemConstants.DEFAULT_ID_AMTRACKSERVICE)
+		public AppmasterTrackService appmasterTrackService() {
+			return new EmbeddedAppmasterTrackService();
+		}
+	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(TaskAppmasterApplication.class, args);
