@@ -4,6 +4,9 @@ logging:
     org.springframework.statemachine: DEBUG
 server:
   port: 9393
+security:
+  basic:
+    enabled: false
 management:
   contextPath: /management
 spring:
