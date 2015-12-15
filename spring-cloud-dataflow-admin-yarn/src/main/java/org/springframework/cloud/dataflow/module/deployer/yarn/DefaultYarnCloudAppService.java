@@ -112,7 +112,14 @@ public class DefaultYarnCloudAppService implements YarnCloudAppService, Initiali
 
 		int i = 0;
 		for (Map.Entry<String, String> entry : definitionParameters.entrySet()) {
-			extraProperties.put("containerArg" + i++, entry.getKey() + "=" + entry.getValue());
+			String value = entry.getValue();
+			if (value.startsWith("\"") && value.endsWith("\"")) {
+				// escape existing double quotes
+				extraProperties.put("containerArg" + i++, entry.getKey() + "=\\" + value.substring(0, value.length()-1) + "\\\"");
+			} else {
+				// escape with extra double quotes
+				extraProperties.put("containerArg" + i++, entry.getKey() + "=\\\"" + value + "\\\"");
+			}
 		}
 		getApp(null, null, CloudAppType.STREAM).createCluster(ConverterUtils.toApplicationId(yarnApplicationId), clusterId, "module-template",
 				"default", 1, null, null, null, extraProperties);
