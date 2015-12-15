@@ -104,6 +104,7 @@ public class YarnStreamModuleDeployerIT extends AbstractCliBootYarnClusterTests 
 				.setGroup("ticktock")
 				.setName("log")
 				.setParameter("spring.cloud.stream.bindings.input", "ticktock.0")
+				.setParameter("expression", "new String(payload + ' hello')")
 				.build();
 		ArtifactCoordinates timeCoordinates = new ArtifactCoordinates.Builder()
 				.setGroupId(GROUP_ID)
