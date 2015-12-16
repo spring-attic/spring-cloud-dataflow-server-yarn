@@ -36,7 +36,7 @@ spring:
                 - ${dataflow.yarn.app.streamcontainer.javaOpts:}
               arguments:
                 -Dserver.port: 0
-                -Dspring.jmx.enabled: false              
+                -Dendpoints.jmx.unique-names: true
                 -Dspring.config.location: servers.yml
               locality: false
               archiveFile: spring-cloud-dataflow-yarn-streamcontainer-${spring.cloud.dataflow.yarn.version}.jar
