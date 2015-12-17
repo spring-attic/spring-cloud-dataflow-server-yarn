@@ -59,7 +59,7 @@ public class DataFlowAppmaster extends ManagedContainerClusterAppmaster {
 					// this state is valid at start but we know it's not gonna
 					// get called until we have had at least one container running
 					log.info("No running containers and no container clusters, initiate app shutdown");
-					stop();
+					notifyCompleted();
 				}
 			}
 		});
