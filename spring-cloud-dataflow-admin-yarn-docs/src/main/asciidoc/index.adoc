@@ -1,5 +1,5 @@
-= Spring Cloud Data Flow Admin for YARN
-Thomas Risberg, Janne Valkealahti
+= Spring Cloud Data Flow for Apache YARN
+Sabby Anandan, Marius Bogoevici, Eric Bottard, Mark Fisher, Ilayaperumal Gopinathan, Gunnar Hillert, Mark Pollack, Patrick Peralta, Glenn Renfro, Thomas Risberg, Dave Syer, David Turanski, Janne Valkealahti
 :doctype: book
 :toc:
 :toclevels: 4
