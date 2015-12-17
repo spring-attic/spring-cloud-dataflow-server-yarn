@@ -41,6 +41,8 @@ Thomas Risberg, Janne Valkealahti
 :attributes: allow-uri-read
 // ======================================================================================
 
+include::introduction.adoc[]
+
 include::overview.adoc[]
 
 include::getting-started.adoc[]

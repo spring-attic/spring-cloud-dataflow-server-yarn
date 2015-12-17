@@ -1,5 +1,3 @@
 [[overview]]
-== Spring Cloud Data Flow YARN
 
-This project provides support for deploying Spring Cloud Stream modules to Apache YARN.
-
+include::{dataflow-asciidoc}/spring-cloud-dataflow-overview.adoc[]

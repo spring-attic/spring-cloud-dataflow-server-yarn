@@ -1,0 +1,7 @@
+[[introduction]]
+= Spring Cloud Data Flow for Apache YARN
+
+== Introduction
+
+The Spring Cloud Data Flow for Apache YARN project allows you to deploy the Spring Cloud Dataflow using Apache YARN as the cluster runtime environment.
+
