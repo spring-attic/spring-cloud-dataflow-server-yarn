@@ -22,6 +22,7 @@
 		<module>spring-cloud-dataflow-yarn-client</module>
 		<module>spring-cloud-dataflow-admin-yarn</module>
 		<module>spring-cloud-dataflow-yarn-build-tests</module>
+		<module>spring-cloud-dataflow-admin-yarn-docs</module>
 		<module>spring-cloud-dataflow-admin-yarn-dist</module>
 	</modules>
 
