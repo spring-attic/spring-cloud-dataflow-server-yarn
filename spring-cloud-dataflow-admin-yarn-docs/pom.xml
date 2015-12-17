@@ -167,6 +167,7 @@
 									</postProcess>
 								</configuration>
 							</execution>
+<!--
 							<execution>
 								<id>pdf</id>
 								<goals>
@@ -186,7 +187,7 @@
 									</postProcess>
 								</configuration>
 							</execution>
-
+-->
 							<execution>
 								<id>epub</id>
 								<goals>
