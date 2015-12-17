@@ -26,6 +26,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.hadoop.yarn.api.records.Container;
 import org.springframework.yarn.am.cluster.ContainerCluster;
 import org.springframework.yarn.am.cluster.ManagedContainerClusterAppmaster;
+import org.springframework.yarn.listener.ContainerMonitorListener;
 
 /**
  * Custom yarn appmaster tweaking container launch settings.
@@ -36,6 +37,33 @@ import org.springframework.yarn.am.cluster.ManagedContainerClusterAppmaster;
 public class DataFlowAppmaster extends ManagedContainerClusterAppmaster {
 
 	private final static Log log = LogFactory.getLog(DataFlowAppmaster.class);
+
+	@Override
+	protected void onInit() throws Exception {
+		super.onInit();
+
+		// TODO: we want to have a proper support in base classes to gracefully
+		//       shutdown appmaster when it has nothing to do. this trick
+		//       here is solely a workaround not being able to access internal
+		//       structures of base classes. this is pretty much all we can do
+		//       from a subclass.
+		//       potentially we want to make it configurable with a grace period, etc.
+		getMonitor().addContainerMonitorStateListener(new ContainerMonitorListener() {
+
+			@Override
+			public void state(ContainerMonitorState state) {
+				if (log.isDebugEnabled()) {
+					log.info("Received monitor state " + state + " and container clusters size is " + getContainerClusters().size());
+				}
+				if (state.getRunning() == 0 && getContainerClusters().size() == 0) {
+					// this state is valid at start but we know it's not gonna
+					// get called until we have had at least one container running
+					log.info("No running containers and no container clusters, initiate app shutdown");
+					stop();
+				}
+			}
+		});
+	}
 
 	@Override
 	protected List<String> onContainerLaunchCommands(Container container, ContainerCluster cluster,
