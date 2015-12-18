@@ -7,7 +7,7 @@
 		<version>1.0.0.BUILD-SNAPSHOT</version>
 		<relativePath/>  <!-- lookup parent from repository -->
 	</parent>
-	<artifactId>spring-cloud-dataflow-admin-yarns-docs</artifactId>
+	<artifactId>spring-cloud-dataflow-admin-yarn-docs</artifactId>
 	<name>spring-cloud-dataflow-admin-yarn-docs</name>
 	<description>Spring Cloud Data Flow Admin YARN</description>
 	<properties>
