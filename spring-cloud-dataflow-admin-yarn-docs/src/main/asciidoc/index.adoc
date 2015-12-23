@@ -7,7 +7,7 @@ Sabby Anandan, Marius Bogoevici, Eric Bottard, Mark Fisher, Ilayaperumal Gopinat
 :numbered:
 :icons: font
 :hide-uri-scheme:
-:spring-cloud-dataflow-repo: snapshot
+:spring-cloud-dataflow-repo: milestone
 :github-tag: master
 :spring-cloud-dataflow-docs-version: current
 :spring-cloud-dataflow-docs: http://docs.spring.io/spring-cloud-dataflow-admin-yarn/docs/{spring-cloud-dataflow-docs-version}/reference
