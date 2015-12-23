@@ -13,6 +13,13 @@
 		<version>1.0.0.BUILD-SNAPSHOT</version>
 	</parent>
 
+	<properties>
+		<spring-cloud-stream.version>1.0.0.M3</spring-cloud-stream.version>
+		<spring-cloud-dataflow.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-dataflow.version>
+		<spring-hadoop.version>2.3.0.RC2</spring-hadoop.version>
+		<spring-statemachine.version>1.0.2.RC1</spring-statemachine.version>
+	</properties>
+
 	<modules>
 		<module>spring-cloud-dataflow-yarn-common</module>
 		<module>spring-cloud-dataflow-yarn-streamappmaster</module>
@@ -46,48 +53,48 @@
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-yarn-boot</artifactId>
-				<version>2.3.0.RC2</version>
+				<version>${spring-hadoop.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-yarn-boot-cli</artifactId>
-				<version>2.3.0.RC2</version>
+				<version>${spring-hadoop.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-stream-configuration-metadata</artifactId>
-				<version>1.0.0.BUILD-SNAPSHOT</version>
+				<version>${spring-cloud-stream.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-stream-module-launcher</artifactId>
-				<version>1.0.0.BUILD-SNAPSHOT</version>
+				<version>${spring-cloud-stream.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dataflow-admin-starter</artifactId>
-				<version>1.0.0.BUILD-SNAPSHOT</version>
+				<version>${spring-cloud-dataflow.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dataflow-module-deployer-spi</artifactId>
-				<version>1.0.0.BUILD-SNAPSHOT</version>
+				<version>${spring-cloud-dataflow.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.statemachine</groupId>
 				<artifactId>spring-statemachine-core</artifactId>
-				<version>1.0.2.RC1</version>
+				<version>${spring-statemachine.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.statemachine</groupId>
 				<artifactId>spring-statemachine-test</artifactId>
-				<version>1.0.2.RC1</version>
+				<version>${spring-statemachine.version}</version>
 				<scope>test</scope>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-yarn-boot-test</artifactId>
-				<version>2.3.0.RC2</version>
+				<version>${spring-hadoop.version}</version>
 				<scope>test</scope>
 			</dependency>
 		</dependencies>

@@ -6,12 +6,12 @@ image:https://build.spring.io/plugins/servlet/buildStatusImage/SCD-YARNBMASTER[B
 
 Build and skip all tests:
 ```
-mvn clean package -DskipTests
+./mvnw clean package -DskipTests
 ```
 
 Or build project and run tests(tests take long time to run):
 ```
-mvn clean package 
+./mvnw clean package 
 ```
 
 === Running the YARN Admin
