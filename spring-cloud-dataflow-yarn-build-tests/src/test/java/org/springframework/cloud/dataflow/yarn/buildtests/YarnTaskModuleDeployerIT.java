@@ -13,6 +13,7 @@ import org.apache.hadoop.yarn.api.records.ApplicationId;
 import org.apache.hadoop.yarn.util.ConverterUtils;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.dataflow.admin.spi.yarn.YarnAdminConfiguration;
@@ -68,6 +69,7 @@ public class YarnTaskModuleDeployerIT extends AbstractCliBootYarnClusterTests {
 		context = null;
 	}
 
+	@Ignore
 	@Test
 	public void testTaskTimestamp() throws Exception {
 		assertThat(context.containsBean("taskModuleDeployer"), is(true));

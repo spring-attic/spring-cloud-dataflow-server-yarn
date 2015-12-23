@@ -28,6 +28,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.hadoop.yarn.api.records.ApplicationId;
 import org.apache.hadoop.yarn.api.records.YarnApplicationState;
 import org.apache.hadoop.yarn.util.ConverterUtils;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.cloud.dataflow.module.deployer.yarn.YarnCloudAppService.CloudAppInfo;
 import org.springframework.cloud.dataflow.module.deployer.yarn.YarnCloudAppService.CloudAppInstanceInfo;
@@ -150,6 +151,7 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 		app.destroy();
 	}
 
+	@Ignore
 	@Test
 	public void testTask1() throws Exception {
 		Properties instanceProperties = new Properties();
