@@ -49,7 +49,8 @@ import org.springframework.yarn.test.support.ContainerLogUtils;
 public class YarnTaskModuleDeployerIT extends AbstractCliBootYarnClusterTests {
 
 	private static final String GROUP_ID = "org.springframework.cloud.task.module";
-	private static final String VERSION = "1.0.0.BUILD-SNAPSHOT";
+	//TODO: Make this configurable (issue https://github.com/spring-cloud/spring-cloud-dataflow-admin-yarn/issues/38)
+	private static final String VERSION = "1.0.0.M2";
 	private AnnotationConfigApplicationContext context;
 
 	@Before
