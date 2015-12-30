@@ -146,6 +146,13 @@ public class YarnCloudAppTaskStateMachineTests {
 		context.close();
 	}
 
+	@Test
+	public void smokeTestDeployTwice() throws Exception {
+		for (int i = 0; i < 100; i++) {
+			testDeployTwice();
+		}
+	}
+
 	@Configuration
 	static class Config {
 
