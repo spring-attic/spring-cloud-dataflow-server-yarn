@@ -15,16 +15,11 @@
  */
 package org.springframework.cloud.dataflow.yarn.streamappmaster;
 
-import java.net.Inet6Address;
-import java.net.InetAddress;
-import java.net.NetworkInterface;
-import java.net.SocketException;
-import java.util.Enumeration;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext;
 import org.springframework.boot.context.embedded.EmbeddedServletContainer;
+import org.springframework.cloud.dataflow.yarn.streamappmaster.HostInfoDiscovery.HostInfo;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.yarn.am.AppmasterTrackService;
@@ -51,21 +46,25 @@ public class EmbeddedAppmasterTrackService implements AppmasterTrackService, App
 
 	private long waitTime;
 
+	private final HostInfoDiscovery hostInfoDiscovery;
+
 	/**
 	 * Instantiates a new embedded appmaster track service with
 	 * default wait time of 60 seconds.
 	 */
-	public EmbeddedAppmasterTrackService() {
-		this(DEFAULT_WAIT_TIME);
+	public EmbeddedAppmasterTrackService(HostInfoDiscovery hostInfoDiscovery) {
+		this(DEFAULT_WAIT_TIME, hostInfoDiscovery);
 	}
 
 	/**
 	 * Instantiates a new embedded appmaster track service.
 	 *
 	 * @param waitTime the wait time in millis
+	 * @param hostInfoDiscovery the host info discovery
 	 */
-	public EmbeddedAppmasterTrackService(long waitTime) {
+	public EmbeddedAppmasterTrackService(long waitTime, HostInfoDiscovery hostInfoDiscovery) {
 		this.waitTime = waitTime;
+		this.hostInfoDiscovery = hostInfoDiscovery;
 	}
 
 	@Override
@@ -74,6 +73,7 @@ public class EmbeddedAppmasterTrackService implements AppmasterTrackService, App
 			log.warn("Request for track url but unable to delegate because embeddedServletContainer is not set, returning null.");
 			return null;
 		}
+		log.info("Using hostInfoDiscovery " + hostInfoDiscovery);
 		long now = System.currentTimeMillis();
 		while(now + waitTime > System.currentTimeMillis()) {
 			int port = embeddedServletContainer.getPort();
@@ -81,7 +81,8 @@ public class EmbeddedAppmasterTrackService implements AppmasterTrackService, App
 				log.debug("Polling port from EmbeddedServletContainer port=" + port);
 			}
 			if (port > 0) {
-				String url = "http://" + getDefaultAddress() + ":" + port;
+				HostInfo hostInfo = hostInfoDiscovery.getHostInfo();
+				String url = "http://" + (hostInfo != null ? hostInfo.getAddress() : "127.0.0.1") + ":" + port;
 				log.info("Giving out track url as " + url);
 				return url;
 			}
@@ -110,36 +111,6 @@ public class EmbeddedAppmasterTrackService implements AppmasterTrackService, App
 	 */
 	public void setWaitTime(long waitTime) {
 		this.waitTime = waitTime;
-	}
-
-	private static String getDefaultAddress() {
-		Enumeration<NetworkInterface> nets;
-		try {
-			nets = NetworkInterface.getNetworkInterfaces();
-		} catch (SocketException e) {
-			return null;
-		}
-		NetworkInterface netinf;
-		while (nets.hasMoreElements()) {
-			netinf = nets.nextElement();
-			boolean skip = false;
-			try {
-				skip = netinf.isPointToPoint();
-			} catch (SocketException e) {
-				skip = true;
-			}
-			if (skip) {
-				continue;
-			}
-			Enumeration<InetAddress> addresses = netinf.getInetAddresses();
-			while (addresses.hasMoreElements()) {
-				InetAddress address = addresses.nextElement();
-				if (!address.isAnyLocalAddress() && !address.isMulticastAddress() && !(address instanceof Inet6Address)) {
-					return address.getHostAddress();
-				}
-			}
-		}
-		return null;
 	}
 
 }

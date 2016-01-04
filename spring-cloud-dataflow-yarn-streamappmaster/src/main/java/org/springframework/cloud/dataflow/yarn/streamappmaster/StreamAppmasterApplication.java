@@ -16,10 +16,13 @@
 
 package org.springframework.cloud.dataflow.yarn.streamappmaster;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.StringUtils;
 import org.springframework.yarn.YarnSystemConstants;
 import org.springframework.yarn.am.AppmasterTrackService;
 
@@ -30,14 +33,35 @@ import org.springframework.yarn.am.AppmasterTrackService;
  *
  */
 @SpringBootApplication
+@EnableConfigurationProperties({ DataflowHostInfoDiscoveryProperties.class })
 public class StreamAppmasterApplication {
 
 	@Configuration
 	public static class Config {
 
+		@Autowired
+		private DataflowHostInfoDiscoveryProperties discoveryProperties;
+
 		@Bean(name=YarnSystemConstants.DEFAULT_ID_AMTRACKSERVICE)
 		public AppmasterTrackService appmasterTrackService() {
-			return new EmbeddedAppmasterTrackService();
+			return new EmbeddedAppmasterTrackService(hostInfoDiscovery());
+		}
+
+		@Bean
+		public HostInfoDiscovery hostInfoDiscovery() {
+			DefaultHostInfoDiscovery discovery = new DefaultHostInfoDiscovery();
+			if (StringUtils.hasText(discoveryProperties.getMatchIpv4())) {
+				discovery.setMatchIpv4(discoveryProperties.getMatchIpv4());
+			}
+			if (StringUtils.hasText(discoveryProperties.getMatchInterface())) {
+				discovery.setMatchInterface(discoveryProperties.getMatchInterface());
+			}
+			if (discoveryProperties.getPreferInterface() != null) {
+				discovery.setPreferInterface(discoveryProperties.getPreferInterface());
+			}
+			discovery.setLoopback(discoveryProperties.isLoopback());
+			discovery.setPointToPoint(discoveryProperties.isPointToPoint());
+			return discovery;
 		}
 	}
 
