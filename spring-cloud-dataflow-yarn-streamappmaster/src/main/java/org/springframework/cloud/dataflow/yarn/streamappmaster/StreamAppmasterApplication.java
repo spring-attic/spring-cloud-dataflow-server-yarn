@@ -18,10 +18,6 @@ package org.springframework.cloud.dataflow.yarn.streamappmaster;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.yarn.YarnSystemConstants;
-import org.springframework.yarn.am.AppmasterTrackService;
 
 /**
  * Yarn application bootstrapping appmaster.
@@ -31,15 +27,6 @@ import org.springframework.yarn.am.AppmasterTrackService;
  */
 @SpringBootApplication
 public class StreamAppmasterApplication {
-
-	@Configuration
-	public static class Config {
-
-		@Bean(name=YarnSystemConstants.DEFAULT_ID_AMTRACKSERVICE)
-		public AppmasterTrackService appmasterTrackService() {
-			return new EmbeddedAppmasterTrackService();
-		}
-	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(StreamAppmasterApplication.class, args);
