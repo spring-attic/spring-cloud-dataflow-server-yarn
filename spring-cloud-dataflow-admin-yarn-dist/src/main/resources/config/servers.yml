@@ -9,6 +9,13 @@ spring:
   redis:
     port: 6379
     host: localhost
+#  yarn:
+#    hostdiscovery:
+#      pointToPoint: false
+#      loopback: false
+#      preferInterface: ['eth', 'en']
+#      matchIpv4: 192.168.0.0/24
+#      matchInterface: eth\\d*
 #dataflow:
 #  yarn:
 #    app:
