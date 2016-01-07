@@ -122,10 +122,10 @@ public class YarnStreamModuleDeployerIT extends AbstractCliBootYarnClusterTests 
 
 		ModuleDeploymentId timeId = deployer.deploy(time);
 		ApplicationId applicationId = assertWaitApp(2, TimeUnit.MINUTES, yarnCloudAppService);
-		assertWaitFileContent(2, TimeUnit.MINUTES, applicationId, "Started TimeSourceApplication");
+		assertWaitFileContent(4, TimeUnit.MINUTES, applicationId, "Started TimeSourceApplication");
 
 		ModuleDeploymentId logId = deployer.deploy(log);
-		assertWaitFileContent(2, TimeUnit.MINUTES, applicationId, "Started LogSinkApplication");
+		assertWaitFileContent(4, TimeUnit.MINUTES, applicationId, "Started LogSinkApplication");
 
 		deployer.undeploy(timeId);
 		assertWaitFileContent(2, TimeUnit.MINUTES, applicationId, "stopped outbound.ticktock.0");
@@ -187,10 +187,10 @@ public class YarnStreamModuleDeployerIT extends AbstractCliBootYarnClusterTests 
 
 		ModuleDeploymentId timeId = deployer.deploy(time);
 		ApplicationId applicationId = assertWaitApp(2, TimeUnit.MINUTES, yarnCloudAppService);
-		assertWaitFileContent(2, TimeUnit.MINUTES, applicationId, "Started TimeSourceApplication");
+		assertWaitFileContent(4, TimeUnit.MINUTES, applicationId, "Started TimeSourceApplication");
 
 		ModuleDeploymentId hdfsId = deployer.deploy(hdfs);
-		assertWaitFileContent(2, TimeUnit.MINUTES, applicationId, "Started HdfsSinkApplication");
+		assertWaitFileContent(4, TimeUnit.MINUTES, applicationId, "Started HdfsSinkApplication");
 
 		waitHdfsFile("/tmp/hdfs-sink/data-0.txt", 2, TimeUnit.MINUTES);
 
