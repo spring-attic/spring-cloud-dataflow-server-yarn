@@ -86,7 +86,7 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 		app.createCluster(applicationId, "ticktock:log", "module-template", "default", 1, null, null, null, extraProperties1);
 
 		app.startCluster(applicationId, "ticktock:log");
-		assertWaitFileContent(2, TimeUnit.MINUTES, applicationId, "Started LogSinkApplication");
+		assertWaitFileContent(4, TimeUnit.MINUTES, applicationId, "Started LogSinkApplication");
 
 		Map<String, Object> extraProperties2 = new HashMap<String, Object>();
 		//TODO: Make this configurable (issue https://github.com/spring-cloud/spring-cloud-dataflow-admin-yarn/issues/38)
@@ -95,7 +95,7 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 		app.createCluster(applicationId, "ticktock:time", "module-template", "default", 1, null, null, null, extraProperties2);
 
 		app.startCluster(applicationId, "ticktock:time");
-		assertWaitFileContent(2, TimeUnit.MINUTES, applicationId, "Started TimeSourceApplication");
+		assertWaitFileContent(4, TimeUnit.MINUTES, applicationId, "Started TimeSourceApplication");
 
 		app.destroy();
 	}
@@ -139,7 +139,7 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 		app.createCluster(applicationId, "ticktock:hdfs", "module-template", "default", 1, null, null, null, extraProperties1);
 
 		app.startCluster(applicationId, "ticktock:hdfs");
-		assertWaitFileContent(2, TimeUnit.MINUTES, applicationId, "Started HdfsSinkApplication");
+		assertWaitFileContent(4, TimeUnit.MINUTES, applicationId, "Started HdfsSinkApplication");
 
 		Map<String, Object> extraProperties2 = new HashMap<String, Object>();
 		//TODO: Make this configurable (issue https://github.com/spring-cloud/spring-cloud-dataflow-admin-yarn/issues/38)
@@ -148,7 +148,7 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 		app.createCluster(applicationId, "ticktock:time", "module-template", "default", 1, null, null, null, extraProperties2);
 
 		app.startCluster(applicationId, "ticktock:time");
-		assertWaitFileContent(2, TimeUnit.MINUTES, applicationId, "Started TimeSourceApplication");
+		assertWaitFileContent(4, TimeUnit.MINUTES, applicationId, "Started TimeSourceApplication");
 
 		waitHdfsFile("/tmp/hdfs-sink/data-0.txt", 2, TimeUnit.MINUTES);
 

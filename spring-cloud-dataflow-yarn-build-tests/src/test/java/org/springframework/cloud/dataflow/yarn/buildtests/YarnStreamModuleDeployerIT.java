@@ -198,9 +198,7 @@ public class YarnStreamModuleDeployerIT extends AbstractCliBootYarnClusterTests 
 		assertWaitFileContent(2, TimeUnit.MINUTES, applicationId, "stopped outbound.timehdfs.0");
 
 		deployer.undeploy(hdfsId);
-		// TODO: why "inbound.timehdfs.0" is not logged?
-		//assertWaitFileContent(2, TimeUnit.MINUTES, applicationId, "stopped inbound.timehdfs.0");
-		assertWaitFileContent(2, TimeUnit.MINUTES, applicationId, "stopped hdfsSink.hdfsSink.serviceActivator");
+		assertWaitFileContent(2, TimeUnit.MINUTES, applicationId, "stopped inbound.timehdfs.0");
 
 		Collection<CloudAppInstanceInfo> instances = yarnCloudAppService.getInstances(CloudAppType.STREAM);
 		assertThat(instances.size(), is(1));
