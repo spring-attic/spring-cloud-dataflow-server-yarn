@@ -66,12 +66,13 @@ import org.springframework.yarn.test.support.ContainerLogUtils;
 public class YarnStreamModuleDeployerIT extends AbstractCliBootYarnClusterTests {
 
 	private static final String GROUP_ID = "org.springframework.cloud.stream.module";
-	//TODO: Make this configurable (issue https://github.com/spring-cloud/spring-cloud-dataflow-admin-yarn/issues/38)
-	private static final String VERSION = "1.0.0.M2";
+
+	private String artifactVersion;
 	private AnnotationConfigApplicationContext context;
 
 	@Before
 	public void setup() {
+		artifactVersion = getEnvironment().getProperty("artifactVersion");
 		context = new AnnotationConfigApplicationContext();
 		context.getEnvironment().setActiveProfiles("yarn");
 		context.register(TestYarnConfiguration.class);
@@ -108,13 +109,13 @@ public class YarnStreamModuleDeployerIT extends AbstractCliBootYarnClusterTests 
 		ArtifactCoordinates timeCoordinates = new ArtifactCoordinates.Builder()
 				.setGroupId(GROUP_ID)
 				.setArtifactId("time-source")
-				.setVersion(VERSION)
+				.setVersion(artifactVersion)
 				.setClassifier("exec")
 				.build();
 		ArtifactCoordinates logCoordinates = new ArtifactCoordinates.Builder()
 				.setGroupId(GROUP_ID)
 				.setArtifactId("log-sink")
-				.setVersion(VERSION)
+				.setVersion(artifactVersion)
 				.setClassifier("exec")
 				.build();
 		ModuleDeploymentRequest time = new ModuleDeploymentRequest(timeDefinition, timeCoordinates);
@@ -173,13 +174,13 @@ public class YarnStreamModuleDeployerIT extends AbstractCliBootYarnClusterTests 
 		ArtifactCoordinates timeCoordinates = new ArtifactCoordinates.Builder()
 				.setGroupId(GROUP_ID)
 				.setArtifactId("time-source")
-				.setVersion(VERSION)
+				.setVersion(artifactVersion)
 				.setClassifier("exec")
 				.build();
 		ArtifactCoordinates hdfsCoordinates = new ArtifactCoordinates.Builder()
 				.setGroupId(GROUP_ID)
 				.setArtifactId("hdfs-sink")
-				.setVersion(VERSION)
+				.setVersion(artifactVersion)
 				.setClassifier("exec")
 				.build();
 		ModuleDeploymentRequest time = new ModuleDeploymentRequest(timeDefinition, timeCoordinates);
