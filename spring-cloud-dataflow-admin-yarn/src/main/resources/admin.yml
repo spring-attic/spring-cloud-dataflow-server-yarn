@@ -9,6 +9,11 @@ security:
     enabled: false
 management:
   contextPath: /management
+info:
+  app:
+    name: "@project.artifactId@"
+    description: "@project.description@"
+    version: "@project.version@"
 spring:
   main:
     show_banner: false
