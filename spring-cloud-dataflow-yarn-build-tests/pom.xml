@@ -109,6 +109,9 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-failsafe-plugin</artifactId>
+				<configuration>
+					<argLine>-Xmx2048m -XX:MaxPermSize=768m</argLine>
+				</configuration>
 				<executions>
 					<execution>
 						<phase>package</phase>
