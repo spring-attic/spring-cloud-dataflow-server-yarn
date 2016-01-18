@@ -138,6 +138,10 @@
 									<name>projectVersion</name>
 									<value>${project.version}</value>
 								</property>
+								<property>
+									<name>artifactVersion</name>
+									<value>${spring-cloud-stream-modules.artifact.version}</value>
+								</property>
 							</properties>
 						</configuration>
 					</execution>
