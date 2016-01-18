@@ -81,7 +81,7 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 		// before SHDP-532 gets in, create/start individually
 		Map<String, Object> extraProperties1 = new HashMap<String, Object>();
 		//TODO: Make this configurable (issue https://github.com/spring-cloud/spring-cloud-dataflow-admin-yarn/issues/38)
-		extraProperties1.put("containerModules", "org.springframework.cloud.stream.module:log-sink:jar:exec:1.0.0.M2");
+		extraProperties1.put("containerModules", "org.springframework.cloud.stream.module:log-sink:jar:exec:1.0.0.BUILD-SNAPSHOT");
 		extraProperties1.put("containerArg1", "spring.cloud.stream.bindings.input.destination=ticktock.0");
 		app.createCluster(applicationId, "ticktock:log", "module-template", "default", 1, null, null, null, extraProperties1);
 
@@ -90,7 +90,7 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 
 		Map<String, Object> extraProperties2 = new HashMap<String, Object>();
 		//TODO: Make this configurable (issue https://github.com/spring-cloud/spring-cloud-dataflow-admin-yarn/issues/38)
-		extraProperties2.put("containerModules", "org.springframework.cloud.stream.module:time-source:jar:exec:1.0.0.M2");
+		extraProperties2.put("containerModules", "org.springframework.cloud.stream.module:time-source:jar:exec:1.0.0.BUILD-SNAPSHOT");
 		extraProperties2.put("containerArg1", "spring.cloud.stream.bindings.output.destination=ticktock.0");
 		app.createCluster(applicationId, "ticktock:time", "module-template", "default", 1, null, null, null, extraProperties2);
 
@@ -134,7 +134,7 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 		// before SHDP-532 gets in, create/start individually
 		Map<String, Object> extraProperties1 = new HashMap<String, Object>();
 		//TODO: Make this configurable (issue https://github.com/spring-cloud/spring-cloud-dataflow-admin-yarn/issues/38)
-		extraProperties1.put("containerModules", "org.springframework.cloud.stream.module:hdfs-sink:jar:exec:1.0.0.M2");
+		extraProperties1.put("containerModules", "org.springframework.cloud.stream.module:hdfs-sink:jar:exec:1.0.0.BUILD-SNAPSHOT");
 		extraProperties1.put("containerArg1", "spring.cloud.stream.bindings.input.destination=ticktock.0");
 		app.createCluster(applicationId, "ticktock:hdfs", "module-template", "default", 1, null, null, null, extraProperties1);
 
@@ -143,7 +143,7 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 
 		Map<String, Object> extraProperties2 = new HashMap<String, Object>();
 		//TODO: Make this configurable (issue https://github.com/spring-cloud/spring-cloud-dataflow-admin-yarn/issues/38)
-		extraProperties2.put("containerModules", "org.springframework.cloud.stream.module:time-source:jar:exec:1.0.0.M2");
+		extraProperties2.put("containerModules", "org.springframework.cloud.stream.module:time-source:jar:exec:1.0.0.BUILD-SNAPSHOT");
 		extraProperties2.put("containerArg1", "spring.cloud.stream.bindings.output.destination=ticktock.0");
 		app.createCluster(applicationId, "ticktock:time", "module-template", "default", 1, null, null, null, extraProperties2);
 
@@ -163,7 +163,7 @@ public class YarnCloudAppServiceApplicationIT extends AbstractCliBootYarnCluster
 		instanceProperties.setProperty("spring.cloud.dataflow.yarn.version", getProjectVersion());
 		//TODO: Make this configurable (issue https://github.com/spring-cloud/spring-cloud-dataflow-admin-yarn/issues/38)
 		String[] runArgs = new String[] { "--spring.config.name=task",
-				"--spring.yarn.client.launchcontext.arguments.--dataflow.module.coordinates=org.springframework.cloud.task.module:timestamp-task:jar:exec:1.0.0.M2" };
+				"--spring.yarn.client.launchcontext.arguments.--dataflow.module.coordinates=org.springframework.cloud.task.module:timestamp-task:jar:exec:1.0.0.BUILD-SNAPSHOT" };
 		ApplicationContextInitializer<?>[] initializers = new ApplicationContextInitializer<?>[] {
 				new HadoopConfigurationInjectingInitializer(getConfiguration()) };
 		YarnCloudAppServiceApplication app = new YarnCloudAppServiceApplication("app", getProjectVersion(),

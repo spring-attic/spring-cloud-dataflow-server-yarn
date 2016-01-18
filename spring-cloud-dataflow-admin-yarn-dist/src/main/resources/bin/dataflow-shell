@@ -8,7 +8,7 @@
 
 # Add default JVM options here. You can also use JAVA_OPTS and SPRING_CLOUD_DATAFLOW_SHELL_OPTS to pass JVM options to this script.
 DATAFLOW_VERSION="@project.version@"
-DATAFLOW_SHELL_VERSION="1.0.0.M2"
+DATAFLOW_SHELL_VERSION="1.0.0.BUILD-SNAPSHOT"
 DEFAULT_JVM_OPTS=""
 APP_NAME="dataflow-shell"
 APP_BASE_NAME=`basename "$0"`
