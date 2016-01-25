@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 the original author or authors.
+ * Copyright 2015-2016 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -69,6 +69,7 @@ public class YarnStreamModuleDeployer implements ModuleDeployer {
 		ModuleDefinition definition = request.getDefinition();
 		ModuleDeploymentId id = ModuleDeploymentId.fromModuleDefinition(definition);
 		String clusterId = moduleDeploymentIdToClusterId(id);
+		String group = id.getGroup();
 		String module = coordinates.toString();
 		Map<String, String> definitionParameters = definition.getParameters();
 		Map<String, String> deploymentProperties = request.getDeploymentProperties();
@@ -83,6 +84,7 @@ public class YarnStreamModuleDeployer implements ModuleDeployer {
 		Message<Events> message = MessageBuilder.withPayload(Events.DEPLOY)
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_APP_VERSION, "app")
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_CLUSTER_ID, clusterId)
+				.setHeader(YarnCloudAppStreamStateMachine.HEADER_GROUP_ID, group)
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_COUNT, count)
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_MODULE, module)
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_DEFINITION_PARAMETERS, definitionParameters)
@@ -95,8 +97,11 @@ public class YarnStreamModuleDeployer implements ModuleDeployer {
 	@Override
 	public void undeploy(ModuleDeploymentId id) {
 		String clusterId = moduleDeploymentIdToClusterId(id);
+		String group = id.getGroup();
 		Message<Events> message = MessageBuilder.withPayload(Events.UNDEPLOY)
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_CLUSTER_ID, clusterId)
+				.setHeader(YarnCloudAppStreamStateMachine.HEADER_APP_VERSION, "app")
+				.setHeader(YarnCloudAppStreamStateMachine.HEADER_GROUP_ID, group)
 				.build();
 		stateMachine.sendEvent(message);
 	}

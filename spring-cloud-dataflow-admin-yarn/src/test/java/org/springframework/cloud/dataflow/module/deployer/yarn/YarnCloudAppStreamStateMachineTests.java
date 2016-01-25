@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 the original author or authors.
+ * Copyright 2015-2016 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -120,6 +120,7 @@ public class YarnCloudAppStreamStateMachineTests {
 		Message<Events> message = MessageBuilder.withPayload(Events.DEPLOY)
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_APP_VERSION, "app")
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_CLUSTER_ID, "fakeClusterId")
+				.setHeader(YarnCloudAppStreamStateMachine.HEADER_GROUP_ID, "fakeGroup")
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_COUNT, 1)
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_MODULE, "fakeModule")
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_DEFINITION_PARAMETERS, new HashMap<Object, Object>())
@@ -186,6 +187,7 @@ public class YarnCloudAppStreamStateMachineTests {
 		Message<Events> message = MessageBuilder.withPayload(Events.DEPLOY)
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_APP_VERSION, "app")
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_CLUSTER_ID, "fakeClusterId")
+				.setHeader(YarnCloudAppStreamStateMachine.HEADER_GROUP_ID, "fakeGroup")
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_COUNT, 1)
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_MODULE, "fakeModule")
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_DEFINITION_PARAMETERS, new HashMap<Object, Object>())
@@ -338,7 +340,10 @@ public class YarnCloudAppStreamStateMachineTests {
 
 		@Override
 		public String submitApplication(String appVersion, CloudAppType cloudAppType, List<String> contextRunArgs) {
-			return null;
+			instance = "scdstream:" + appVersion + ":fakeGroup";
+			submitApplicationCount.add(new Wrapper(appVersion));
+			submitApplicationLatch.countDown();
+			return "fakeApplicationId";
 		}
 
 		@Override

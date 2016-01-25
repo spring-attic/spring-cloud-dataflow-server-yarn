@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 the original author or authors.
+ * Copyright 2015-2016 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,9 @@
 
 package org.springframework.cloud.dataflow.module.deployer.yarn;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -48,6 +50,7 @@ public class YarnCloudAppStreamStateMachine {
 	static final String VAR_APPLICATION_ID = "applicationId";
 	static final String HEADER_APP_VERSION = "appVersion";
 	static final String HEADER_CLUSTER_ID = "clusterId";
+	static final String HEADER_GROUP_ID = "groupId";
 	static final String HEADER_COUNT = "count";
 	static final String HEADER_MODULE = "module";
 	static final String HEADER_DEFINITION_PARAMETERS = "definitionParameters";
@@ -248,17 +251,20 @@ public class YarnCloudAppStreamStateMachine {
 
 		@Override
 		public void execute(StateContext<States, Events> context) {
-			CloudAppInstanceInfo appInstanceInfo = findRunningInstance();
+			String appVersion = (String) context.getMessageHeader(HEADER_APP_VERSION);
+			String groupId = (String) context.getMessageHeader(HEADER_GROUP_ID);
+			String appName = "scdstream:" + appVersion + ":" + groupId;
+			CloudAppInstanceInfo appInstanceInfo = findRunningInstance(appName);
 			if (appInstanceInfo != null) {
 				context.getExtendedState().getVariables().put(VAR_APPLICATION_ID, appInstanceInfo.getApplicationId());
 			}
 		}
 	}
 
-	private CloudAppInstanceInfo findRunningInstance() {
+	private CloudAppInstanceInfo findRunningInstance(String appName) {
 		for (CloudAppInstanceInfo appInstanceInfo : yarnCloudAppService.getInstances(CloudAppType.STREAM)) {
 			logger.info("Checking instance {}", appInstanceInfo);
-			if (appInstanceInfo.getName().equals("scdstream:app") && appInstanceInfo.getState().equals("RUNNING")
+			if (appInstanceInfo.getName().equals(appName) && appInstanceInfo.getState().equals("RUNNING")
 					&& appInstanceInfo.getAddress().contains("http")) {
 				logger.info("Using instance {}", appInstanceInfo);
 				return appInstanceInfo;
@@ -287,7 +293,11 @@ public class YarnCloudAppStreamStateMachine {
 		@Override
 		public void execute(StateContext<States, Events> context) {
 			String appVersion = (String) context.getMessageHeader(HEADER_APP_VERSION);
-			String applicationId = yarnCloudAppService.submitApplication(appVersion, CloudAppType.STREAM);
+			String groupId = (String) context.getMessageHeader(HEADER_GROUP_ID);
+			String appName = "scdstream:" + appVersion + ":" + groupId;
+			List<String> contextRunArgs = new ArrayList<String>();
+			contextRunArgs.add("--spring.yarn.appName=" + appName);
+			String applicationId = yarnCloudAppService.submitApplication(appVersion, CloudAppType.STREAM, contextRunArgs);
 			context.getExtendedState().getVariables().put(VAR_APPLICATION_ID, applicationId);
 
 			// TODO: for now just loop until we get proper handling
@@ -295,7 +305,7 @@ public class YarnCloudAppStreamStateMachine {
 			Exception error = null;
 			for (int i = 0; i < 60; i++) {
 				try {
-					CloudAppInstanceInfo appInstanceInfo = findRunningInstance();
+					CloudAppInstanceInfo appInstanceInfo = findRunningInstance(appName);
 					if (appInstanceInfo != null && appInstanceInfo.getApplicationId().equals(applicationId)) {
 						return;
 					} else {
@@ -347,7 +357,6 @@ public class YarnCloudAppStreamStateMachine {
 		public void execute(StateContext<States, Events> context) {
 			yarnCloudAppService.startCluster(context.getExtendedState().get(VAR_APPLICATION_ID, String.class), context
 					.getMessageHeaders().get(HEADER_CLUSTER_ID, String.class));
-//			context.getStateMachine().sendEvent(Events.CONTINUE);
 		}
 	}
 
@@ -359,8 +368,11 @@ public class YarnCloudAppStreamStateMachine {
 		@Override
 		public void execute(StateContext<States, Events> context) {
 			String clusterId = context.getMessageHeaders().get(HEADER_CLUSTER_ID, String.class);
+			String appVersion = (String) context.getMessageHeader(HEADER_APP_VERSION);
+			String groupId = (String) context.getMessageHeader(HEADER_GROUP_ID);
+			String appName = "scdstream:" + appVersion + ":" + groupId;
 
-			CloudAppInstanceInfo appInstanceInfo = findRunningInstance();
+			CloudAppInstanceInfo appInstanceInfo = findRunningInstance(appName);
 			if (appInstanceInfo != null) {
 				for (String cluster : yarnCloudAppService.getClusters(appInstanceInfo.getApplicationId())) {
 					if (cluster.equals(clusterId)) {
@@ -379,8 +391,11 @@ public class YarnCloudAppStreamStateMachine {
 		@Override
 		public void execute(StateContext<States, Events> context) {
 			String clusterId = context.getMessageHeaders().get(HEADER_CLUSTER_ID, String.class);
+			String appVersion = (String) context.getMessageHeader(HEADER_APP_VERSION);
+			String groupId = (String) context.getMessageHeader(HEADER_GROUP_ID);
+			String appName = "scdstream:" + appVersion + ":" + groupId;
 
-			CloudAppInstanceInfo appInstanceInfo = findRunningInstance();
+			CloudAppInstanceInfo appInstanceInfo = findRunningInstance(appName);
 			if (appInstanceInfo != null) {
 				for (String cluster : yarnCloudAppService.getClusters(appInstanceInfo.getApplicationId())) {
 					if (cluster.equals(clusterId)) {
