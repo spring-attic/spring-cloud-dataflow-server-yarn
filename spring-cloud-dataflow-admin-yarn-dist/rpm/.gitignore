@@ -1,0 +1,6 @@
+SRPMS/
+BUILD/
+BUILDROOT/
+RPMS/
+SOURCES/
+/.vagrant/
