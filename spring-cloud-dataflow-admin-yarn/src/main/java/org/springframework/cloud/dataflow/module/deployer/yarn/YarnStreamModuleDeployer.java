@@ -16,6 +16,7 @@
 
 package org.springframework.cloud.dataflow.module.deployer.yarn;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -79,6 +80,21 @@ public class YarnStreamModuleDeployer implements ModuleDeployer {
 		logger.info("definitionParameters: " + definitionParameters);
 		logger.info("deploymentProperties: " + deploymentProperties);
 
+
+		// contextRunArgs are passed to boot app ran to control yarn apps
+		ArrayList<String> contextRunArgs = new ArrayList<String>();
+		contextRunArgs.add("--spring.yarn.appName=scdstream:app:" + group);
+
+		// deployment properties override servers.yml which overrides application.yml
+		for (Entry<String, String> entry : deploymentProperties.entrySet()) {
+			if (entry.getKey().startsWith("dataflow.yarn.app.streamappmaster")) {
+				contextRunArgs.add("--" + entry.getKey() + "=" + entry.getValue());
+			} else if (entry.getKey().startsWith("dataflow.yarn.app.streamcontainer")) {
+				// weird format with '--' is just straight pass to appmaster
+				contextRunArgs.add("--spring.yarn.client.launchcontext.arguments.--" + entry.getKey() + "=" + entry.getValue());
+			}
+		}
+
 		// TODO: using default app name "app" until we start to customise
 		//       via deploymentProperties
 		Message<Events> message = MessageBuilder.withPayload(Events.DEPLOY)
@@ -88,6 +104,7 @@ public class YarnStreamModuleDeployer implements ModuleDeployer {
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_COUNT, count)
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_MODULE, module)
 				.setHeader(YarnCloudAppStreamStateMachine.HEADER_DEFINITION_PARAMETERS, definitionParameters)
+				.setHeader(YarnCloudAppStreamStateMachine.HEADER_CONTEXT_RUN_ARGS, contextRunArgs)
 				.build();
 
 		stateMachine.sendEvent(message);

@@ -19,6 +19,8 @@ spring:
         - "file:${dataflow.yarn.app.appmaster.path:lib}/spring-cloud-dataflow-yarn-streamappmaster-*.jar"
         - "file:${dataflow.yarn.app.container.path:lib}/spring-cloud-dataflow-yarn-streamcontainer-*.jar"
         - "file:${dataflow.yarn.app.config.path:config}/servers.yml"
+      queue: ${dataflow.yarn.app.streamappmaster.queue:default}
+      labelExpression: ${dataflow.yarn.app.streamappmaster.labelExpression:}
       launchcontext:
         arguments:
           -Dspring.config.location: servers.yml
