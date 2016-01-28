@@ -18,6 +18,8 @@ spring:
         - "file:${dataflow.yarn.app.appmaster.path:lib}/spring-cloud-dataflow-yarn-taskappmaster-*.jar"
         - "file:${dataflow.yarn.app.container.path:lib}/spring-cloud-dataflow-yarn-taskcontainer-*.jar"
         - "file:${dataflow.yarn.app.config.path:config}/servers.yml"
+      queue: ${dataflow.yarn.app.taskappmaster.queue:default}
+      labelExpression: ${dataflow.yarn.app.taskappmaster.labelExpression:}
       launchcontext:
         options:
           - ${dataflow.yarn.app.taskappmaster.javaOpts:}

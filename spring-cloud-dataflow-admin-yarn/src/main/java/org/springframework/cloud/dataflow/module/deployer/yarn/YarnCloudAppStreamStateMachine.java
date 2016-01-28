@@ -16,7 +16,6 @@
 
 package org.springframework.cloud.dataflow.module.deployer.yarn;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -54,6 +53,7 @@ public class YarnCloudAppStreamStateMachine {
 	static final String HEADER_COUNT = "count";
 	static final String HEADER_MODULE = "module";
 	static final String HEADER_DEFINITION_PARAMETERS = "definitionParameters";
+	static final String HEADER_CONTEXT_RUN_ARGS = "contextRunArgs";
 	static final String HEADER_ERROR = "error";
 
 	private final YarnCloudAppService yarnCloudAppService;
@@ -295,8 +295,10 @@ public class YarnCloudAppStreamStateMachine {
 			String appVersion = (String) context.getMessageHeader(HEADER_APP_VERSION);
 			String groupId = (String) context.getMessageHeader(HEADER_GROUP_ID);
 			String appName = "scdstream:" + appVersion + ":" + groupId;
-			List<String> contextRunArgs = new ArrayList<String>();
-			contextRunArgs.add("--spring.yarn.appName=" + appName);
+
+			// we control type so casting is safe
+			@SuppressWarnings("unchecked")
+			List<String> contextRunArgs = (List<String>) context.getMessageHeader(HEADER_CONTEXT_RUN_ARGS);
 			String applicationId = yarnCloudAppService.submitApplication(appVersion, CloudAppType.STREAM, contextRunArgs);
 			context.getExtendedState().getVariables().put(VAR_APPLICATION_ID, applicationId);
 

@@ -24,6 +24,7 @@ spring:
           - "servers.yml"
       resource:
         priority: ${dataflow.yarn.app.taskcontainer.priority:10}
+        labelExpression: ${dataflow.yarn.app.taskcontainer.labelExpression:}
         memory: ${dataflow.yarn.app.taskcontainer.memory:256m}
         virtualCores: ${dataflow.yarn.app.taskcontainer.virtualCores:1}
       launchcontext:

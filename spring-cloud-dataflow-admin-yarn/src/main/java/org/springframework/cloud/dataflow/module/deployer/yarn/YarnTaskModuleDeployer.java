@@ -77,6 +77,11 @@ public class YarnTaskModuleDeployer implements ModuleDeployer {
 		logger.info("definitionParameters: " + definitionParameters);
 		logger.info("deploymentProperties: " + deploymentProperties);
 
+		// as a tmp solution, zap module.<taskmodule>. from properties
+		// because TaskController doesn't do it like Streams do
+		deploymentProperties = extractModuleDeploymentProperties(definition, deploymentProperties);
+		logger.info("extracted deploymentProperties: " + deploymentProperties);
+
 		// contextRunArgs are passed to boot app ran to control yarn apps
 		// we pass needed args to control module coordinates and params,
 		// weird format with '--' is just straight pass to container
@@ -155,6 +160,18 @@ public class YarnTaskModuleDeployer implements ModuleDeployer {
 		} else {
 			throw new IllegalArgumentException("Invalid appName=[" + appName + "]");
 		}
+	}
+
+	private Map<String, String> extractModuleDeploymentProperties(ModuleDefinition module,
+			Map<String, String> streamDeploymentProperties) {
+		String prefix = "module." + module.getLabel() + ".";
+		Map<String, String> properties = new HashMap<>();
+		for (Entry<String, String> entry : streamDeploymentProperties.entrySet()) {
+			if (entry.getKey().startsWith(prefix)) {
+				properties.put(entry.getKey().substring(prefix.length()), entry.getValue());
+			}
+		}
+		return properties;
 	}
 
 }
