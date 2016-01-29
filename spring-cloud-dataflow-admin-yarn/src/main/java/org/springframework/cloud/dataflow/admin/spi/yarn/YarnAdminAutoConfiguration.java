@@ -36,7 +36,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
  * @author Ilayaperumal Gopinathan
  */
 @Configuration
-public class YarnAdminConfiguration {
+public class YarnAdminAutoConfiguration {
 
 	@Value("${spring.cloud.dataflow.yarn.version}")
 	private String dataflowVersion;
