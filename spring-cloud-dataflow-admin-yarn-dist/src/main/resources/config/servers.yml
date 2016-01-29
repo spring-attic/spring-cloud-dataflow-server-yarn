@@ -16,7 +16,7 @@ spring:
   # Configured for an embedded in-memory H2 database. Replace the datasource configuration with properties
   # matching your preferred database to be used instead, if needed, or when running in a distributed environment.
   datasource:
-    url: jdbc:h2:tcp://localhost:9092/mem:dataflow
+    url: jdbc:h2:tcp://localhost:19092/mem:dataflow
     username: sa
     password:
     driverClassName: org.h2.Driver
