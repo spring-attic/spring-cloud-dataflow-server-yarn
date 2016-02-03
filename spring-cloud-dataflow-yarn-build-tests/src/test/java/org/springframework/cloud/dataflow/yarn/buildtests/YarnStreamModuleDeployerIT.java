@@ -18,9 +18,9 @@ package org.springframework.cloud.dataflow.yarn.buildtests;
 
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 
 import java.io.File;
@@ -38,7 +38,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.dataflow.admin.spi.yarn.YarnAdminConfiguration;
+import org.springframework.cloud.dataflow.autoconfigure.yarn.YarnAdminAutoConfiguration;
 import org.springframework.cloud.dataflow.core.ArtifactCoordinates;
 import org.springframework.cloud.dataflow.core.ModuleDefinition;
 import org.springframework.cloud.dataflow.core.ModuleDeploymentId;
@@ -423,7 +423,7 @@ public class YarnStreamModuleDeployerIT extends AbstractCliBootYarnClusterTests 
 	}
 
 	@Configuration
-	public static class TestYarnConfiguration extends YarnAdminConfiguration {
+	public static class TestYarnConfiguration extends YarnAdminAutoConfiguration {
 
 		@Autowired
 		private org.apache.hadoop.conf.Configuration configuration;
