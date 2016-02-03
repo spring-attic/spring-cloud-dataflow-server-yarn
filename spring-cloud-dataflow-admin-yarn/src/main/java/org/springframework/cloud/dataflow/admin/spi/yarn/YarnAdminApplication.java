@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 the original author or authors.
+ * Copyright 2015-2016 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,8 @@
 
 package org.springframework.cloud.dataflow.admin.spi.yarn;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.security.oauth2.OAuth2AutoConfiguration;
 import org.springframework.cloud.dataflow.admin.AdminApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.yarn.boot.YarnAppmasterAutoConfiguration;
-import org.springframework.yarn.boot.YarnContainerAutoConfiguration;
+import org.springframework.cloud.dataflow.admin.EnableDataFlowServer;
 
 /**
  * Bootstrap class for Spring Cloud Data Flow Admin on Apache Hadoop YARN.
@@ -29,9 +25,7 @@ import org.springframework.yarn.boot.YarnContainerAutoConfiguration;
  * @author Mark Fisher
  * @author Janne Valkealahti
  */
-@ComponentScan(basePackageClasses = AdminApplication.class)
-@EnableAutoConfiguration(exclude = { YarnAppmasterAutoConfiguration.class, YarnContainerAutoConfiguration.class,
-		OAuth2AutoConfiguration.class })
+@EnableDataFlowServer
 public class YarnAdminApplication {
 
 	public static void main(String[] args) {
