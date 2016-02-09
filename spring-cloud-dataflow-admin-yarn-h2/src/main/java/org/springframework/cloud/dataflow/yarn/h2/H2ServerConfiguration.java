@@ -34,7 +34,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.DependsOn;
 import org.springframework.util.StringUtils;
 
 /**
@@ -65,12 +64,12 @@ public class H2ServerConfiguration {
 			args.add("-baseDir");
 			args.add(properties.getDirectory());
 		}
-		return Server.createTcpServer(args.toArray(new String[0])).start();
+		Server server = Server.createTcpServer(args.toArray(new String[0])).start();
+		initDatabaseViaConnection();
+		return server;
 	}
 
-	@Bean(destroyMethod = "close")
-	@DependsOn("dataflowH2Server")
-	public Connection dataflowH2ServerInitConnection() throws SQLException {
+	private void initDatabaseViaConnection() throws SQLException {
 		// create a connection which will kick a db create as it is
 		// only supported way for h2
 		StringBuilder buf = new StringBuilder();
@@ -84,6 +83,7 @@ public class H2ServerConfiguration {
 		if (StringUtils.hasText(properties.getPassword())) {
 			buf.append(";PASSWORD=" + properties.getPassword());
 		}
-		return DriverManager.getConnection(buf.toString());
+		Connection connection = DriverManager.getConnection(buf.toString());
+		connection.close();
 	}
 }

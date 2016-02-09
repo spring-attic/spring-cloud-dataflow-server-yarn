@@ -1,3 +1,0 @@
-# we don't have server but to play safe set random port
-server:
-  port: 0
