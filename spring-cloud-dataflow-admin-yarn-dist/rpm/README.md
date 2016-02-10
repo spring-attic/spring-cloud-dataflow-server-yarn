@@ -28,3 +28,14 @@ Now, build the RPM:
     $ rpmbuild -bb rpmbuild/SPECS/dataflow-admin-yarn.spec
 
 The RPM should now be available in `rpmbuild/RPMS/noarch`
+
+### Using Local Snapshot Versions
+
+Snapshot versions doesn't work with rpm format due to having a dash in `BUILD-SNAPSHOT`.
+Tweak what can be used is to simply use maven `versions` plugin to change main version
+prior to uploading file into vagrant vm. Command creates a backupfiles for modifications
+which can be reverted. Naturally a spec file needs to have this same version defined.
+
+    ./mvnw versions:set -DnewVersion=1.0.0.SNAPSHOT
+    ./mvnw versions:revert
+
