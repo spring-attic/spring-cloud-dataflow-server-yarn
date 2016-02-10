@@ -3,7 +3,7 @@ logging:
     org.springframework.cloud.dataflow.module.deployer.yarn: DEBUG
     org.springframework.statemachine: DEBUG
 server:
-  port: 9393
+  port: ${dataflow.server.port:9393}
 security:
   basic:
     enabled: false
@@ -23,4 +23,4 @@ spring:
     dataflow:
       yarn:
         version: "@project.version@"
-    
+
