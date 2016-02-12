@@ -75,7 +75,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dataflow-admin-starter</artifactId>
+				<artifactId>spring-cloud-dataflow-server-core</artifactId>
 				<version>${spring-cloud-dataflow.version}</version>
 			</dependency>
 			<dependency>
