@@ -29,8 +29,10 @@
 		<module>spring-cloud-dataflow-yarn-streamcontainer</module>
 		<module>spring-cloud-dataflow-yarn-taskcontainer</module>
 		<module>spring-cloud-dataflow-yarn-client</module>
-		<module>spring-cloud-dataflow-admin-yarn</module>
-		<module>spring-cloud-dataflow-admin-yarn-h2</module>
+		<module>spring-cloud-dataflow-deployer-yarn</module>
+		<module>spring-cloud-starter-dataflow-server-yarn</module>
+		<module>spring-cloud-dataflow-server-yarn</module>
+		<module>spring-cloud-dataflow-server-yarn-h2</module>
 		<module>spring-cloud-dataflow-yarn-build-tests</module>
 		<module>spring-cloud-dataflow-admin-yarn-docs</module>
 		<module>spring-cloud-dataflow-admin-yarn-dist</module>

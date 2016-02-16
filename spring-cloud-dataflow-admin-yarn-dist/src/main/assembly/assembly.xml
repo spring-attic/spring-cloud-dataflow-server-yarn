@@ -25,8 +25,8 @@
 			<outputDirectory>/lib</outputDirectory>
 			<outputFileNameMapping>${artifact.artifactId}-${artifact.baseVersion}.${artifact.extension}</outputFileNameMapping>
 			<includes>
-				<include>org.springframework.cloud:spring-cloud-dataflow-admin-yarn</include>
-				<include>org.springframework.cloud:spring-cloud-dataflow-admin-yarn-h2</include>
+				<include>org.springframework.cloud:spring-cloud-dataflow-server-yarn</include>
+				<include>org.springframework.cloud:spring-cloud-dataflow-server-yarn-h2</include>
 				<include>org.springframework.cloud:spring-cloud-dataflow-yarn-streamappmaster</include>
 				<include>org.springframework.cloud:spring-cloud-dataflow-yarn-taskappmaster</include>
 				<include>org.springframework.cloud:spring-cloud-dataflow-yarn-streamcontainer</include>

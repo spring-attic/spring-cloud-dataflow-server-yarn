@@ -22,13 +22,13 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-dataflow-admin-yarn</artifactId>
+			<artifactId>spring-cloud-dataflow-server-yarn</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-dataflow-admin-yarn-h2</artifactId>
-			<version>1.0.0.BUILD-SNAPSHOT</version>
+			<artifactId>spring-cloud-dataflow-server-yarn-h2</artifactId>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
