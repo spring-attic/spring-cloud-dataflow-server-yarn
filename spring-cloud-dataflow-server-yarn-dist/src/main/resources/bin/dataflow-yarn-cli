@@ -12,12 +12,9 @@ USAGE="NAME:
 
 COMMANDS:
     dataflow-yarn-cli shell                            Start CLI Shell instance
-    dataflow-yarn-cli push [OPTIONS]                   Push the application artifacts to HDFS
     dataflow-yarn-cli pushed [OPTIONS]                 List a pushed instances
-    dataflow-yarn-cli submit [OPTIONS]                 Submit a new application instance
     dataflow-yarn-cli submitted [OPTIONS]              List status of submitted instances
     dataflow-yarn-cli kill [OPTIONS]                   Kill an running instance
-    dataflow-yarn-cli admininfo [OPTIONS]              List http host and port info for the admin servers
     dataflow-yarn-cli clustersinfo [OPTIONS]           List instance container clusters info
     dataflow-yarn-cli clustercreate [OPTIONS]          Create a new container cluster
     dataflow-yarn-cli clusterdestroy [OPTIONS]         Destroy a existing container cluster

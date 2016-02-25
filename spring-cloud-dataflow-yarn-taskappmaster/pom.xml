@@ -7,7 +7,7 @@
 	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
-		<artifactId>spring-cloud-dataflow-admin-yarn-parent</artifactId>
+		<artifactId>spring-cloud-dataflow-server-yarn-parent</artifactId>
 		<version>1.0.0.BUILD-SNAPSHOT</version>
 	</parent>
 

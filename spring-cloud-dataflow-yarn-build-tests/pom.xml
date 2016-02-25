@@ -9,7 +9,7 @@
 
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
-		<artifactId>spring-cloud-dataflow-admin-yarn-parent</artifactId>
+		<artifactId>spring-cloud-dataflow-server-yarn-parent</artifactId>
 		<version>1.0.0.BUILD-SNAPSHOT</version>
 	</parent>
 
@@ -17,8 +17,8 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-yarn-boot-test</artifactId>
-			<scope>test</scope>			
- 			<exclusions>
+			<scope>test</scope>
+			<exclusions>
 				<exclusion>
 					<groupId>org.slf4j</groupId>
 					<artifactId>slf4j-log4j12</artifactId>
@@ -49,7 +49,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-dataflow-admin-yarn</artifactId>
+			<artifactId>spring-cloud-dataflow-server-yarn</artifactId>
 			<version>${project.version}</version>
 			<scope>test</scope>
 		</dependency>
@@ -86,7 +86,7 @@
 
 	<build>
 		<plugins>
- 			<plugin>
+			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
 					<descriptors>

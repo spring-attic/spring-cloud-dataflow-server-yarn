@@ -16,8 +16,8 @@
 
 package org.springframework.cloud.dataflow.server.yarn;
 
-import org.springframework.cloud.dataflow.admin.AdminApplication;
-import org.springframework.cloud.dataflow.admin.EnableDataFlowServer;
+import org.springframework.boot.SpringApplication;
+import org.springframework.cloud.dataflow.server.EnableDataFlowServer;
 
 /**
  * Bootstrap class for Spring Cloud Data Flow Admin on Apache Hadoop YARN.
@@ -29,6 +29,6 @@ import org.springframework.cloud.dataflow.admin.EnableDataFlowServer;
 public class YarnDataFlowServer {
 
 	public static void main(String[] args) {
-		AdminApplication.main(args);
+		SpringApplication.run(YarnDataFlowServer.class, args);
 	}
 }

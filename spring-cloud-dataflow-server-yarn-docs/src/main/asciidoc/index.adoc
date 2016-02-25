@@ -10,9 +10,9 @@ Sabby Anandan, Marius Bogoevici, Eric Bottard, Mark Fisher, Ilayaperumal Gopinat
 :spring-cloud-dataflow-repo: milestone
 :github-tag: master
 :spring-cloud-dataflow-docs-version: current
-:spring-cloud-dataflow-docs: http://docs.spring.io/spring-cloud-dataflow-admin-yarn/docs/{spring-cloud-dataflow-docs-version}/reference
-:spring-cloud-dataflow-docs-current: http://docs.spring.io/spring-cloud-dataflow-admin-yarn/docs/current-SNAPSHOT/reference/html/
-:github-repo: spring-cloud/spring-cloud-dataflow-admin-yarn
+:spring-cloud-dataflow-docs: http://docs.spring.io/spring-cloud-dataflow-server-yarn/docs/{spring-cloud-dataflow-docs-version}/reference
+:spring-cloud-dataflow-docs-current: http://docs.spring.io/spring-cloud-dataflow-server-yarn/docs/current-SNAPSHOT/reference/html/
+:github-repo: spring-cloud/spring-cloud-dataflow-server-yarn
 :github-raw: http://raw.github.com/{github-repo}/{github-tag}
 :github-code: http://github.com/{github-repo}/tree/{github-tag}
 :github-wiki: http://github.com/{github-repo}/wiki

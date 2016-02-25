@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>spring-cloud-dataflow-admin-yarn-docs</artifactId>
+	<artifactId>spring-cloud-dataflow-server-yarn-docs</artifactId>
 	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
@@ -10,8 +10,8 @@
 		<relativePath />  <!-- lookup parent from repository -->
 	</parent>
 
-	<name>spring-cloud-dataflow-admin-yarn-docs</name>
-	<description>Spring Cloud Data Flow Admin YARN</description>
+	<name>spring-cloud-dataflow-server-yarn-docs</name>
+	<description>Spring Cloud Data Flow Server YARN</description>
 	<properties>
 		<main.basedir>${basedir}/..</main.basedir>
 	</properties>
@@ -251,7 +251,7 @@
 								</goals>
 								<configuration>
 									<target>
-										<zip destfile="${project.build.directory}/spring-cloud-dataflow-admin-yarn-${project.version}.zip">
+										<zip destfile="${project.build.directory}/spring-cloud-dataflow-server-yarn-${project.version}.zip">
 											<fileset dir="${project.build.directory}/contents" />
 										</zip>
 									</target>
@@ -295,7 +295,7 @@
 								<configuration>
 									<artifacts>
 										<artifact>
-											<file>${project.build.directory}/spring-cloud-dataflow-admin-yarn-${project.version}.zip</file>
+											<file>${project.build.directory}/spring-cloud-dataflow-server-yarn-${project.version}.zip</file>
 											<type>zip;zip.type=docs;zip.deployed=false</type>
 										</artifact>
 									</artifacts>

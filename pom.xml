@@ -3,7 +3,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.springframework.cloud</groupId>
-	<artifactId>spring-cloud-dataflow-admin-yarn-parent</artifactId>
+	<artifactId>spring-cloud-dataflow-server-yarn-parent</artifactId>
 	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
@@ -34,8 +34,8 @@
 		<module>spring-cloud-dataflow-server-yarn</module>
 		<module>spring-cloud-dataflow-server-yarn-h2</module>
 		<module>spring-cloud-dataflow-yarn-build-tests</module>
-		<module>spring-cloud-dataflow-admin-yarn-docs</module>
-		<module>spring-cloud-dataflow-admin-yarn-dist</module>
+		<module>spring-cloud-dataflow-server-yarn-docs</module>
+		<module>spring-cloud-dataflow-server-yarn-dist</module>
 	</modules>
 
 	<dependencyManagement>

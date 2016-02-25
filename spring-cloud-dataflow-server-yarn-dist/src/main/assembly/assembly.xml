@@ -3,11 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
 
-	<id>admin-yarn-dist-assembly</id>
+	<id>server-yarn-dist-assembly</id>
 	<formats>
 		<format>zip</format>
 	</formats>
-	<baseDirectory>spring-cloud-dataflow-admin-yarn-${project.version}</baseDirectory>
+	<baseDirectory>spring-cloud-dataflow-server-yarn-${project.version}</baseDirectory>
 	<includeBaseDirectory>true</includeBaseDirectory>
 
 	<fileSets>

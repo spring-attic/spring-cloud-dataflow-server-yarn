@@ -5,12 +5,12 @@
 	<artifactId>spring-cloud-dataflow-server-yarn-h2</artifactId>
 	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>spring-cloud-dataflow-admin-server-h2</name>
+	<name>spring-cloud-dataflow-server-yarn-h2</name>
 	<description>Data Flow H2 DB Server</description>
 
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
-		<artifactId>spring-cloud-dataflow-admin-yarn-parent</artifactId>
+		<artifactId>spring-cloud-dataflow-server-yarn-parent</artifactId>
 		<version>1.0.0.BUILD-SNAPSHOT</version>
 	</parent>
 
