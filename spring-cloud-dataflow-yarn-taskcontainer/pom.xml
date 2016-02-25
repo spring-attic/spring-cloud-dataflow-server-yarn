@@ -23,7 +23,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-stream-module-launcher</artifactId>
+			<artifactId>spring-cloud-dataflow-app-launcher</artifactId>
 		</dependency>
 	</dependencies>
 

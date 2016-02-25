@@ -26,9 +26,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.dataflow.yarn.common.DataflowModuleYarnProperties;
-import org.springframework.cloud.stream.module.launcher.ModuleLaunchRequest;
-import org.springframework.cloud.stream.module.launcher.ModuleLauncher;
-import org.springframework.cloud.stream.module.launcher.ModuleLauncherConfiguration;
+import org.springframework.cloud.dataflow.app.launcher.ModuleLaunchRequest;
+import org.springframework.cloud.dataflow.app.launcher.ModuleLauncher;
+import org.springframework.cloud.dataflow.app.launcher.ModuleLauncherConfiguration;
 import org.springframework.context.annotation.Import;
 import org.springframework.util.Assert;
 

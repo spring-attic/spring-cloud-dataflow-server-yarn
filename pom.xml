@@ -15,7 +15,6 @@
 	</parent>
 
 	<properties>
-		<spring-cloud-stream.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-stream.version>
 		<spring-cloud-dataflow.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-dataflow.version>
 		<spring-cloud-stream-modules.artifact.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-stream-modules.artifact.version>
 		<spring-hadoop.version>2.4.0.BUILD-SNAPSHOT</spring-hadoop.version>
@@ -47,13 +46,6 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-stream-dependencies</artifactId>
-				<version>${spring-cloud-stream.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
 			<!-- To be moved to bom -->
 			<dependency>
 				<groupId>org.springframework.data</groupId>
@@ -67,13 +59,13 @@
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-stream-configuration-metadata</artifactId>
-				<version>${spring-cloud-stream.version}</version>
+				<artifactId>spring-cloud-dataflow-configuration-metadata</artifactId>
+				<version>${spring-cloud-dataflow.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-stream-module-launcher</artifactId>
-				<version>${spring-cloud-stream.version}</version>
+				<artifactId>spring-cloud-dataflow-app-launcher</artifactId>
+				<version>${spring-cloud-dataflow.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
