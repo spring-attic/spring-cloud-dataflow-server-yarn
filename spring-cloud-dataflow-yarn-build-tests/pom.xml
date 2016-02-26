@@ -29,22 +29,23 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- jersey 1.9 needed by hadoop -->
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-core</artifactId>
-			<version>1.19</version>
+			<version>1.9</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-client</artifactId>
-			<version>1.19</version>
+			<version>1.9</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-server</artifactId>
-			<version>1.19</version>
+			<version>1.9</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
