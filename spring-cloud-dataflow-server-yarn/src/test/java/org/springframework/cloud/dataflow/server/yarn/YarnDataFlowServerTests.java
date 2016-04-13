@@ -22,9 +22,11 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 import org.springframework.boot.SpringApplication;
-import org.springframework.cloud.dataflow.module.deployer.yarn.YarnStreamModuleDeployer;
-import org.springframework.cloud.dataflow.module.deployer.yarn.YarnTaskModuleDeployer;
+//import org.springframework.cloud.dataflow.module.deployer.yarn.YarnStreamModuleDeployer;
+//import org.springframework.cloud.dataflow.module.deployer.yarn.YarnTaskModuleDeployer;
 import org.springframework.cloud.dataflow.server.yarn.YarnDataFlowServer;
+import org.springframework.cloud.deployer.spi.yarn.YarnAppDeployer;
+import org.springframework.cloud.deployer.spi.yarn.YarnTaskLauncher;
 import org.springframework.context.ConfigurableApplicationContext;
 
 public class YarnDataFlowServerTests {
@@ -34,10 +36,10 @@ public class YarnDataFlowServerTests {
 		SpringApplication app = new SpringApplication(YarnDataFlowServer.class);
 		ConfigurableApplicationContext context = app.run(new String[] { "--spring.cloud.bootstrap.name=admin",
 				"--server.port=0", "--spring.cloud.dataflow.yarn.version=fake" });
-		assertThat(context.containsBean("processModuleDeployer"), is(true));
-		assertThat(context.getBean("processModuleDeployer"), instanceOf(YarnStreamModuleDeployer.class));
-		assertThat(context.containsBean("taskModuleDeployer"), is(true));
-		assertThat(context.getBean("taskModuleDeployer"), instanceOf(YarnTaskModuleDeployer.class));
+		assertThat(context.containsBean("appDeployer"), is(true));
+		assertThat(context.getBean("appDeployer"), instanceOf(YarnAppDeployer.class));
+		assertThat(context.containsBean("taskLauncher"), is(true));
+		assertThat(context.getBean("taskLauncher"), instanceOf(YarnTaskLauncher.class));
 		context.close();
 	}
 

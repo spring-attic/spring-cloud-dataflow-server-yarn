@@ -11,34 +11,37 @@
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-dataflow-parent</artifactId>
 		<version>1.0.0.BUILD-SNAPSHOT</version>
+<!--
 		<relativePath />
+-->
 	</parent>
 
 	<properties>
+		<spring-cloud-deployer-yarn.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-deployer-yarn.version>
+		<spring-cloud-stream.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-stream.version>
 		<spring-cloud-dataflow.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-dataflow.version>
+		<spring-statemachine.version>1.1.0.M2</spring-statemachine.version>
+		<spring-hadoop.version>2.4.0.M1</spring-hadoop.version>
 		<spring-cloud-stream-modules.artifact.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-stream-modules.artifact.version>
-		<spring-hadoop.version>2.4.0.BUILD-SNAPSHOT</spring-hadoop.version>
-		<spring-statemachine.version>1.0.2.RELEASE</spring-statemachine.version>
 	</properties>
 
 	<modules>
-		<module>spring-cloud-dataflow-yarn-common</module>
-		<module>spring-cloud-dataflow-yarn-streamappmaster</module>
-		<module>spring-cloud-dataflow-yarn-taskappmaster</module>
-		<module>spring-cloud-dataflow-yarn-streamcontainer</module>
-		<module>spring-cloud-dataflow-yarn-taskcontainer</module>
-		<module>spring-cloud-dataflow-yarn-client</module>
-		<module>spring-cloud-dataflow-deployer-yarn</module>
-		<module>spring-cloud-starter-dataflow-server-yarn</module>
 		<module>spring-cloud-dataflow-server-yarn</module>
-		<module>spring-cloud-dataflow-server-yarn-h2</module>
-		<module>spring-cloud-dataflow-yarn-build-tests</module>
+		<module>spring-cloud-dataflow-server-yarn-autoconfig</module>
+		<module>spring-cloud-dataflow-server-yarn-client</module>
 		<module>spring-cloud-dataflow-server-yarn-docs</module>
+		<module>spring-cloud-dataflow-server-yarn-h2</module>
+		<module>spring-cloud-starter-dataflow-server-yarn</module>
 		<module>spring-cloud-dataflow-server-yarn-dist</module>
 	</modules>
 
 	<dependencyManagement>
 		<dependencies>
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>11.0.2</version>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-starter-parent</artifactId>
@@ -46,7 +49,24 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-stream-dependencies</artifactId>
+				<version>${spring-cloud-stream.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
 			<!-- To be moved to bom -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dataflow-server-core</artifactId>
+				<version>${spring-cloud-dataflow.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-starter-deployer-yarn</artifactId>
+				<version>${spring-cloud-deployer-yarn.version}</version>
+			</dependency>
 			<dependency>
 				<groupId>org.springframework.data</groupId>
 				<artifactId>spring-yarn-boot</artifactId>
@@ -59,19 +79,21 @@
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dataflow-configuration-metadata</artifactId>
-				<version>${spring-cloud-dataflow.version}</version>
+				<artifactId>spring-cloud-stream-configuration-metadata</artifactId>
+				<version>${spring-cloud-stream.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dataflow-app-launcher</artifactId>
-				<version>${spring-cloud-dataflow.version}</version>
+				<artifactId>spring-cloud-stream-module-launcher</artifactId>
+				<version>${spring-cloud-stream.version}</version>
 			</dependency>
+<!--
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dataflow-server-core</artifactId>
 				<version>${spring-cloud-dataflow.version}</version>
 			</dependency>
+-->
 			<dependency>
 				<groupId>org.springframework.statemachine</groupId>
 				<artifactId>spring-statemachine-core</artifactId>

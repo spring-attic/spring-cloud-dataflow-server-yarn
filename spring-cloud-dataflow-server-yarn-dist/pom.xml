@@ -32,27 +32,17 @@
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-dataflow-yarn-streamappmaster</artifactId>
-			<version>${project.version}</version>
+			<artifactId>spring-cloud-deployer-yarn-appdeployerappmaster</artifactId>
+			<version>${spring-cloud-deployer-yarn.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-dataflow-yarn-taskappmaster</artifactId>
-			<version>${project.version}</version>
+			<artifactId>spring-cloud-deployer-yarn-tasklauncherappmaster</artifactId>
+			<version>${spring-cloud-deployer-yarn.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-dataflow-yarn-streamcontainer</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-dataflow-yarn-taskcontainer</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-dataflow-yarn-client</artifactId>
+			<artifactId>spring-cloud-dataflow-server-yarn-client</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

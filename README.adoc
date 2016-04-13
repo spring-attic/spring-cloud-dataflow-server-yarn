@@ -16,26 +16,28 @@ Or build project and run tests(tests take long time to run):
 
 === Running the YARN Admin
 
-All needed artifacts are packaged in a distribution file `spring-cloud-dataflow-admin-yarn-dist/target/spring-cloud-dataflow-admin-yarn-dist-1.0.0.BUILD-SNAPSHOT.zip`.
+All needed artifacts are packaged in a distribution file `spring-cloud-dataflow-server-yarn-dist/target/spring-cloud-dataflow-server-yarn-dist-1.0.0.BUILD-SNAPSHOT.zip`.
 
 . Unzip the dist
 
 ```
-# unzip spring-cloud-dataflow-admin-yarn-dist-1.0.0.BUILD-SNAPSHOT.zip
+# unzip spring-cloud-dataflow-server-yarn-dist-1.0.0.BUILD-SNAPSHOT.zip
 # find .
-./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT
-./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin
-./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-shell
-./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-yarn-cli
-./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-admin-yarn
-./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/config
-./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/config/servers.yml
-./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/lib
-./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT.jar
-./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-yarn-client-1.0.0.BUILD-SNAPSHOT.jar
-./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-yarn-container-1.0.0.BUILD-SNAPSHOT.jar
-./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-shell-1.0.0.BUILD-SNAPSHOT.jar
-./spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-yarn-appmaster-1.0.0.BUILD-SNAPSHOT.jar
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/bin
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-server-yarn
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-shell
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-server-yarn-h2
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-server-yarn-cli
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/lib
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-deployer-yarn-tasklauncherappmaster-1.0.0.BUILD-SNAPSHOT.jar
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-server-yarn-client-1.0.0.BUILD-SNAPSHOT.jar
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-deployer-yarn-appdeployerappmaster-1.0.0.BUILD-SNAPSHOT.jar
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-server-yarn-h2-1.0.0.BUILD-SNAPSHOT.jar
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT.jar
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/lib/spring-cloud-dataflow-shell-1.0.0.BUILD-SNAPSHOT.jar
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/config
+./spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/config/servers.yml
 ```
 
 . Configure `servers.yml` for `hadoop` and `redis` settings.
@@ -43,13 +45,13 @@ All needed artifacts are packaged in a distribution file `spring-cloud-dataflow-
 Start admin server:
 +
 ```
-spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-admin-yarn
+spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-server-yarn
 ```
 +
 . Start the Admin Shell:
 +
 ```
-spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-shell
+spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-shell
 ```
 +
 . Create a stream:
@@ -62,7 +64,7 @@ dataflow:>stream destroy --name ticktock
 . Killing a running application from the command line:
 +
 ```
-spring-cloud-dataflow-admin-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-yarn-cli shell
+spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-server-yarn-cli shell
 
 
 $ submitted

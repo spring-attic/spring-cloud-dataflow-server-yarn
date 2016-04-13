@@ -17,12 +17,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-dataflow-deployer-yarn</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-dataflow-server-core</artifactId>
+			<artifactId>spring-cloud-dataflow-server-yarn</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 	</dependencies>

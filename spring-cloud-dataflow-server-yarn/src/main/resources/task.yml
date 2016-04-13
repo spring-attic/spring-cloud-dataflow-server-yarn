@@ -15,8 +15,7 @@ spring:
     client:
       clientClass: org.springframework.yarn.client.DefaultApplicationYarnClient
       files:
-        - "file:${dataflow.yarn.app.appmaster.path:lib}/spring-cloud-dataflow-yarn-taskappmaster-*.jar"
-        - "file:${dataflow.yarn.app.container.path:lib}/spring-cloud-dataflow-yarn-taskcontainer-*.jar"
+        - "file:${dataflow.yarn.app.appmaster.path:lib}/spring-cloud-deployer-yarn-tasklauncherappmaster-*.jar"
         - "file:${dataflow.yarn.app.config.path:config}/servers.yml"
       queue: ${dataflow.yarn.app.taskappmaster.queue:default}
       labelExpression: ${dataflow.yarn.app.taskappmaster.labelExpression:}
@@ -25,10 +24,10 @@ spring:
           - ${dataflow.yarn.app.taskappmaster.javaOpts:}
         arguments:
           -Dspring.config.location: servers.yml
-        archiveFile: spring-cloud-dataflow-yarn-taskappmaster-${spring.cloud.dataflow.yarn.version}.jar
+        archiveFile: spring-cloud-deployer-yarn-tasklauncherappmaster-${spring.cloud.dataflow.yarn.version}.jar
       localizer:
         patterns:
-          - "spring-cloud-dataflow-yarn-taskappmaster-*.jar"
+          - "spring-cloud-deployer-yarn-tasklauncherappmaster-*.jar"
           - "servers.yml"
       resource:
         memory: ${dataflow.yarn.app.taskappmaster.memory:512m}

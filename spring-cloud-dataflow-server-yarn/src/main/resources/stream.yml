@@ -16,18 +16,17 @@ spring:
     client:
       clientClass: org.springframework.yarn.client.DefaultApplicationYarnClient
       files:
-        - "file:${dataflow.yarn.app.appmaster.path:lib}/spring-cloud-dataflow-yarn-streamappmaster-*.jar"
-        - "file:${dataflow.yarn.app.container.path:lib}/spring-cloud-dataflow-yarn-streamcontainer-*.jar"
+        - "file:${dataflow.yarn.app.appmaster.path:lib}/spring-cloud-deployer-yarn-appdeployerappmaster-*.jar"
         - "file:${dataflow.yarn.app.config.path:config}/servers.yml"
       queue: ${dataflow.yarn.app.streamappmaster.queue:default}
       labelExpression: ${dataflow.yarn.app.streamappmaster.labelExpression:}
       launchcontext:
         arguments:
           -Dspring.config.location: servers.yml
-        archiveFile: spring-cloud-dataflow-yarn-streamappmaster-${spring.cloud.dataflow.yarn.version}.jar
+        archiveFile: spring-cloud-deployer-yarn-appdeployerappmaster-${spring.cloud.dataflow.yarn.version}.jar
       localizer:
         patterns:
-          - "spring-cloud-dataflow-yarn-streamappmaster-*.jar"
+          - "spring-cloud-deployer-yarn-appdeployerappmaster-*.jar"
           - "servers.yml"
       resource:
         memory: ${dataflow.yarn.app.streamappmaster.memory:512m}
