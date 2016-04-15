@@ -194,5 +194,5 @@ function splitJvmOpts() {
 }
 eval splitJvmOpts $DEFAULT_JVM_OPTS $JAVA_OPTS $CLI_OPTS
 
-exec "$JAVACMD" "${JVM_OPTS[@]}" -jar "${APP_HOME}/lib/spring-cloud-dataflow-yarn-client-${DATAFLOW_VERSION}.jar" ${PARAMS[@]}
+exec "$JAVACMD" "${JVM_OPTS[@]}" -jar "${APP_HOME}/lib/spring-cloud-dataflow-server-yarn-client-${DATAFLOW_VERSION}.jar" ${PARAMS[@]}
 
