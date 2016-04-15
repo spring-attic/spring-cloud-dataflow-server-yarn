@@ -38,6 +38,8 @@
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 				<includes>
+					<include>kafka-applications.properties</include>
+					<include>rabbit-applications.properties</include>
 					<include>dataflow-server.yml</include>
 					<include>task.yml</include>
 					<include>stream.yml</include>

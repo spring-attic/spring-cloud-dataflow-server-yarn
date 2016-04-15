@@ -15,11 +15,23 @@ spring:
     host: localhost
   # Configured for an embedded in-memory H2 database. Replace the datasource configuration with properties
   # matching your preferred database to be used instead, if needed, or when running in a distributed environment.
+  rabbitmq:
+    addresses: localhost:5672
   datasource:
     url: jdbc:h2:tcp://localhost:19092/mem:dataflow
     username: sa
     password:
     driverClassName: org.h2.Driver
+  cloud:
+    dataflow:
+      registry:
+        populator:
+          locations: classpath:rabbit-applications.properties
+#    stream:
+#      kafka:
+#        binder:
+#          brokers: localhost:9093
+#          zkNodes: localhost:2181
 #  yarn:
 #    hostdiscovery:
 #      pointToPoint: false

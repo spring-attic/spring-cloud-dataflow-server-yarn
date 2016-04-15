@@ -23,4 +23,3 @@ spring:
     dataflow:
       yarn:
         version: "@project.version@"
-
