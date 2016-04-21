@@ -22,11 +22,13 @@ spring:
     username: sa
     password:
     driverClassName: org.h2.Driver
+  # Configure location sources for dataflow apps to be populated into registry
   cloud:
     dataflow:
       registry:
         populator:
           locations: classpath:rabbit-applications.properties
+#          locations: file:${dataflow.yarn.app.config.path}/hdfs-applications.properties
 #    stream:
 #      kafka:
 #        binder:
