@@ -32,7 +32,7 @@ Unzip the distribution ZIP file and change to the directory containing the deplo
 
 [source,text,subs="attributes"]
 ----
-$ cd spring-cloud-dataflow-server-yarn-1.0.0.M2 {version-type} xxx {github-tag}
+$ cd spring-cloud-dataflow-server-yarn-1.0.0.M2
 ----
 
 === Configure Settings
