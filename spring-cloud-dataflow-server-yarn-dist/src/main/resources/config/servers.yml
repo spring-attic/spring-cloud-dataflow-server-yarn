@@ -27,7 +27,8 @@ spring:
     dataflow:
       registry:
         populator:
-          locations: classpath:rabbit-applications.properties
+          enabled: false
+#          locations: classpath:rabbit-applications.properties
 #          locations: file:${dataflow.yarn.app.config.path}/hdfs-applications.properties
 #    stream:
 #      kafka:
