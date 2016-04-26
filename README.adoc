@@ -1,4 +1,4 @@
-== Spring Cloud Data Flow Admin for Apache Yarn 
+== Spring Cloud Data Flow Server for Apache Yarn
 
 image:https://build.spring.io/plugins/servlet/buildStatusImage/SCD-YARNBMASTER[Build Status, link=https://build.spring.io/browse/SCD-YARNBMASTER] image:https://badge.waffle.io/spring-cloud/spring-cloud-dataflow-admin-yarn.svg?label=ready&title=Ready[Stories in Ready, link=http://waffle.io/spring-cloud/spring-cloud-dataflow-admin-yarn] image:https://badge.waffle.io/spring-cloud/spring-cloud-dataflow-admin-yarn.svg?label=In%20Progress&title=In%20Progress[Stories in Progress, link=http://waffle.io/spring-cloud/spring-cloud-dataflow-admin-yarn]
 
@@ -14,7 +14,7 @@ Or build project and run tests(tests take long time to run):
 ./mvnw clean package 
 ```
 
-=== Running the YARN Admin
+=== Running the Server
 
 All needed artifacts are packaged in a distribution file `spring-cloud-dataflow-server-yarn-dist/target/spring-cloud-dataflow-server-yarn-dist-1.0.0.BUILD-SNAPSHOT.zip`.
 
@@ -48,7 +48,7 @@ Start admin server:
 spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-server-yarn
 ```
 +
-. Start the Admin Shell:
+. Start the Data Flow Shell:
 +
 ```
 spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-shell
