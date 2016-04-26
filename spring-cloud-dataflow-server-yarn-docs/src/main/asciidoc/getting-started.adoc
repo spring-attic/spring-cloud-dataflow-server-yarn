@@ -1,68 +1,230 @@
 = Spring Cloud Data Flow Runtime
 
+Data flow runtime can be deployed and used with _YARN_ in two different
+ways, firstly using it directly with a _YARN_ cluster and secondly
+letting _Apache Ambari_ to deploy it into its cluster as a service.
+
 == Deploying on YARN
 
 The Admin server application is run as a standalone application.  All modules used for streams and tasks will be deployed on the YARN cluster that is targeted by the Admin server. configured to be used.
 
-[start=1]
-1. download the Spring Cloud Data Flow YARN distribution ZIP file which includes the Admin and the Shell apps:
+=== Prerequisites
 
-```
-wget http://repo.spring.io/milestone/org/springframework/cloud/dist/spring-cloud-dataflow-server-yarn-dist/1.0.0.M1/spring-cloud-dataflow-server-yarn-dist-1.0.0.M1.zip
-```
+These requirements are not something yarn runtime needs but generally
+what dataflow core needs.
+
+* Redis - Needed for some persisting runtime data.
+* Rabbit - If dataflow modules using rabbit bindings are used.
+* Kafka - If dataflow modules using kafka bindings are used.
+* DB - we currently use embedded H2 database, though any supported
+DB can be configured.
+
+=== Download and Extract Distribution
+
+Download the Spring Cloud Data Flow YARN distribution ZIP file which includes the Admin and the Shell apps:
+
+[source,text]
+----
+$ wget http://repo.spring.io/milestone/org/springframework/cloud/dist/spring-cloud-dataflow-server-yarn-dist/1.0.0.M2/spring-cloud-dataflow-server-yarn-dist-1.0.0.M2.zip
+----
 
 Unzip the distribution ZIP file and change to the directory containing the deployment files.
 
-```
-cd spring-cloud-dataflow-server-yarn-1.0.0.M1
-```
+[source,text,subs="attributes"]
+----
+$ cd spring-cloud-dataflow-server-yarn-1.0.0.M2 {version-type} xxx {github-tag}
+----
 
-[start=2]
-2. Make sure Hadoop and Redis are running. If either one is not running on `localhost` you need to configure them in `config/servers.yml`
+=== Configure Settings
 
-[start=3]
-3. If this is the first time deploying make sure the user that runs the Admin app has rights to create and write to /dataflow directory. If there is an existing deployment on `hdfs` remove it using:
+Generic runtime settings can changed in `config/servers.yml`. Make
+sure Hadoop and Redis are running.
+If either one is not running on `localhost` you need to configure them in `config/servers.yml`
 
-```
+=== Start Server
+If this is the first time deploying make sure the user that runs
+the _Server_ app has rights to create and write to _/dataflow_
+directory in `hdfs`. If there is an existing deployment on `hdfs`
+remove it using:
+
+[source,text]
+----
 $ hdfs dfs -rm -R /dataflow
-```
+----
 
-[start=4]
-4. start the Spring Cloud Data Flow Admin app for YARN
+Start the Spring Cloud Data Flow Server app for YARN
 
-```
+[source,text]
+----
 $ ./bin/dataflow-server-yarn
-```
+----
 
-[start=5]
-5. start `spring-cloud-dataflow-shell`
+=== Connect Shell
 
-```
+start `spring-cloud-dataflow-shell`
+
+[source,text]
+----
 $ ./bin/dataflow-shell
-```
+----
 
-[start=6]
-6. Test the deployment
+=== Create Stream
 
 Create a stream:
 
-```
-dataflow:>stream create --name "ticktock" --definition "time | hdfs --rollover=100" --deploy
-```
+[source,text]
+----
+dataflow:>stream create --name foostream --definition "time|log" --deploy
+----
 
 List streams:
 
-```
+[source,text]
+----
 dataflow:>stream list
-  Stream Name  Stream Definition           Status
-  -----------  --------------------------  --------
-  ticktock     time | hdfs --rollover=100  deployed
-```
+╔═══════════╤═════════════════╤════════╗
+║Stream Name│Stream Definition│ Status ║
+╠═══════════╪═════════════════╪════════╣
+║foostream  │time|log         │deployed║
+╚═══════════╧═════════════════╧════════╝
+----
 
 After some time, destroy the stream:
 
-```
-dataflow:>stream destroy --name ticktock
-```
+[source,text]
+----
+dataflow:>stream destroy --name foostream
+----
 
-The YARN application is pushed and started automatically during a stream deployment process. Once all streams are destroyed the YARN application will exit.
+The YARN application is pushed and started automatically during a stream
+deployment process. Once all streams are destroyed the YARN application
+will exit.
+
+=== Create Task
+Create and launch task:
+
+[source,text]
+----
+dataflow:>task create --name footask --definition "timestamp"
+Created new task 'footask'
+dataflow:>task launch --name footask
+Launched task 'footask'
+----
+
+=== Check YARN App Statuses
+Overall app status can be seen from _YARN Resource Manager UI_ or
+using _Spring YARN CLI_ which gives more info about running containers
+within an app itself.
+
+[source,text]
+----
+$ ./bin/dataflow-server-yarn-cli shell
+----
+
+When stream has been submitted YARN shows it as `ACCEPTED` before its
+turned to `RUNNING` state.
+
+[source,text]
+----
+
+$ submitted
+  APPLICATION ID                  USER          NAME                     QUEUE    TYPE      STARTTIME       FINISHTIME  STATE     FINALSTATUS  ORIGINAL TRACKING URL
+  ------------------------------  ------------  -----------------------  -------  --------  --------------  ----------  --------  -----------  ---------------------
+  application_1461658614481_0001  jvalkealahti  scdstream:app:foostream  default  DATAFLOW  26/04/16 16:27  N/A         ACCEPTED  UNDEFINED
+
+$ submitted
+  APPLICATION ID                  USER          NAME                     QUEUE    TYPE      STARTTIME       FINISHTIME  STATE    FINALSTATUS  ORIGINAL TRACKING URL
+  ------------------------------  ------------  -----------------------  -------  --------  --------------  ----------  -------  -----------  -------------------------
+  application_1461658614481_0001  jvalkealahti  scdstream:app:foostream  default  DATAFLOW  26/04/16 16:27  N/A         RUNNING  UNDEFINED    http://192.168.1.96:58580
+----
+
+More info about internals for stream apps can be queried by
+`clustersinfo` and `clusterinfo` commands:
+
+[source,text]
+----
+$ clustersinfo -a application_1461658614481_0001
+  CLUSTER ID
+  --------------
+  foostream:log
+  foostream:time
+
+$ clusterinfo -a application_1461658614481_0001 -c foostream:time
+  CLUSTER STATE  MEMBER COUNT
+  -------------  ------------
+  RUNNING        1
+----
+
+After stream is undeployed YARN app should close itself automatically:
+
+[source,text]
+----
+$ submitted -v
+  APPLICATION ID                  USER          NAME                     QUEUE    TYPE      STARTTIME       FINISHTIME      STATE     FINALSTATUS  ORIGINAL TRACKING URL
+  ------------------------------  ------------  -----------------------  -------  --------  --------------  --------------  --------  -----------  ---------------------
+  application_1461658614481_0001  jvalkealahti  scdstream:app:foostream  default  DATAFLOW  26/04/16 16:27  26/04/16 16:28  FINISHED  SUCCEEDED
+----
+
+Launching a task will be shown in `RUNNING` state while app is
+executing its batch jobs:
+
+[source,text]
+----
+$ submitted -v
+  APPLICATION ID                  USER          NAME                     QUEUE    TYPE      STARTTIME       FINISHTIME      STATE     FINALSTATUS  ORIGINAL TRACKING URL
+  ------------------------------  ------------  -----------------------  -------  --------  --------------  --------------  --------  -----------  -------------------------
+  application_1461658614481_0002  jvalkealahti  scdtask:timestamp        default  DATAFLOW  26/04/16 16:29  N/A             RUNNING   UNDEFINED    http://192.168.1.96:39561
+  application_1461658614481_0001  jvalkealahti  scdstream:app:foostream  default  DATAFLOW  26/04/16 16:27  26/04/16 16:28  FINISHED  SUCCEEDED
+
+$ submitted -v 
+  APPLICATION ID                  USER          NAME                     QUEUE    TYPE      STARTTIME       FINISHTIME      STATE     FINALSTATUS  ORIGINAL TRACKING URL
+  ------------------------------  ------------  -----------------------  -------  --------  --------------  --------------  --------  -----------  ---------------------
+  application_1461658614481_0002  jvalkealahti  scdtask:timestamp        default  DATAFLOW  26/04/16 16:29  26/04/16 16:29  FINISHED  SUCCEEDED
+  application_1461658614481_0001  jvalkealahti  scdstream:app:foostream  default  DATAFLOW  26/04/16 16:27  26/04/16 16:28  FINISHED  SUCCEEDED
+----
+
+
+== Deploying on AMBARI
+Ambari basically automates YARN installation instead of doing it
+manually. Also a lot of other configuration steps are automated as
+much as possible to easy overall installation process.
+
+=== Install Ambari Server
+Generally it is only needed to install `scdf-plugin-hdp` plugin into
+ambari server which adds needed service definitions.
+
+[source,text]
+----
+[root@ambari-1 ~]# yum -y install ambari-server
+[root@ambari-1 ~]# ambari-server setup -s
+[root@ambari-1 ~]# wget -nv http://repo.spring.io/yum-milestone-local/scdf/1.0/scdf-milestone-1.0.repo -O /etc/yum.repos.d/scdf-milestone-1.0.repo
+[root@ambari-1 ~]# yum -y install scdf-plugin-hdp
+[root@ambari-1 ~]# ambari-server start
+----
+
+[NOTE]
+====
+Ambari plugin only works for redhat6 based systems for now.
+====
+
+=== Deploy Data Flow
+
+When you create your cluste and choose a stack, make sure that
+`redhat6` section contains repository named `SCDF-1.0` and that it
+points to `http://repo.spring.io/yum-milestone-local/scdf/1.0`.
+
+From services choose `Spring Cloud Dataflow` and `Kafka`. `Hdfs`,
+`Yarn` and `Zookeeper` are forced dependencies.
+
+Then in _Customize Services_ what is really left for user to do is to 
+add address for redis(as it’s required). Everything else is automatically
+configured. Technically it also allows you to switch to use rabbit by
+leaving Kafka out and defining rabbit settings there. But generally
+use of Kafka is a good choice.
+
+[NOTE]
+====
+We also install H2 DB as service so that it can be accessed from every
+node.
+====
+
