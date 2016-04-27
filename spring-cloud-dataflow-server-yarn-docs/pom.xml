@@ -5,9 +5,8 @@
 	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
-		<artifactId>spring-cloud-dataflow-parent</artifactId>
+		<artifactId>spring-cloud-dataflow-server-yarn-parent</artifactId>
 		<version>1.0.0.BUILD-SNAPSHOT</version>
-		<relativePath />  <!-- lookup parent from repository -->
 	</parent>
 
 	<name>spring-cloud-dataflow-server-yarn-docs</name>
@@ -53,18 +52,18 @@
 						<artifactId>asciidoctor-maven-plugin</artifactId>
 						<version>1.5.0</version>
 						<dependencies>
-						  <dependency>
-						    <!-- Needed to resolve URI includes -->
-						    <!-- See https://github.com/asciidoctor/asciidoctor.js/issues/153 -->
-						    <groupId>org.jruby</groupId>
-						    <artifactId>jruby-complete</artifactId>
-						    <version>9.0.0.0</version>
-						  </dependency>
-						  <dependency>
-						    <groupId>org.slf4j</groupId>
-						    <artifactId>slf4j-nop</artifactId>
-						    <version>1.7.5</version>
-						  </dependency>
+							<dependency>
+								<!-- Needed to resolve URI includes -->
+								<!-- See https://github.com/asciidoctor/asciidoctor.js/issues/153 -->
+								<groupId>org.jruby</groupId>
+								<artifactId>jruby-complete</artifactId>
+								<version>9.0.0.0</version>
+							</dependency>
+							<dependency>
+								<groupId>org.slf4j</groupId>
+								<artifactId>slf4j-nop</artifactId>
+								<version>1.7.5</version>
+							</dependency>
 						</dependencies>
 						<executions>
 							<execution>
@@ -79,6 +78,7 @@
 									<doctype>book</doctype>
 									<attributes>
 										<docinfo>true</docinfo>
+										<revnumber-version>${project.version}</revnumber-version>
 										<spring-boot-version>${project.version}</spring-boot-version>
 										<spring-boot-docs-version>${project.version}</spring-boot-docs-version>
 										<spring-boot-repo>${spring-boot-repo}</spring-boot-repo>
@@ -86,6 +86,8 @@
 										<spring-security-docs-version>${spring-security.version}</spring-security-docs-version>
 										<allow-uri-read>true</allow-uri-read>
 										<github-tag>${github-tag}</github-tag>
+										<version-type>${version-type}</version-type>
+										<version-type-lowercase>${version-type-lowercase}</version-type-lowercase>
 									</attributes>
 								</configuration>
 							</execution>
@@ -273,7 +275,7 @@
 										<propertyregex property="version-type" override="true" input="${version-type}" regexp="(M)\d+" replace="MILESTONE" />
 										<propertyregex property="version-type" override="true" input="${version-type}" regexp="(RC)\d+" replace="MILESTONE" />
 										<propertyregex property="version-type" override="true" input="${version-type}" regexp="BUILD-(.*)" replace="SNAPSHOT" />
-										<stringutil string="${version-type}" property="spring-boot-repo">
+										<stringutil string="${version-type}" property="version-type-lowercase">
 											<lowercase />
 										</stringutil>
 										<var name="github-tag" value="v${project.version}" />

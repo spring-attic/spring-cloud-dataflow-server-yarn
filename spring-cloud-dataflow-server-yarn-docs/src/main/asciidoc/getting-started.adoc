@@ -23,16 +23,16 @@ DB can be configured.
 
 Download the Spring Cloud Data Flow YARN distribution ZIP file which includes the Admin and the Shell apps:
 
-[source,text]
+[source,text,subs="attributes"]
 ----
-$ wget http://repo.spring.io/milestone/org/springframework/cloud/dist/spring-cloud-dataflow-server-yarn-dist/1.0.0.M2/spring-cloud-dataflow-server-yarn-dist-1.0.0.M2.zip
+$ wget http://repo.spring.io/{version-type-lowercase}/org/springframework/cloud/dist/spring-cloud-dataflow-server-yarn-dist/{revnumber-version}/spring-cloud-dataflow-server-yarn-dist-{revnumber-version}.zip
 ----
 
 Unzip the distribution ZIP file and change to the directory containing the deployment files.
 
 [source,text,subs="attributes"]
 ----
-$ cd spring-cloud-dataflow-server-yarn-1.0.0.M2
+$ cd spring-cloud-dataflow-server-yarn-{revnumber-version}
 ----
 
 === Configure Settings
@@ -193,11 +193,11 @@ much as possible to easy overall installation process.
 Generally it is only needed to install `scdf-plugin-hdp` plugin into
 ambari server which adds needed service definitions.
 
-[source,text]
+[source,text,subs="attributes"]
 ----
 [root@ambari-1 ~]# yum -y install ambari-server
 [root@ambari-1 ~]# ambari-server setup -s
-[root@ambari-1 ~]# wget -nv http://repo.spring.io/yum-milestone-local/scdf/1.0/scdf-milestone-1.0.repo -O /etc/yum.repos.d/scdf-milestone-1.0.repo
+[root@ambari-1 ~]# wget -nv http://repo.spring.io/yum-{version-type-lowercase}-local/scdf/1.0/scdf-{version-type-lowercase}-1.0.repo -O /etc/yum.repos.d/scdf-{version-type-lowercase}-1.0.repo
 [root@ambari-1 ~]# yum -y install scdf-plugin-hdp
 [root@ambari-1 ~]# ambari-server start
 ----
@@ -211,7 +211,7 @@ Ambari plugin only works for redhat6 based systems for now.
 
 When you create your cluste and choose a stack, make sure that
 `redhat6` section contains repository named `SCDF-1.0` and that it
-points to `http://repo.spring.io/yum-milestone-local/scdf/1.0`.
+points to `http://repo.spring.io/yum-{version-type-lowercase}-local/scdf/1.0`.
 
 From services choose `Spring Cloud Dataflow` and `Kafka`. `Hdfs`,
 `Yarn` and `Zookeeper` are forced dependencies.
