@@ -11,9 +11,6 @@
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-dataflow-parent</artifactId>
 		<version>1.0.0.BUILD-SNAPSHOT</version>
-<!--
-		<relativePath />
--->
 	</parent>
 
 	<properties>
@@ -25,7 +22,6 @@
 		<spring-cloud-dataflow.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-dataflow.version>
 		<spring-statemachine.version>1.1.0.M2</spring-statemachine.version>
 		<spring-hadoop.version>2.4.0.M1</spring-hadoop.version>
-		<spring-cloud-stream-modules.artifact.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-stream-modules.artifact.version>
 	</properties>
 
 	<modules>
@@ -100,13 +96,6 @@
 				<artifactId>spring-cloud-stream-module-launcher</artifactId>
 				<version>${spring-cloud-stream.version}</version>
 			</dependency>
-<!--
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dataflow-server-core</artifactId>
-				<version>${spring-cloud-dataflow.version}</version>
-			</dependency>
--->
 			<dependency>
 				<groupId>org.springframework.statemachine</groupId>
 				<artifactId>spring-statemachine-core</artifactId>
