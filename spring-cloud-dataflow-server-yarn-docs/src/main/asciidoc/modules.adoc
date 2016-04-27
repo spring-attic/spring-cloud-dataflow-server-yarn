@@ -1,9 +1,0 @@
-[[modules]]
-= Modules
-
-Modules are provided by the Spring Cloud Stream Modules and Spring Cloud Task Modules projects.
-
-include::{scsm-asciidoc}/sources.adoc[]
-include::{scsm-asciidoc}/processors.adoc[]
-include::{scsm-asciidoc}/sinks.adoc[]
-== Tasks
