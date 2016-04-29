@@ -4,11 +4,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.springframework.cloud</groupId>
 	<artifactId>spring-cloud-dataflow-server-yarn-client</artifactId>
-	<version>1.0.0.M2</version>
+	<version>1.0.0.BUILD-SNAPSHOT</version>
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-dataflow-server-yarn-parent</artifactId>
-		<version>1.0.0.M2</version>
+		<version>1.0.0.BUILD-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
