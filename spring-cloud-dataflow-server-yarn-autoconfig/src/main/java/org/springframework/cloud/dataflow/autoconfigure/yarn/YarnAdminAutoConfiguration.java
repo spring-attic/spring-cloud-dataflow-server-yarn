@@ -19,9 +19,11 @@ package org.springframework.cloud.dataflow.autoconfigure.yarn;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -44,6 +46,7 @@ import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.data.hadoop.fs.HdfsResourceLoader;
+import org.springframework.hateoas.core.DefaultRelProvider;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
@@ -58,6 +61,8 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @ConditionalOnClass({ AppDeployer.class, TaskLauncher.class })
 @ConditionalOnProperty(prefix = "dataflow.server.yarn", name = "enabled", havingValue = "true", matchIfMissing = true)
 public class YarnAdminAutoConfiguration {
+
+	private static final String REL_PROVIDER_BEAN_NAME = "defaultRelProvider";
 
 	@Value("${spring.cloud.dataflow.yarn.version}")
 	private String dataflowVersion;
@@ -76,6 +81,29 @@ public class YarnAdminAutoConfiguration {
 		loaders.put("file", defaultLoader);
 		loaders.put("http", defaultLoader);
 		return new DelegatingResourceLoader(loaders);
+	}
+
+	// workaround for github.com/spring-cloud/spring-cloud-dataflow/issues/575
+	// remove hateos from pom after this is fix can be removed
+	@Bean
+	public BeanPostProcessor relProviderOverridingBeanPostProcessor() {
+		return new BeanPostProcessor() {
+			@Override
+			public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+				// Override the RelProvider to DefaultRelProvider
+				// Since DataFlow UI expects DefaultRelProvider to be used, override any other instance of
+				// DefaultRelProvider (EvoInflectorRelProvider for instance) with the DefaultRelProvider.
+				if (beanName != null && beanName.equals(REL_PROVIDER_BEAN_NAME)) {
+					return new DefaultRelProvider();
+				}
+				return bean;
+			}
+
+			@Override
+			public Object postProcessAfterInitialization(Object bean, String s) throws BeansException {
+				return bean;
+			}
+		};
 	}
 
 	@Bean
