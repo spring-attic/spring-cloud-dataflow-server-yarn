@@ -24,7 +24,7 @@ spring:
           - ${dataflow.yarn.app.taskappmaster.javaOpts:}
         arguments:
           -Dspring.config.location: servers.yml
-        archiveFile: spring-cloud-deployer-yarn-tasklauncherappmaster-${spring.cloud.dataflow.yarn.version}.jar
+        archiveFile: spring-cloud-deployer-yarn-tasklauncherappmaster-${spring.cloud.dataflow.yarn.deployerversion}.jar
       localizer:
         patterns:
           - "spring-cloud-deployer-yarn-tasklauncherappmaster-*.jar"
