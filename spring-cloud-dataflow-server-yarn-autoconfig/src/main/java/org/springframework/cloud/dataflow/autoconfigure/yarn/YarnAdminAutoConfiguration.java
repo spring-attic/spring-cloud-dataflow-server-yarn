@@ -39,6 +39,7 @@ import org.springframework.cloud.deployer.spi.yarn.TaskLauncherStateMachine;
 import org.springframework.cloud.deployer.spi.yarn.YarnAppDeployer;
 import org.springframework.cloud.deployer.spi.yarn.YarnCloudAppService;
 import org.springframework.cloud.deployer.spi.yarn.YarnTaskLauncher;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
@@ -124,8 +125,8 @@ public class YarnAdminAutoConfiguration {
 
 		@Bean
 		public AppDeployerStateMachine appDeployerStateMachine(YarnCloudAppService yarnCloudAppService,
-				TaskExecutor yarnModuleDeployerTaskExecutor, BeanFactory beanFactory) throws Exception {
-			return new AppDeployerStateMachine(yarnCloudAppService, yarnModuleDeployerTaskExecutor, beanFactory);
+				TaskExecutor yarnModuleDeployerTaskExecutor, BeanFactory beanFactory, ApplicationContext applicationContext) throws Exception {
+			return new AppDeployerStateMachine(yarnCloudAppService, yarnModuleDeployerTaskExecutor, beanFactory, applicationContext);
 		}
 
 		@Bean
@@ -141,8 +142,8 @@ public class YarnAdminAutoConfiguration {
 
 		@Bean
 		public TaskLauncherStateMachine taskLauncherStateMachine(YarnCloudAppService yarnCloudAppService,
-				TaskExecutor yarnModuleDeployerTaskExecutor, BeanFactory beanFactory) throws Exception {
-			return new TaskLauncherStateMachine(yarnCloudAppService, yarnModuleDeployerTaskExecutor, beanFactory);
+				TaskExecutor yarnModuleDeployerTaskExecutor, BeanFactory beanFactory, ApplicationContext applicationContext) throws Exception {
+			return new TaskLauncherStateMachine(yarnCloudAppService, yarnModuleDeployerTaskExecutor, beanFactory, applicationContext);
 		}
 
 		@Bean
