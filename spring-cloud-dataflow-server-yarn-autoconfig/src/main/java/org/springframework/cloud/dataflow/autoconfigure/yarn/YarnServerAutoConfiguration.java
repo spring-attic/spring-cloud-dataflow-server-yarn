@@ -52,7 +52,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 /**
  * {@link EnableAutoConfiguration Auto-configuration} for dataflow
- * YARN admin.
+ * YARN server.
  *
  * @author Janne Valkealahti
  *
@@ -61,7 +61,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
 @ConditionalOnClass({ AppDeployer.class, TaskLauncher.class })
 @ConditionalOnProperty(prefix = "dataflow.server.yarn", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class YarnAdminAutoConfiguration {
+public class YarnServerAutoConfiguration {
 
 	private static final String REL_PROVIDER_BEAN_NAME = "defaultRelProvider";
 

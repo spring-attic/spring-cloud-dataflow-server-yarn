@@ -6,7 +6,7 @@ letting _Apache Ambari_ to deploy it into its cluster as a service.
 
 == Deploying on YARN
 
-The Admin server application is run as a standalone application.  All modules used for streams and tasks will be deployed on the YARN cluster that is targeted by the Admin server. configured to be used.
+The server application is run as a standalone application.  All modules used for streams and tasks will be deployed on the YARN cluster that is targeted by the server. configured to be used.
 
 === Prerequisites
 

@@ -34,8 +34,7 @@ public class YarnDataFlowServerTests {
 	@Test
 	public void testSimpleBootstrap() {
 		SpringApplication app = new SpringApplication(YarnDataFlowServer.class);
-		ConfigurableApplicationContext context = app.run(new String[] { "--spring.cloud.bootstrap.name=admin",
-				"--server.port=0", "--spring.cloud.dataflow.yarn.version=fake" });
+		ConfigurableApplicationContext context = app.run(new String[] { "--server.port=0", "--spring.cloud.dataflow.yarn.version=fake" });
 		assertThat(context.containsBean("appDeployer"), is(true));
 		assertThat(context.getBean("appDeployer"), instanceOf(YarnAppDeployer.class));
 		assertThat(context.containsBean("taskLauncher"), is(true));

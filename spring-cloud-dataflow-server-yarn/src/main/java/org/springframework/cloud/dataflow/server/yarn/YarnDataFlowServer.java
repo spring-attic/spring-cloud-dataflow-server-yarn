@@ -20,7 +20,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.cloud.dataflow.server.EnableDataFlowServer;
 
 /**
- * Bootstrap class for Spring Cloud Data Flow Admin on Apache Hadoop YARN.
+ * Bootstrap class for Spring Cloud Data Flow server on Apache Hadoop YARN.
  *
  * @author Mark Fisher
  * @author Janne Valkealahti

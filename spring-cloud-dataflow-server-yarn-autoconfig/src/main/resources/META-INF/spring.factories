@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.springframework.cloud.dataflow.autoconfigure.yarn.YarnAdminAutoConfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=org.springframework.cloud.dataflow.autoconfigure.yarn.YarnServerAutoConfiguration

@@ -23,7 +23,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Application bootstrapping H2 database server.
  *
  * With a bundled startup script this application is run:
- * $ dataflow-admin-yarn-h2 \
+ * $ dataflow-server-yarn-h2 \
  *   --dataflow.database.h2.directory=/path/to/db \
  *   --dataflow.database.h2.username=myuser \
  *   --dataflow.database.h2.password=mypw \
