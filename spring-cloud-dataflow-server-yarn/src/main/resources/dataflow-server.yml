@@ -18,7 +18,7 @@ spring:
   main:
     show_banner: false
   application:
-    name: spring-cloud-dataflow-admin
+    name: spring-cloud-dataflow-server-yarn
   cloud:
     dataflow:
       yarn:
