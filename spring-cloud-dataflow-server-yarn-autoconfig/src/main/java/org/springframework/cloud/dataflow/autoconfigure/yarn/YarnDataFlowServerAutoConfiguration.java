@@ -61,7 +61,7 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 @AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE)
 @ConditionalOnClass({ AppDeployer.class, TaskLauncher.class })
 @ConditionalOnProperty(prefix = "dataflow.server.yarn", name = "enabled", havingValue = "true", matchIfMissing = true)
-public class YarnServerAutoConfiguration {
+public class YarnDataFlowServerAutoConfiguration {
 
 	private static final String REL_PROVIDER_BEAN_NAME = "defaultRelProvider";
 

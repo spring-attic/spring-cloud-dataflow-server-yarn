@@ -6,7 +6,7 @@ letting _Apache Ambari_ to deploy it into its cluster as a service.
 
 == Deploying on YARN
 
-The server application is run as a standalone application.  All modules used for streams and tasks will be deployed on the YARN cluster that is targeted by the server. configured to be used.
+The server application is run as a standalone application.  All apps used for streams and tasks will be deployed on the YARN cluster that is targeted by the server.
 
 === Prerequisites
 
@@ -14,8 +14,8 @@ These requirements are not something yarn runtime needs but generally
 what dataflow core needs.
 
 * Redis - Needed for some persisting runtime data.
-* Rabbit - If dataflow modules using rabbit bindings are used.
-* Kafka - If dataflow modules using kafka bindings are used.
+* Rabbit - If dataflow apps using rabbit bindings are used.
+* Kafka - If dataflow apps using kafka bindings are used.
 * DB - we currently use embedded H2 database, though any supported
 DB can be configured.
 
