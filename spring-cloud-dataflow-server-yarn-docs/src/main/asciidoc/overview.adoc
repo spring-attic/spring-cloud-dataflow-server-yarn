@@ -16,7 +16,7 @@ There's a rich ecosystem of Spring Cloud Stream http://docs.spring.io/spring-clo
 
 Do you have a requirement to develop custom applications? No problem. Refer to this guide to create http://docs.spring.io/spring-cloud-stream-app-starters/docs/{scst-starters-core-version}/reference/htmlsingle/#_creating_custom_artifacts[custom stream applications]. There're several https://github.com/spring-cloud/spring-cloud-stream-samples[samples] available for reference.
 
-[[spring-cloud-task-overview]]
+[[spring-cloud-task-feature-overview]]
 == Spring Cloud Task
 
 Spring Cloud Task makes it easy to create short-lived microservices. We provide capabilities that allow short-lived JVM processes to be executed on demand in a production environment.
