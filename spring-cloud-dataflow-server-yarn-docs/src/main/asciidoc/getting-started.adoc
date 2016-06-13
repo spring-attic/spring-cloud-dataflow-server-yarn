@@ -2,7 +2,7 @@
 
 Data flow runtime can be deployed and used with _YARN_ in two different
 ways, firstly using it directly with a _YARN_ cluster and secondly
-letting _Apache Ambari_ to deploy it into its cluster as a service.
+letting _Apache Ambari_ deploy it into its cluster as a service.
 
 == Deploying on YARN
 
