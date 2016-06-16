@@ -68,6 +68,15 @@ start `spring-cloud-dataflow-shell`
 $ ./bin/dataflow-shell
 ----
 
+=== Register Applications
+
+By default, the application registry will be empty. If you would like to register all out-of-the-box stream applications built with the RabbitMQ binder in bulk, you can with the following command. For more details, review how to <<streams.adoc#spring-cloud-dataflow-register-apps, register applications>>.
+
+[source,text]
+----
+dataflow:>app import --uri http://bit.ly/stream-applications-rabbit-docker
+----
+
 === Create Stream
 
 Create a stream:
