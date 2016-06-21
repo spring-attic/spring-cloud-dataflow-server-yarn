@@ -186,7 +186,7 @@ if $cygwin ; then
     esac
 fi
 
-CLI_OPTS="-Dspring.config.location=${APP_HOME}/config/servers.yml -Ddataflow.yarn.app.appmaster.path=${APP_HOME}/lib -Ddataflow.yarn.app.container.path=${APP_HOME}/lib -Ddataflow.yarn.app.config.path=${APP_HOME}/config"
+CLI_OPTS="-Dspring.config.location=${APP_HOME}/config/servers.yml,${APP_HOME}/config/cli.yml -Ddeployer.yarn.app.appmaster.path=${APP_HOME}/lib -Ddeployer.yarn.app.container.path=${APP_HOME}/lib -Ddeployer.yarn.app.config.path=${APP_HOME}/config"
 
 # Split up the JVM_OPTS values into an array, following the shell quoting and substitution rules
 function splitJvmOpts() {

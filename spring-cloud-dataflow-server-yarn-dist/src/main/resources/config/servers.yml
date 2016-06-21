@@ -1,3 +1,7 @@
+logging:
+  level:
+    org.apache.hadoop: INFO
+    org.springframework.yarn: INFO
 spring:
   main:
     show_banner: false
@@ -34,12 +38,14 @@ spring:
 #      preferInterface: ['eth', 'en']
 #      matchIpv4: 192.168.0.0/24
 #      matchInterface: eth\\d*
-#dataflow:
+#deployer:
 #  yarn:
 #    app:
+#      baseDir: /dataflow
 #      streamappmaster:
 #        memory: 512m
 #        virtualCores: 1
+#        javaOpts: "-Xms512m -Xmx512m"
 #      streamcontainer:
 #        priority: 5
 #        memory: 256m
@@ -48,6 +54,7 @@ spring:
 #      taskappmaster:
 #        memory: 512m
 #        virtualCores: 1
+#        javaOpts: "-Xms512m -Xmx512m"
 #      taskcontainer:
 #        priority: 10
 #        memory: 256m

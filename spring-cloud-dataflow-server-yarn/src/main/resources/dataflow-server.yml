@@ -1,7 +1,3 @@
-logging:
-  level:
-    org.springframework.cloud.dataflow.module.deployer.yarn: DEBUG
-    org.springframework.statemachine: DEBUG
 server:
   port: ${dataflow.server.port:9393}
 security:

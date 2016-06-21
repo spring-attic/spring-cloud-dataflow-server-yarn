@@ -171,9 +171,9 @@ if [ x"$SCDF_CONFIG_NAME" = x ] ; then
 fi
 
 DATAFLOW_OPTS="-Dspring.config.location=${SCDF_CONFIG_LOCATION}/servers.yml"
-DATAFLOW_OPTS="$DATAFLOW_OPTS -Ddataflow.yarn.app.appmaster.path=${SCDF_HOME}/lib"
-DATAFLOW_OPTS="$DATAFLOW_OPTS -Ddataflow.yarn.app.container.path=${SCDF_HOME}/lib"
-DATAFLOW_OPTS="$DATAFLOW_OPTS -Ddataflow.yarn.app.config.path=${SCDF_CONFIG_LOCATION}"
+DATAFLOW_OPTS="$DATAFLOW_OPTS -Ddeployer.yarn.app.appmaster.path=${SCDF_HOME}/lib"
+DATAFLOW_OPTS="$DATAFLOW_OPTS -Ddeployer.yarn.app.container.path=${SCDF_HOME}/lib"
+DATAFLOW_OPTS="$DATAFLOW_OPTS -Ddeployer.yarn.app.config.path=${SCDF_CONFIG_LOCATION}"
 
 # Split up the JVM_OPTS And DATAFLOW_OPTS values into an array, following the shell quoting and substitution rules
 function splitJvmOpts() {
