@@ -72,7 +72,7 @@ Step 5 - Register [Stream and Task](http://docs.spring.io/spring-cloud-dataflow-
 
 Step 6 - Create **‘ticktock’** Stream
 ```
-dataflow:>stream create ticktock --definition "time | hdfs" --deploy
+dataflow:>stream create ticktock --definition "time | hdfs --rollover=1000" --deploy
 ```
 
 Step 7 - Verify **‘ticktock’** Results under `/tmp/hdfs-sink/` folder
