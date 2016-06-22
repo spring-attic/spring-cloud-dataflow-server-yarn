@@ -13,7 +13,6 @@ The server application is run as a standalone application.  All apps used for st
 These requirements are not something yarn runtime needs but generally
 what dataflow core needs.
 
-* Redis - Needed for some persisting runtime data.
 * Rabbit - If dataflow apps using rabbit bindings are used.
 * Kafka - If dataflow apps using kafka bindings are used.
 * DB - we currently use embedded H2 database, though any supported
@@ -38,7 +37,7 @@ $ cd spring-cloud-dataflow-server-yarn-{revnumber-version}
 === Configure Settings
 
 Generic runtime settings can changed in `config/servers.yml`. Make
-sure Hadoop and Redis are running.
+sure Hadoop and Kafka or RabbitMQ are running.
 If either one is not running on `localhost` you need to configure them in `config/servers.yml`
 
 === Start Server
@@ -226,7 +225,7 @@ From services choose `Spring Cloud Dataflow` and `Kafka`. `Hdfs`,
 `Yarn` and `Zookeeper` are forced dependencies.
 
 Then in _Customize Services_ what is really left for user to do is to 
-add address for redis(as it’s required). Everything else is automatically
+add address for Kafka or RabbitMQ (as it’s required). Everything else is automatically
 configured. Technically it also allows you to switch to use rabbit by
 leaving Kafka out and defining rabbit settings there. But generally
 use of Kafka is a good choice.
