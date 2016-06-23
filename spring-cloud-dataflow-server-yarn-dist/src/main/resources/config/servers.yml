@@ -26,6 +26,7 @@ spring:
     username: sa
     password:
     driverClassName: org.h2.Driver
+#  cloud:
 #    stream:
 #      kafka:
 #        binder:
