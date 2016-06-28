@@ -3,17 +3,24 @@
 Data flow runtime can be deployed and used with _YARN_ in two different
 ways, firstly using it directly with a _YARN_ cluster and secondly
 letting _Apache Ambari_ deploy it into its cluster as a service.
+Difference between these two deployment types is that _YARN_ only
+provides a raw runtime environment for containers where user is required
+to setup all needed dependencies while _Apache Ambari_ will try to
+focus on easy deployment where minimum set of required services exist
+in ambari managed cluster.
 
+[[yarn-deploying-on-yarn]]
 == Deploying on YARN
 
-The server application is run as a standalone application.  All apps used for streams and tasks will be deployed on the YARN cluster that is targeted by the server.
+The server application is run as a standalone application. All
+applications used for streams and tasks will be deployed on the YARN
+cluster that is targeted by the server.
 
 === Prerequisites
 
 These requirements are not something yarn runtime needs but generally
 what dataflow core needs.
 
-* Redis - Needed for some persisting runtime data.
 * Rabbit - If dataflow apps using rabbit bindings are used.
 * Kafka - If dataflow apps using kafka bindings are used.
 * DB - we currently use embedded H2 database, though any supported
@@ -21,7 +28,8 @@ DB can be configured.
 
 === Download and Extract Distribution
 
-Download the Spring Cloud Data Flow YARN distribution ZIP file which includes the Admin and the Shell apps:
+Download the Spring Cloud Data Flow YARN distribution ZIP file which
+includes the Server and the Shell apps:
 
 [source,text,subs="attributes"]
 ----
@@ -37,9 +45,13 @@ $ cd spring-cloud-dataflow-server-yarn-{revnumber-version}
 
 === Configure Settings
 
-Generic runtime settings can changed in `config/servers.yml`. Make
-sure Hadoop and Redis are running.
-If either one is not running on `localhost` you need to configure them in `config/servers.yml`
+Generic runtime settings can changed in `config/servers.yml`.
+Dedicated section <<yarn-configure-settings>> contains detailed
+information about configuration.
+
+`servers.yml` file is a central place to share common configuration as
+it is added to Boot based jvm processes via option
+`-Dspring.config.location=servers.yml`.
 
 === Start Server
 If this is the first time deploying make sure the user that runs
@@ -69,12 +81,25 @@ $ ./bin/dataflow-shell
 ----
 
 === Register Applications
-
-By default, the application registry will be empty. If you would like to register all out-of-the-box stream applications built with the RabbitMQ binder in bulk, you can with the following command. For more details, review how to <<streams.adoc#spring-cloud-dataflow-register-apps, register applications>>.
+By default, the application registry will be empty. If you would like
+to register all out-of-the-box stream applications built with the RabbitMQ
+binder in bulk, you can with the following command. For more details,
+review how to <<streams.adoc#spring-cloud-dataflow-register-apps, register applications>>.
 
 [source,text]
 ----
-dataflow:>app import --uri http://bit.ly/stream-applications-rabbit-docker
+dataflow:>app import --uri http://bit.ly/stream-applications-rabbit-maven
+----
+
+==== Sourcing Applications from HDFS
+YARN integration also allows you to store registered applications
+directly in HDFS instead of relying on `maven` or any other
+resolution. Only thing to change during a registration is to use
+`hdfs` address as shown below.
+
+[source,text]
+----
+dataflow:>app register --name ftp --type sink --uri hdfs:/dataflow/artifacts/repo/ftp-sink-kafka-1.0.0.RC1.jar
 ----
 
 === Create Stream
@@ -193,10 +218,17 @@ $ submitted -v
 ----
 
 
+[[yarn-deploying-on-ambari]]
 == Deploying on AMBARI
-Ambari basically automates YARN installation instead of doing it
-manually. Also a lot of other configuration steps are automated as
+Ambari basically automates YARN installation instead of requiring user
+to do it manually. Also a lot of other configuration steps are automated as
 much as possible to easy overall installation process.
+
+There is no difference on components deployed into ambari comparing of
+a manual usage with a separate YARN cluster. With ambari we simply package
+needed dataflow components into a rpm package so that it can be managed as
+an ambari service. After that ambari really only manage a runtime
+configuration of those components.
 
 === Install Ambari Server
 Generally it is only needed to install `scdf-plugin-hdp` plugin into
@@ -213,20 +245,28 @@ ambari server which adds needed service definitions.
 
 [NOTE]
 ====
-Ambari plugin only works for redhat6 based systems for now.
+Ambari plugin only works for redhat6/redhat7 and related centos based systems for now.
 ====
 
 === Deploy Data Flow
 
 When you create your cluste and choose a stack, make sure that
-`redhat6` section contains repository named `SCDF-1.0` and that it
-points to `http://repo.spring.io/yum-{version-type-lowercase}-local/scdf/1.0`.
+`redhat6` or/and `redhat7` sections contains repository named
+`SCDF-1.0` and that it points to
+`http://repo.spring.io/yum-{version-type-lowercase}-local/scdf/1.0`.
 
-From services choose `Spring Cloud Dataflow` and `Kafka`. `Hdfs`,
+From services choose `Spring Cloud Data Flow` and `Kafka`. `Hdfs`,
 `Yarn` and `Zookeeper` are forced dependencies.
 
-Then in _Customize Services_ what is really left for user to do is to 
-add address for redis(as it’s required). Everything else is automatically
+[NOTE]
+====
+With `Kafka` you can do "one-click" installation while using `Rabbit`
+you need to provide appropriate connection settings as `Rabbit` is not
+part of a Ambari managed service.
+====
+
+Then in _Customize Services_ what is really left for user to do is to
+customise settings if needed. Everything else is automatically
 configured. Technically it also allows you to switch to use rabbit by
 leaving Kafka out and defining rabbit settings there. But generally
 use of Kafka is a good choice.
@@ -236,4 +276,286 @@ use of Kafka is a good choice.
 We also install H2 DB as service so that it can be accessed from every
 node.
 ====
+
+=== Using Configuration
+`servers.yml` file is also used to store common configuration with
+Ambari. Settings in _Advanced scdf-site_ and _Custom scdf-site_ are
+used to dynamically create a this file which is then copied over to
+hdfs when needed application files are deployd.
+
+[IMPORTANT]
+====
+If ambari configuration is modified, you need to delete
+`/dataflow/apps/stream/app` and `/dataflow/apps/task/app` directories
+from hdfs for new settings to get applied.
+====
+
+[[yarn-configure-settings]]
+== Configuring Runtime Settings and Environment
+This section describes how settings related to running YARN
+application can be modified.
+
+=== Configuring Application Resources
+Stream and task processes for application master and containers can be
+further tuned by setting memory and cpu settings. Also java options
+allow to define actual jvm options.
+
+[source,text]
+----
+deployer:
+  yarn:
+    app:
+      streamappmaster:
+        memory: 512m
+        virtualCores: 1
+        javaOpts: "-Xms512m -Xmx512m"
+      streamcontainer:
+        priority: 5
+        memory: 256m
+        virtualCores: 1
+        javaOpts: "-Xms64m -Xmx256m"
+      taskappmaster:
+        memory: 512m
+        virtualCores: 1
+        javaOpts: "-Xms512m -Xmx512m"
+      taskcontainer:
+        priority: 10
+        memory: 256m
+        virtualCores: 1
+        javaOpts: "-Xms64m -Xmx256m"
+----
+
+=== Configure Base Directory
+Base directory where all needed files are kept defaults to `/dataflow`
+and can be changed using `baseDir` property.
+
+[source,text]
+----
+deployer:
+  yarn:
+    app:
+      baseDir: /dataflow
+----
+
+[[yarn-pre-populate]]
+=== Pre-populate Applications
+Spring Cloud Data Flow app registration is based on URI's with various
+different endpoints. As mentioned in section <<yarn-how-it-works>> all
+applications are first stored into hdfs before application container
+is launched. Server can use `http`, `file`, `http` and `maven` based
+uris as well direct `hdfs` uris.
+
+It is possible to place these applications directly into HDFS and
+register application based on that URI.
+
+=== Configure Logging
+Logging for all components is done centrally via `servers.yml` file
+using normal Spring Boot properties.
+
+[source,text]
+----
+logging:
+  level:
+    org.apache.hadoop: INFO
+    org.springframework.yarn: INFO
+----
+
+=== Global YARN Memory Settings
+YARN Nodemanager is continously tracking how much memory is used by
+individual YARN containers. If containers are using more memory than
+what the configuration allows, containers are simply killed by a
+Nodemanager. Application master controlling the app lifecycle is given
+a little more freedom meaning that Nodemanager is not that aggressive
+when making a desicion when a container should be killed.
+
+[IMPORTANT]
+====
+These are global cluster settings and cannot be changed during an
+application deployment.
+====
+
+Lets take a quick look of memory related settings in YARN cluster and
+in YARN applications. Below xml config is what a default vanilla
+Apache
+Hadoop uses for memory related settings. Other distributions may have
+different defaults.
+
+
+*yarn.nodemanager.pmem-check-enabled*::
+
+Enables a check for physical memory of a process. This check if
+enabled is directly tracking amount of memory requested for a YARN
+container. 
+
+*yarn.nodemanager.vmem-check-enabled*::
+
+Enables a check for virtual memory of a process. This setting is one
+which is usually causing containers of a custom YARN applications to
+get killed by a node manager. Usually the actual ratio between
+physical and virtual memory is higher than a default `2.1` or bugs in
+a OS is causing wrong calculation of a used virtual memory.
+
+*yarn.nodemanager.vmem-pmem-ratio*::
+
+Defines a ratio of allowed virtual memory compared to physical memory.
+This ratio simply defines how much virtual memory a process can use
+but the actual tracked size is always calculated from a physical
+memory limit.
+
+*yarn.scheduler.minimum-allocation-mb*::
+
+Defines a minimum allocated memory for container.
+
++
+[NOTE]
+====
+This setting also indirectly defines what is the actual physical
+memory limit requested during a container allocation. Actual physical
+memory limit is always going to be multiple of this setting rounded to
+upper bound. For example if this setting is left to default `1024` and
+container is requested with `512M`, `1024M` is going to be used.
+However if requested size is `1100M`, actual size is set to `2048M`.
+====
+
+*yarn.scheduler.maximum-allocation-mb*::
+
+Defines a maximum allocated memory for container.
+
+*yarn.nodemanager.resource.memory-mb*::
+
+Defines how much memory a node controlled by a node manager is allowed
+to allocate. This setting should be set to amount of which OS is able
+give to YARN managed processes in a way which doesn't cause OS to
+swap, etc.
+
+[[yarn-how-it-works]]
+== How YARN Deployment Works
+When YARN application is deployed into a YARN cluster it consists of
+two parts, _Application Master_ and _Containers_. Application master
+is a control program responsible of handling applications lifecycle
+and allocation of containers. Containers are then where a real heavy
+lifting is done. In case of a stream there is always minimum of 3
+containers, one for application master, one for sink and one for
+source. When running tasks there is always one application master and
+one container running a particular task.
+
+Needed application files are pushed into hdfs automatically when
+needed. After stream and task is used once hdfs directory structure
+would like like shown above.
+
+[source,text]
+----
+/dataflow/apps
+/dataflow/apps/stream
+/dataflow/apps/stream/app
+/dataflow/apps/stream/app/application.properties
+/dataflow/apps/stream/app/servers.yml
+/dataflow/apps/stream/app/spring-cloud-deployer-yarn-appdeployerappmaster-1.0.0.BUILD-SNAPSHOT.jar
+/dataflow/apps/task
+/dataflow/apps/task/app
+/dataflow/apps/task/app/application.properties
+/dataflow/apps/task/app/servers.yml
+/dataflow/apps/task/app/spring-cloud-deployer-yarn-tasklauncherappmaster-1.0.0.BUILD-SNAPSHOT.jar
+----
+
+[NOTE]
+====
+`/dataflow/apps` can deleted in case application version is changed or
+configuration related to `servers.yml` is modified. Once created these
+files are not overridden.
+====
+
+Application artifacts are cached under `/dataflow/artifacts/cache`
+directory.
+
+[source,text]
+----
+/dataflow/artifacts
+/dataflow/artifacts/cache
+/dataflow/artifacts/cache/hdfs-sink-rabbit-1.0.0.RC1.jar
+/dataflow/artifacts/cache/time-source-rabbit-1.0.0.RC1.jar
+/dataflow/artifacts/cache/timestamp-task-1.0.0.RC1.jar
+----
+
+[[yarn-troubleshooting]]
+== Troubleshooting
+YARN is fantastic runtime environment for running various workflows
+but when things don't work excatly as it was planned, it may be a little
+bit of a tedious process to find out what went wrong. This section
+tries to provide instructions how to troubleshoot various issues
+causing abnormal behaviour.
+
+When something is about to get launched into yarn, a generic procedure
+goes like this:
+
+* Client is requesting resources(cpu and memory) for an application master.
+* Application master is started as an jvm process controlling
+  lifecycle of a yarn application as whole.
+* Application master is requesting resources(cpu and memory) for its
+  containers where real work is executed.
+* Containers are executed as a jvm processes.
+
+There are various places where things can go wrong in this flow:
+
+* YARN resource scheduler will not allocate resources for a container
+  possibly due to overallocation or misconfiguration.
+* YARN will kill container because it thinks that a container is
+  abusing requested amount of memory.
+* JVM process itself dies either by abnormal behaviour or OOM errors
+  caused by a wrong jvm options.
+
+Log files are the most obvious place to look errors. YARN application
+itself writes log files name `Appmaster.stdout`, `Appmaster.stderr`,
+`Container.stdout` and `Container.stderr` under yarn's application
+logging directory. Also yarn's own logs for _Resource Manager_ and
+especially for _Node Manager_ contains additional information when
+i.e. containers are getting killed by yarn itself.
+
+== Using Sandboxes
+Sandboxes are a single VM images to ease testing and demos without
+going through a full multi-machine cluster setup. However these images
+have a natural restrictions of resources which are a cornerstone of
+YARN to be able to run applications on it. With same limitations and a
+carefull configuration it is possible to install Spring Cloud Data
+Flow on those sandboxes. In this section we try to provide some
+instructions how this can be accomplished.
+
+=== Hortonworks Sandbox
+
+Install plugin repository.
+
+[source,text,subs="attributes"]
+----
+$ wget -nv http://repo.spring.io/yum-{version-type-lowercase}-local/scdf/1.0/scdf-{version-type-lowercase}-1.0.repo -O /etc/yum.repos.d/scdf-{version-type-lowercase}-1.0.repo
+----
+
+Install plugin.
+
+[source,text]
+----
+$ ambari-server stop
+$ yum -y install scdf-plugin-hdp
+$ ambari-server start
+----
+
+Add needed services together spring _Spring Cloud Data Flow_. Tune
+server jvm options. Spring Cloud Data Flow -> Configs -> Advanced
+scdf-server-env -> scdf-server-env template:
+
+[source,text]
+----
+export JAVA_OPTS="-Xms512m -Xmx512m"
+----
+
+Tune jvm options for application masters and container. Spring Cloud
+Data Flow -> Configs -> Custom scdf-site:
+
+
+[source,text]
+----
+deployer.yarn.app.streamappmaster.javaOpts=-Xms512m -Xmx512m
+deployer.yarn.app.streamcontainer.javaOpts=-Xms512m -Xmx512m
+deployer.yarn.app.taskappmaster.javaOpts=-Xms512m -Xmx512m
+deployer.yarn.app.taskcontainer.javaOpts=-Xms512m -Xmx512m
+----
 
