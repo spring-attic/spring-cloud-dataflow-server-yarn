@@ -55,6 +55,8 @@ include::introduction.adoc[]
 
 include::overview.adoc[]
 
+include::{dataflow-asciidoc}/architecture.adoc[]
+
 include::getting-started.adoc[]
 
 include::{dataflow-asciidoc}/streams.adoc[]
