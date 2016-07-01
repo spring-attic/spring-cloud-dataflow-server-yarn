@@ -2,6 +2,10 @@ logging:
   level:
     org.apache.hadoop: INFO
     org.springframework.yarn: INFO
+maven:
+  remoteRepositories:
+    springRepo:
+      url: https://repo.spring.io/libs-snapshot
 spring:
   main:
     show_banner: false
@@ -32,6 +36,28 @@ spring:
 #        binder:
 #          brokers: localhost:9093
 #          zkNodes: localhost:2181
+#    deployer:
+#      yarn:
+#        app:
+#          baseDir: /dataflow
+#          streamappmaster:
+#            memory: 512m
+#            virtualCores: 1
+#            javaOpts: "-Xms512m -Xmx512m"
+#          streamcontainer:
+#            priority: 5
+#            memory: 256m
+#            virtualCores: 1
+#            javaOpts: "-Xms64m -Xmx256m"
+#          taskappmaster:
+#            memory: 512m
+#            virtualCores: 1
+#            javaOpts: "-Xms512m -Xmx512m"
+#          taskcontainer:
+#            priority: 10
+#            memory: 256m
+#            virtualCores: 1
+#            javaOpts: "-Xms64m -Xmx256m"
 #  yarn:
 #    hostdiscovery:
 #      pointToPoint: false
@@ -39,25 +65,4 @@ spring:
 #      preferInterface: ['eth', 'en']
 #      matchIpv4: 192.168.0.0/24
 #      matchInterface: eth\\d*
-#deployer:
-#  yarn:
-#    app:
-#      baseDir: /dataflow
-#      streamappmaster:
-#        memory: 512m
-#        virtualCores: 1
-#        javaOpts: "-Xms512m -Xmx512m"
-#      streamcontainer:
-#        priority: 5
-#        memory: 256m
-#        virtualCores: 1
-#        javaOpts: "-Xms64m -Xmx256m"
-#      taskappmaster:
-#        memory: 512m
-#        virtualCores: 1
-#        javaOpts: "-Xms512m -Xmx512m"
-#      taskcontainer:
-#        priority: 10
-#        memory: 256m
-#        virtualCores: 1
-#        javaOpts: "-Xms64m -Xmx256m"
+

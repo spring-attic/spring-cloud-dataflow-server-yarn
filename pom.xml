@@ -16,11 +16,11 @@
 
 	<properties>
 		<spring-cloud-deployer-yarn.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-deployer-yarn.version>
-		<spring-cloud-deployer.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-deployer.version>
+		<spring-cloud-deployer.version>1.0.1.RELEASE</spring-cloud-deployer.version>
 		<spring-cloud-stream.version>1.0.2.RELEASE</spring-cloud-stream.version>
 		<spring-cloud-dataflow.version>1.0.0.BUILD-SNAPSHOT</spring-cloud-dataflow.version>
 		<spring-statemachine.version>1.1.0.RELEASE</spring-statemachine.version>
-		<spring-hadoop.version>2.4.0.RC1</spring-hadoop.version>
+		<spring-hadoop.version>2.4.0.RELEASE</spring-hadoop.version>
 	</properties>
 
 	<modules>
