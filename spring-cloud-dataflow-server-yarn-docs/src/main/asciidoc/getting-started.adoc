@@ -302,27 +302,29 @@ allow to define actual jvm options.
 
 [source,text]
 ----
-deployer:
-  yarn:
-    app:
-      streamappmaster:
-        memory: 512m
-        virtualCores: 1
-        javaOpts: "-Xms512m -Xmx512m"
-      streamcontainer:
-        priority: 5
-        memory: 256m
-        virtualCores: 1
-        javaOpts: "-Xms64m -Xmx256m"
-      taskappmaster:
-        memory: 512m
-        virtualCores: 1
-        javaOpts: "-Xms512m -Xmx512m"
-      taskcontainer:
-        priority: 10
-        memory: 256m
-        virtualCores: 1
-        javaOpts: "-Xms64m -Xmx256m"
+spring:
+  cloud:
+    deployer:
+      yarn:
+        app:
+          streamappmaster:
+            memory: 512m
+            virtualCores: 1
+            javaOpts: "-Xms512m -Xmx512m"
+          streamcontainer:
+            priority: 5
+            memory: 256m
+            virtualCores: 1
+            javaOpts: "-Xms64m -Xmx256m"
+          taskappmaster:
+            memory: 512m
+            virtualCores: 1
+            javaOpts: "-Xms512m -Xmx512m"
+          taskcontainer:
+            priority: 10
+            memory: 256m
+            virtualCores: 1
+            javaOpts: "-Xms64m -Xmx256m"
 ----
 
 === Configure Base Directory
@@ -331,10 +333,12 @@ and can be changed using `baseDir` property.
 
 [source,text]
 ----
-deployer:
-  yarn:
-    app:
-      baseDir: /dataflow
+spring:
+  cloud:
+    deployer:
+      yarn:
+        app:
+          baseDir: /dataflow
 ----
 
 [[yarn-pre-populate]]
@@ -553,9 +557,9 @@ Data Flow -> Configs -> Custom scdf-site:
 
 [source,text]
 ----
-deployer.yarn.app.streamappmaster.javaOpts=-Xms512m -Xmx512m
-deployer.yarn.app.streamcontainer.javaOpts=-Xms512m -Xmx512m
-deployer.yarn.app.taskappmaster.javaOpts=-Xms512m -Xmx512m
-deployer.yarn.app.taskcontainer.javaOpts=-Xms512m -Xmx512m
+spring.cloud.deployer.yarn.app.streamappmaster.javaOpts=-Xms512m -Xmx512m
+spring.cloud.deployer.yarn.app.streamcontainer.javaOpts=-Xms512m -Xmx512m
+spring.cloud.deployer.yarn.app.taskappmaster.javaOpts=-Xms512m -Xmx512m
+spring.cloud.deployer.yarn.app.taskcontainer.javaOpts=-Xms512m -Xmx512m
 ----
 
