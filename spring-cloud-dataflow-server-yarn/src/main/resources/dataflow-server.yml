@@ -19,4 +19,6 @@ spring:
     dataflow:
       yarn:
         version: "@project.version@"
-        deployerversion: "@spring-cloud-deployer-yarn.version@"
+    deployer:
+      yarn:
+        version: "@spring-cloud-deployer-yarn.version@"
