@@ -30,7 +30,7 @@
 				<include>org.springframework.cloud:spring-cloud-deployer-yarn-appdeployerappmaster</include>
 				<include>org.springframework.cloud:spring-cloud-deployer-yarn-tasklauncherappmaster</include>
 				<include>org.springframework.cloud:spring-cloud-dataflow-server-yarn-client</include>
-				<include>org.springframework.cloud:spring-cloud-dataflow-shell</include>
+				<include>org.springframework.cloud:spring-cloud-dataflow-server-yarn-shell</include>
 			</includes>
 		</dependencySet>
 	</dependencySets>

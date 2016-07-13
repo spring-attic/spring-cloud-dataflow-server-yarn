@@ -7,7 +7,7 @@
 ##############################################################################
 
 # Add default JVM options here. You can also use JAVA_OPTS and SPRING_CLOUD_DATAFLOW_SHELL_OPTS to pass JVM options to this script.
-DATAFLOW_SHELL_VERSION="@spring-cloud-dataflow.version@"
+DATAFLOW_VERSION="@project.version@"
 DEFAULT_JVM_OPTS=""
 APP_NAME="dataflow-shell"
 APP_BASE_NAME=`basename "$0"`
@@ -154,10 +154,26 @@ if $cygwin ; then
     esac
 fi
 
+# check if SCDF_HOME is already set; if it is not, then set APP_HOME as SCDF_HOME
+if [ x"$SCDF_HOME" = x ] ; then
+    export SCDF_HOME=$APP_HOME
+fi
+
+# Check for explicity set SCDF_CONFIG_*
+if [ x"$SCDF_CONFIG_LOCATION" = x ] ; then
+    export SCDF_CONFIG_LOCATION=$SCDF_HOME/config
+fi
+export SCDF_CONFIG_LOCATION=$SCDF_CONFIG_LOCATION/
+if [ x"$SCDF_CONFIG_NAME" = x ] ; then
+    export SCDF_CONFIG_NAME=servers,application
+fi
+
+DATAFLOW_OPTS="-Dspring.config.location=${SCDF_CONFIG_LOCATION}/servers.yml,${SCDF_CONFIG_LOCATION}/cli.yml"
+
 # Split up the JVM_OPTS And SPRING_ClOUD_DATAFLOW_SHELL_OPTS values into an array, following the shell quoting and substitution rules
 function splitJvmOpts() {
     JVM_OPTS=("$@")
 }
-eval splitJvmOpts $DEFAULT_JVM_OPTS $JAVA_OPTS $SPRING_CLOUD_DATAFLOW_SHELL_OPTS
+eval splitJvmOpts $DEFAULT_JVM_OPTS $JAVA_OPTS $SPRING_CLOUD_DATAFLOW_SHELL_OPTS $DATAFLOW_OPTS
 
-exec "$JAVACMD" "${JVM_OPTS[@]}" -jar "${APP_HOME_LIB}/spring-cloud-dataflow-shell-${DATAFLOW_SHELL_VERSION}.jar" "${args[@]}"
+exec "$JAVACMD" "${JVM_OPTS[@]}" -jar "${APP_HOME_LIB}/spring-cloud-dataflow-server-yarn-shell-${DATAFLOW_VERSION}.jar" "${args[@]}"
