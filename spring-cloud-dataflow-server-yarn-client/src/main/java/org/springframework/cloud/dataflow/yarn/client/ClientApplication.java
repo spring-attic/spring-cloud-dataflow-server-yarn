@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 the original author or authors.
+ * Copyright 2015-2016 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,6 +41,7 @@ public class ClientApplication extends AbstractCli {
 		commands.add(new YarnSubmittedCommand(new SubmittedOptionHandler("DATAFLOW")));
 		commands.add(new YarnKillCommand());
 		commands.add(new YarnShutdownCommand());
+		commands.add(new YarnPushCommand());
 		commands.add(new YarnClustersInfoCommand());
 		commands.add(new YarnClusterInfoCommand());
 		commands.add(new YarnClusterCreateCommand());

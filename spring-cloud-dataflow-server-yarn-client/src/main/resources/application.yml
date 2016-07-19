@@ -9,6 +9,9 @@ spring:
     dataflow:
       yarn:
         version: "@project.version@"
+    deployer:
+      yarn:
+        version: "@spring-cloud-deployer-yarn.version@"
   yarn:
     appType: DATAFLOW
     client:
