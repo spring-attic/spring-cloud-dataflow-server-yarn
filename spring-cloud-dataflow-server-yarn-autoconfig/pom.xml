@@ -24,14 +24,6 @@
 			<artifactId>spring-cloud-starter-deployer-yarn</artifactId>
 			<version>${spring-cloud-deployer-yarn.version}</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-deployer-resource-support</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-deployer-resource-maven</artifactId>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

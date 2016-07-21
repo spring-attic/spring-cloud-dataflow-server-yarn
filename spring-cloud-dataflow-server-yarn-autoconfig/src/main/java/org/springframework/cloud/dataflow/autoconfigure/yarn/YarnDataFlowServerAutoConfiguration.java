@@ -16,26 +16,17 @@
 
 package org.springframework.cloud.dataflow.autoconfigure.yarn;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.cloud.deployer.resource.maven.MavenResourceLoader;
-import org.springframework.cloud.deployer.resource.support.DelegatingResourceLoader;
 import org.springframework.cloud.deployer.spi.app.AppDeployer;
 import org.springframework.cloud.deployer.spi.task.TaskLauncher;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import org.springframework.core.io.DefaultResourceLoader;
-import org.springframework.core.io.ResourceLoader;
-import org.springframework.data.hadoop.fs.HdfsResourceLoader;
 import org.springframework.hateoas.core.DefaultRelProvider;
 
 /**
@@ -52,21 +43,6 @@ import org.springframework.hateoas.core.DefaultRelProvider;
 public class YarnDataFlowServerAutoConfiguration {
 
 	private static final String REL_PROVIDER_BEAN_NAME = "defaultRelProvider";
-	@Autowired(required = false)
-	private MavenResourceLoader mavenResourceLoader;
-
-	@Bean
-	public DelegatingResourceLoader delegatingResourceLoader(org.apache.hadoop.conf.Configuration configuration) {
-		DefaultResourceLoader defaultLoader = new DefaultResourceLoader();
-		Map<String, ResourceLoader> loaders = new HashMap<>();
-		loaders.put("hdfs", new HdfsResourceLoader(configuration));
-		if (mavenResourceLoader != null) {
-			loaders.put("maven", mavenResourceLoader);
-		}
-		loaders.put("file", defaultLoader);
-		loaders.put("http", defaultLoader);
-		return new DelegatingResourceLoader(loaders);
-	}
 
 	// workaround for github.com/spring-cloud/spring-cloud-dataflow/issues/575
 	// remove hateos from pom after this is fix can be removed

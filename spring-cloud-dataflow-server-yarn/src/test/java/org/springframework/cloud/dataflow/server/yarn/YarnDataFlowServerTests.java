@@ -18,27 +18,43 @@ package org.springframework.cloud.dataflow.server.yarn;
 
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
+import java.util.Map;
+
+import org.apache.hadoop.hdfs.DistributedFileSystem;
 import org.junit.Test;
 import org.springframework.boot.SpringApplication;
-//import org.springframework.cloud.dataflow.module.deployer.yarn.YarnStreamModuleDeployer;
-//import org.springframework.cloud.dataflow.module.deployer.yarn.YarnTaskModuleDeployer;
-import org.springframework.cloud.dataflow.server.yarn.YarnDataFlowServer;
+import org.springframework.cloud.deployer.resource.support.DelegatingResourceLoader;
 import org.springframework.cloud.deployer.spi.yarn.YarnAppDeployer;
 import org.springframework.cloud.deployer.spi.yarn.YarnTaskLauncher;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.data.hadoop.fs.HdfsResourceLoader;
 
 public class YarnDataFlowServerTests {
 
 	@Test
-	public void testSimpleBootstrap() {
+	public void testSimpleBootstrap() throws Exception {
 		SpringApplication app = new SpringApplication(YarnDataFlowServer.class);
-		ConfigurableApplicationContext context = app.run(new String[] { "--server.port=0", "--spring.cloud.dataflow.yarn.version=fake" });
+		ConfigurableApplicationContext context = app.run(new String[] { "--server.port=0",
+				"--spring.cloud.dataflow.yarn.version=fake", "--spring.hadoop.fsUri=hdfs://localhost:8020" });
 		assertThat(context.containsBean("appDeployer"), is(true));
 		assertThat(context.getBean("appDeployer"), instanceOf(YarnAppDeployer.class));
 		assertThat(context.containsBean("taskLauncher"), is(true));
 		assertThat(context.getBean("taskLauncher"), instanceOf(YarnTaskLauncher.class));
+		assertThat(context.containsBean("delegatingResourceLoader"), is(true));
+		DelegatingResourceLoader delegatingResourceLoader = context.getBean(DelegatingResourceLoader.class);
+		Map<String, ResourceLoader> loaders = TestUtils.readField("loaders", delegatingResourceLoader);
+		assertThat(loaders.size(), is(4));
+		assertThat(loaders.get("file"), notNullValue());
+		assertThat(loaders.get("http"), notNullValue());
+		assertThat(loaders.get("maven"), notNullValue());
+		assertThat(loaders.get("hdfs"), notNullValue());
+		ResourceLoader resourceLoader = loaders.get("hdfs");
+		assertThat(resourceLoader, instanceOf(HdfsResourceLoader.class));
+		assertThat(((HdfsResourceLoader)resourceLoader).getFileSystem(), instanceOf(DistributedFileSystem.class));
 		context.close();
 	}
 
