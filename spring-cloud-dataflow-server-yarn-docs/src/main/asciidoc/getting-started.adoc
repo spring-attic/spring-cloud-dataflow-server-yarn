@@ -80,6 +80,28 @@ start `spring-cloud-dataflow-shell`
 $ ./bin/dataflow-shell
 ----
 
+Shell in a distribution package contains extension commands for a
+`hdfs` file system.
+
+[source,text]
+----
+dataflow:>hadoop fs 
+hadoop fs cat              hadoop fs copyFromLocal    hadoop fs copyToLocal      hadoop fs expunge          
+hadoop fs ls               hadoop fs mkdir            hadoop fs mv               hadoop fs rm               
+dataflow:>hadoop fs ls /
+rwxrwxrwx root         supergroup 0 2016-07-25 06:54:15 /        
+rwxrwxrwx jvalkealahti supergroup 0 2016-07-25 06:58:38 /dataflow
+rwxr-xr-x jvalkealahti supergroup 0 2016-07-25 07:31:32 /repo    
+rwxrwxrwx root         supergroup 0 2016-07-20 16:25:31 /tmp     
+rwxrwxrwx jvalkealahti supergroup 0 2015-10-29 10:59:24 /user    
+----
+
+[TIP]
+====
+You can configure server address automatically by placing it in
+a configuration using key `dataflow.uri`.
+====
+
 === Register Applications
 By default, the application registry will be empty. If you would like
 to register all out-of-the-box stream applications built with the RabbitMQ
@@ -145,7 +167,7 @@ dataflow:>task launch --name footask
 Launched task 'footask'
 ----
 
-=== Check YARN App Statuses
+=== Using YARN Cli
 Overall app status can be seen from _YARN Resource Manager UI_ or
 using _Spring YARN CLI_ which gives more info about running containers
 within an app itself.
@@ -154,6 +176,8 @@ within an app itself.
 ----
 $ ./bin/dataflow-server-yarn-cli shell
 ----
+
+==== Check YARN App Statuses
 
 When stream has been submitted YARN shows it as `ACCEPTED` before its
 turned to `RUNNING` state.
@@ -216,6 +240,27 @@ $ submitted -v
   application_1461658614481_0002  jvalkealahti  scdtask:timestamp        default  DATAFLOW  26/04/16 16:29  26/04/16 16:29  FINISHED  SUCCEEDED
   application_1461658614481_0001  jvalkealahti  scdstream:app:foostream  default  DATAFLOW  26/04/16 16:27  26/04/16 16:28  FINISHED  SUCCEEDED
 ----
+
+==== Push Apps
+Yarn applications needed for a dataflow can be pushed manually
+into hdfs.
+
+[source,text]
+----
+Spring YARN Cli (v2.4.0.RELEASE)
+Hit TAB to complete. Type 'help' and hit RETURN for help, and 'exit' to quit.
+$ push -t STREAM
+New version installed
+$ push -t TASK
+New version installed
+----
+
+[NOTE]
+====
+Push happens automatically when stream is deployer or task
+launched.
+====
+
 
 
 [[yarn-deploying-on-ambari]]
@@ -294,6 +339,11 @@ from hdfs for new settings to get applied.
 == Configuring Runtime Settings and Environment
 This section describes how settings related to running YARN
 application can be modified.
+
+=== Generic App Settings
+All applications whether those are stream apps or task apps can be
+centrally configured with `servers.yml` as that file is passed to apps
+using `--spring.config.location='servers.yml'`.
 
 === Configuring Application Resources
 Stream and task processes for application master and containers can be
@@ -432,6 +482,110 @@ to allocate. This setting should be set to amount of which OS is able
 give to YARN managed processes in a way which doesn't cause OS to
 swap, etc.
 
+=== Configure Kerberos
+Enabling kerberos is relatively easy when existing kerberized
+cluster exists. Just like with every other hadoop related service,
+use a specific user and a keytab.
+
+[source,text]
+----
+spring:
+  hadoop:
+    security:
+      userPrincipal: scdf/_HOST@HORTONWORKS.COM
+      userKeytab: /etc/security/keytabs/scdf.service.keytab
+      authMethod: kerberos
+      namenodePrincipal: nn/_HOST@HORTONWORKS.COM
+      rmManagerPrincipal: rm/_HOST@HORTONWORKS.COM
+      jobHistoryPrincipal: jhs/_HOST@HORTONWORKS.COM
+
+----
+
+[NOTE]
+====
+When using ambari, configuration and keytab generation are
+fully automated.
+====
+
+[IMPORTANT]
+====
+Currently kafka based apps doesn't work with cluster where
+zookeeper and kafka itself are configured to for kerberos
+authentication. Workaround is to use rabbit based apps.
+====
+
+=== Configure Hdfs HA
+Generic settings for dataflow components to work with
+HA setup can be seen below where id is set to `mycluster`.
+
+[source,text]
+----
+spring:
+  hadoop:
+    fsUri: hdfs://mycluster:8020
+    config:
+      dfs.ha.automatic-failover.enabled=True
+      dfs.nameservices=mycluster
+      dfs.client.failover.proxy.provider.mycluster=org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider
+      dfs.ha.namenodes.mycluster=nn1,nn2
+      dfs.namenode.rpc-address.mycluster.nn2=ambari-3.localdomain:8020
+      dfs.namenode.rpc-address.mycluster.nn1=ambari-2.localdomain:8020
+----
+
+[NOTE]
+====
+When using ambari and Hdfs HA setup, configuration is fully automated.
+====
+
+=== Configure Database
+On default a dataflow server will start embedded H2 database
+using in-memory storage and effectively using configuration.
+
+[source,text]
+----
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost:19092/mem:dataflow
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+----
+
+Distribution package contains a bundled self-contained
+H2 executable which can be used instead. This allows
+to persist data throughout server restarts and is not
+limited to single host.
+
+[source,text]
+----
+./bin/dataflow-server-yarn-h2 --dataflow.database.h2.directory=/var/run/scdf/data 
+----
+
+[source,text]
+----
+spring:
+  datasource:
+    url: jdbc:h2:tcp://neo:19092/dataflow
+    username: sa
+    password:
+    driverClassName: org.h2.Driver
+----
+
+[IMPORTANT]
+====
+With external H2 instance you cannot use `localhost`, instead
+use a real hostname.
+====
+
+[NOTE]
+====
+Port can be changed using property `dataflow.database.h2.port`.
+====
+
+This bundled H2 database is also used in ambari to have a default
+out of a box functionality. Any database supported by a dataflow
+itself can be used by changing `datasource` settings. 
+
 [[yarn-how-it-works]]
 == How YARN Deployment Works
 When YARN application is deployed into a YARN cluster it consists of
@@ -480,6 +634,14 @@ directory.
 /dataflow/artifacts/cache/time-source-rabbit-1.0.0.RC1.jar
 /dataflow/artifacts/cache/timestamp-task-1.0.0.RC1.jar
 ----
+
+[IMPORTANT]
+====
+Artifact caching is happening on two levels, firstly on a local
+disk where server is running, and secondly in a hdfs cache directory.
+If working with snapshots or own development, it may be required to wipe
+out `/dataflow/artifacts/cache` directory and do a server restart.
+====
 
 [[yarn-troubleshooting]]
 == Troubleshooting
