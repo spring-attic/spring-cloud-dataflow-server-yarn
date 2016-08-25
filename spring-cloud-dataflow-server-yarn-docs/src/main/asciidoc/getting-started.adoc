@@ -507,11 +507,71 @@ When using ambari, configuration and keytab generation are
 fully automated.
 ====
 
+==== Working with Kerberized Kafka
+
 [IMPORTANT]
 ====
-Currently kafka based apps doesn't work with cluster where
-zookeeper and kafka itself are configured to for kerberos
-authentication. Workaround is to use rabbit based apps.
+Currently released kafka based apps doesn't work with cluster
+where zookeeper and kafka itself are configured to for kerberos
+authentication. Workaround is to use rabbit based apps or
+build stream apps based on new kafka binder having support
+for kerberized kafka.
+====
+
+After a kafka based stream app has a kerberos support, some settings
+in ambari's kafka configuration needs to be changed. Effectively
+`listeners` and `security.inter.broker.protocol` needs to use
+_SASL_PLAINTEXT_. Also binder needs to be able to create topics, thus
+`scdf` user needs to be added to a kafka's super users.
+
+[source,text]
+----
+listeners=SASL_PLAINTEXT://localhost:6667
+security.inter.broker.protocol=SASL_PLAINTEXT
+super.users=user:kafka;user:scdf
+----
+
+Additional configs are needed for binder and sasl config.
+
+[source,text]
+----
+spring:
+  cloud:
+    stream:
+      kafka:
+        binder:
+          configuration:
+            security:
+              protocol: SASL_PLAINTEXT
+spring:
+  cloud:
+    deployer:
+      yarn:
+        app:
+          streamcontainer:
+            saslConfig: "-Djava.security.auth.login.config=/etc/scdf/conf/scdf_kafka_jaas.conf"
+----
+
+Where `scdf_kafka_jaas.conf` looks something like shown below.
+
+[source,text]
+----
+KafkaClient {
+   com.sun.security.auth.module.Krb5LoginModule required
+   useKeyTab=true
+   keyTab="/etc/security/keytabs/scdf.service.keytab"
+   storeKey=true
+   useTicketCache=false
+   serviceName="kafka"
+   principal="scdf/sandbox.hortonworks.com@HORTONWORKS.COM";
+};
+----
+
+[IMPORTANT]
+====
+When ambari is kerberized via its wizard, everything else is
+automatically configured except kafka settings for a `super.users`,
+`listeners` and `security.inter.broker.protocol`.
 ====
 
 === Configure Hdfs HA
