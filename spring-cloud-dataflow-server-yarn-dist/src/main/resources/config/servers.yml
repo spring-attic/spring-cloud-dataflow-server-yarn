@@ -25,11 +25,24 @@ spring:
   # matching your preferred database to be used instead, if needed, or when running in a distributed environment.
   rabbitmq:
     addresses: localhost:5672
+  # for default embedded database
   datasource:
     url: jdbc:h2:tcp://localhost:19092/mem:dataflow
     username: sa
     password:
     driverClassName: org.h2.Driver
+#  # for mysql/mariadb datasource
+#  datasource:
+#    url: jdbc:mysql://localhost:3306/yourDB
+#    username: yourUsername
+#    password: yourPassword
+#    driverClassName: org.mariadb.jdbc.Driver
+#  # for postgresql datasource
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/yourDB
+#    username: yourUsername
+#    password: yourPassword
+#    driverClassName: org.postgresql.Driver
 #  cloud:
 #    stream:
 #      kafka:

@@ -295,10 +295,19 @@ Ambari plugin only works for redhat6/redhat7 and related centos based systems fo
 
 === Deploy Data Flow
 
-When you create your cluste and choose a stack, make sure that
+When you create your cluster and choose a stack, make sure that
 `redhat6` or/and `redhat7` sections contains repository named
 `SCDF-1.0` and that it points to
 `http://repo.spring.io/yum-{version-type-lowercase}-local/scdf/1.0`.
+
+`Ambari 2.4` contains major rewrites for stack definitions and how it
+is possible to integrate with those from external contributions. Our
+plugin will eventually integrate via extensions or management packs,
+but for now you need to choose stack marked as a _Default Version
+Definition_ which contains correct yum repository. For example with
+`HDP 2.5` you have two default choices, _HDP-2.5.0.0_ and _HDP-2.5
+(Default Version Definition)_. As mentioned you need to pick latter.
+With older ambari versions you don't have these new options.
 
 From services choose `Spring Cloud Data Flow` and `Kafka`. `Hdfs`,
 `Yarn` and `Zookeeper` are forced dependencies.
@@ -328,11 +337,31 @@ Ambari. Settings in _Advanced scdf-site_ and _Custom scdf-site_ are
 used to dynamically create a this file which is then copied over to
 hdfs when needed application files are deployd.
 
+Every additional entry added via _Custom scdf-site_ is added into
+`servers.yml` as is and overrides everything else in it.
+
 [IMPORTANT]
 ====
 If ambari configuration is modified, you need to delete
 `/dataflow/apps/stream/app` and `/dataflow/apps/task/app` directories
-from hdfs for new settings to get applied.
+from hdfs for new settings to get applied. Files in above directories
+will not get overridden including generated `servers.yml` config file.
+====
+
+==== Change Datasource
+Ambari managed service defaults to `H2` database. We currently support
+using `MySQL`, `PostgreSQL` and `HSQLDB` as external datasources.
+Custom datasource configuration can be applied via _Custom scdf-site_
+as shown in below screenshot. After these settings are modified, all
+related services needs to be restarted.
+
+.Custom Datasource Config
+image::{dataflow-server-yarn-asciidoc}/images/ambari-custom-scdf-site-dbconfig.png[Custom Datasource Config, scaledwidth="50%"]
+
+[NOTE]
+====
+Managed service _SCDF H2 Database_ can be stopped and put in a
+maintenance mode after custom datasource settings has been added.
 ====
 
 [[yarn-configure-settings]]

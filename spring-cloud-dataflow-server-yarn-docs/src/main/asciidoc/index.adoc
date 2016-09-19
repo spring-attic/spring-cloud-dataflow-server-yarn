@@ -37,6 +37,7 @@ Sabby Anandan, Marius Bogoevici, Eric Bottard, Mark Fisher, Ilayaperumal Gopinat
 :propdeps-plugin: https://github.com/spring-projects/gradle-plugins/tree/master/propdeps-plugin
 :ant-manual: http://ant.apache.org/manual
 :dataflow-asciidoc: https://raw.githubusercontent.com/spring-cloud/spring-cloud-dataflow/master/spring-cloud-dataflow-docs/src/main/asciidoc
+:dataflow-server-yarn-asciidoc: https://raw.githubusercontent.com/spring-cloud/spring-cloud-dataflow-server-yarn/master/spring-cloud-dataflow-server-yarn-docs/src/main/asciidoc
 :scsm-asciidoc: https://raw.githubusercontent.com/spring-cloud/spring-cloud-stream-modules/master/spring-cloud-stream-modules-docs/src/main/asciidoc
 :attributes: allow-uri-read
 
