@@ -2,11 +2,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>spring-cloud-dataflow-server-yarn-docs</artifactId>
-	<version>1.0.2.BUILD-SNAPSHOT</version>
+	<version>1.0.2.RELEASE</version>
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-dataflow-server-yarn-parent</artifactId>
-		<version>1.0.2.BUILD-SNAPSHOT</version>
+		<version>1.0.2.RELEASE</version>
 	</parent>
 
 	<name>spring-cloud-dataflow-server-yarn-docs</name>
@@ -18,22 +18,22 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-dataflow-server-yarn</artifactId>
-			<version>1.0.2.BUILD-SNAPSHOT</version>
+			<version>1.0.2.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-dataflow-server-yarn-autoconfig</artifactId>
-			<version>1.0.2.BUILD-SNAPSHOT</version>
+			<version>1.0.2.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-dataflow-server-yarn-client</artifactId>
-			<version>1.0.2.BUILD-SNAPSHOT</version>
+			<version>1.0.2.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-dataflow-server-yarn-h2</artifactId>
-			<version>1.0.2.BUILD-SNAPSHOT</version>
+			<version>1.0.2.RELEASE</version>
 		</dependency>
 	</dependencies>
 	<profiles>
@@ -362,7 +362,7 @@
 										</stringutil>
 										<var name="github-tag" value="v${project.version}" />
 										<propertyregex property="github-tag" override="true" input="${github-tag}" regexp=".*SNAPSHOT" replace="master" />
-										<propertyregex property="dataflow-branch-or-tag" override="true" input="${spring-cloud-dataflow.version}" regexp=".*\.(?:M\d+|RC\d+|RELEASE)" select="v\0" defaultValue="master"/>
+										<propertyregex property="dataflow-branch-or-tag" override="true" input="${spring-cloud-dataflow.version}" regexp=".*\.(?:M\d+|RC\d+|RELEASE)" select="v\0" defaultValue="master" />
 									</target>
 								</configuration>
 							</execution>
