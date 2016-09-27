@@ -4,20 +4,20 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.springframework.cloud</groupId>
 	<artifactId>spring-cloud-dataflow-server-yarn-parent</artifactId>
-	<version>1.0.3.BUILD-SNAPSHOT</version>
+	<version>1.1.0.BUILD-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-dataflow-parent</artifactId>
-		<version>1.0.1.RELEASE</version>
+		<version>1.1.0.BUILD-SNAPSHOT</version>
 		<relativePath />
 	</parent>
 
 	<properties>
 		<spring-cloud-deployer-yarn.version>1.0.2.RELEASE</spring-cloud-deployer-yarn.version>
 		<spring-cloud-stream.version>1.0.2.RELEASE</spring-cloud-stream.version>
-		<spring-cloud-dataflow.version>1.0.1.RELEASE</spring-cloud-dataflow.version>
+		<spring-cloud-dataflow.version>1.1.0.BUILD-SNAPSHOT</spring-cloud-dataflow.version>
 		<spring-statemachine.version>1.1.0.RELEASE</spring-statemachine.version>
 		<spring-data-hadoop.version>2.4.0.RELEASE</spring-data-hadoop.version>
 	</properties>
