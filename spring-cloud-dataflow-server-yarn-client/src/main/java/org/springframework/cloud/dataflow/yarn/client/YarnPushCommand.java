@@ -24,6 +24,7 @@ import java.util.Properties;
 import org.springframework.cloud.deployer.spi.yarn.YarnCloudAppService.CloudAppType;
 import org.springframework.yarn.boot.app.ClientApplicationRunner;
 import org.springframework.yarn.boot.cli.AbstractApplicationCommand;
+import org.springframework.yarn.boot.cli.CliSystemConstants;
 
 import joptsimple.OptionSet;
 import joptsimple.OptionSpec;
@@ -74,16 +75,19 @@ public class YarnPushCommand extends AbstractApplicationCommand {
 		public final static List<String> OPTIONS_CLOUD_APP_TYPE  = asList("cloud-app-type", "t");
 		public final static String DESC_CLOUD_APP_TYPE  = "Cloud App Type (STREAM|TASK)";
 		private OptionSpec<CloudAppType> cloudAppTypeOption;
+		private OptionSpec<String> applicationVersionOption;
 
 		@Override
 		protected final void options() {
 			this.cloudAppTypeOption = option(OPTIONS_CLOUD_APP_TYPE, DESC_CLOUD_APP_TYPE).withRequiredArg()
 					.ofType(CloudAppType.class);
+			this.applicationVersionOption = option(CliSystemConstants.OPTIONS_APPLICATION_VERSION,
+					CliSystemConstants.DESC_APPLICATION_VERSION).withOptionalArg().defaultsTo("app");
 		}
 
 		@Override
 		protected void runApplication(OptionSet options) throws Exception {
-			String appVersion = "app";
+			String appVersion = options.valueOf(applicationVersionOption);
 			CloudAppType cloudAppType = options.valueOf(cloudAppTypeOption);
 			YarnPushApplication app = new YarnPushApplication();
 			app.applicationVersion(appVersion);
