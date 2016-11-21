@@ -5,7 +5,7 @@
 	<artifactId>spring-cloud-dataflow-server-yarn</artifactId>
 	<version>1.1.0.BUILD-SNAPSHOT</version>
 	<packaging>jar</packaging>
-	<name>spring-cloud-dataflow-server-yarn</name>
+	<name>Apache YARN Data Flow Server</name>
 	<description>Data Flow Server for Apache Yarn</description>
 
 	<parent>
@@ -47,7 +47,6 @@
 					<include>dataflow-server.yml</include>
 					<include>task.yml</include>
 					<include>stream.yml</include>
-					<include>banner.txt</include>
 				</includes>
 			</resource>
 		</resources>
