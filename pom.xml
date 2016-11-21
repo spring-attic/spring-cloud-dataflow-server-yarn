@@ -30,7 +30,6 @@
 		<module>spring-cloud-dataflow-server-yarn-h2</module>
 		<module>spring-cloud-dataflow-server-yarn-shell-core</module>
 		<module>spring-cloud-dataflow-server-yarn-shell</module>
-		<module>spring-cloud-starter-dataflow-server-yarn</module>
 		<module>spring-cloud-dataflow-server-yarn-dist</module>
 	</modules>
 
