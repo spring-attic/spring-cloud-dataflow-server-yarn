@@ -4,7 +4,7 @@ logging:
     org.apache.hadoop: OFF
 spring:
   main:
-    show_banner: false
+    banner_mode: "off"
   cloud:
     dataflow:
       yarn:
