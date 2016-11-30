@@ -167,6 +167,40 @@ dataflow:>task launch --name footask
 Launched task 'footask'
 ----
 
+Launch tasks from streams:
+
+`task-launcher-yarn-sink` itself bundles a _YARN Deployer_ but doesn't
+push any apps into hdfs, thus pushed app needs to exist and match a
+deployer version `task-launcher-yarn-sink` uses.
+
+In below sample we use `tasklaunchrequest` processor to pass needed
+properties into `task-launcher-yarn` sink. We explicitely defined
+`appVersion` as `appv1` which you would have pushed into hdfs prior
+running this stream. With this processor you also need to define a
+`uri` for a task application itself.
+
+[source,text]
+----
+stream create --name launchertest --definition "http
+--server.port=9000|tasklaunchrequest
+--deployment-properties=spring.cloud.deployer.yarn.app.appVersion=appv1
+--uri=hdfs:/dataflow/repo/timestamp-task.jar|task-launcher-yarn"
+--deploy
+----
+
+To fire up a task just post a dummy message into `http` source.
+
+[source,text]
+----
+http post --target http://localhost:9000 --data empty
+----
+
+[NOTE]
+====
+Using `http` source in YARN difficult as you don't immediately know on
+which cluster node that source app is running.
+====
+
 === Using YARN Cli
 Overall app status can be seen from _YARN Resource Manager UI_ or
 using _Spring YARN CLI_ which gives more info about running containers
@@ -243,7 +277,7 @@ $ submitted -v
 
 ==== Push Apps
 Yarn applications needed for a dataflow can be pushed manually
-into hdfs.
+into hdfs with a given version which default to `app`.
 
 [source,text]
 ----
@@ -253,6 +287,19 @@ $ push -t STREAM
 New version installed
 $ push -t TASK
 New version installed
+$ push -t TASK -v appv1
+New version installed
+----
+
+After above commands base directories for different app versions would
+look like as shown below. Streams and tasks can then use different
+versions which allows to use alternate configurations.
+
+[source,text]
+----
+/dataflow/apps/stream/app
+/dataflow/apps/task/app
+/dataflow/apps/task/appv1
 ----
 
 [NOTE]
