@@ -722,6 +722,41 @@ This bundled H2 database is also used in ambari to have a default
 out of a box functionality. Any database supported by a dataflow
 itself can be used by changing `datasource` settings. 
 
+=== Configure Network Discovery
+_YARN Deployer_ has to be able to talk with _Application Master_
+which then is responsible controlling containers running stream and
+task applications. The way this work is that _Application Master_
+tries to discover its own address which _YARN Deployer_ is then able
+to use. If _YARN_ cluster nodes have multiple _NICs_ or for some other
+reason address is discovered wrongly, some settings can be changed to
+alter default discovery logic.
+
+Below is a generic settings what can be changed.
+
+[source,text]
+----
+spring
+  yarn:
+    hostdiscovery:
+      pointToPoint: false
+      loopback: false
+      preferInterface: ['eth', 'en']
+      matchIpv4: 192.168.0.0/24
+      matchInterface: eth\\d*
+----
+
+* *pointToPoint* - Skips all interfaces which are most likely i.e.
+  VPNs. Defaults to _false_.
+* *loopback* - Don't take loopback interface. Defaults to _false_.
+* *preferInterface* - In case multiple interface names exist, setup
+  preference order for discovery. Format is interface name without
+  number qualifier so with _eth0_, use _eth_. There's no defaults.
+* *matchIpv4* - Interface can be matched using its existing ip address
+  which is given as _CIDR_ format. There's no defaults.
+* *matchInterface* - Interface can also matched using a simple regex
+  pattern which gives even better control if complex interface combinations
+  exist in a cluster. There's no defaults.
+
 [[yarn-how-it-works]]
 == How YARN Deployment Works
 When YARN application is deployed into a YARN cluster it consists of
