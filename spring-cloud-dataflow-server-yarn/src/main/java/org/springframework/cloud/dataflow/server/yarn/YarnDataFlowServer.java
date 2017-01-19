@@ -17,6 +17,7 @@
 package org.springframework.cloud.dataflow.server.yarn;
 
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.dataflow.server.EnableDataFlowServer;
 
 /**
@@ -26,6 +27,7 @@ import org.springframework.cloud.dataflow.server.EnableDataFlowServer;
  * @author Janne Valkealahti
  */
 @EnableDataFlowServer
+@SpringBootApplication
 public class YarnDataFlowServer {
 
 	public static void main(String[] args) {
