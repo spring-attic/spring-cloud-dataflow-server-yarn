@@ -3,7 +3,7 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>spring-cloud-dataflow-server-yarn-shell</artifactId>
-	<version>1.1.1.BUILD-SNAPSHOT</version>
+	<version>1.1.2.BUILD-SNAPSHOT</version>
 	<packaging>jar</packaging>
 	<name>spring-cloud-dataflow-server-yarn-shell</name>
 	<description>Data Flow Server Shell for Apache Yarn</description>
@@ -11,14 +11,14 @@
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-dataflow-server-yarn-parent</artifactId>
-		<version>1.1.1.BUILD-SNAPSHOT</version>
+		<version>1.1.2.BUILD-SNAPSHOT</version>
 	</parent>
 
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-dataflow-server-yarn-shell-core</artifactId>
-			<version>1.1.1.BUILD-SNAPSHOT</version>
+			<version>1.1.2.BUILD-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	<build>
