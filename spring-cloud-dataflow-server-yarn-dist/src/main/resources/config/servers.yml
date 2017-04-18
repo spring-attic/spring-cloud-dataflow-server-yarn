@@ -49,6 +49,9 @@ spring:
 #        binder:
 #          brokers: localhost:9093
 #          zkNodes: localhost:2181
+#      bindings:
+#        applicationMetrics:
+#          destination: metrics
 #    deployer:
 #      yarn:
 #        app:
