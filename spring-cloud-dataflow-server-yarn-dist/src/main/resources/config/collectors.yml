@@ -1,0 +1,14 @@
+server:
+  port: 8081
+security:
+  basic:
+    enabled: false
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: metrics
+      default:
+        contentType: application/json
+

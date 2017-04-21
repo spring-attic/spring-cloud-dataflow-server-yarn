@@ -45,6 +45,21 @@
 			<artifactId>spring-cloud-dataflow-server-yarn-client</artifactId>
 			<version>1.2.0.BUILD-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>metrics-collector-rabbit</artifactId>
+			<version>${spring-cloud-metrics-collector.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>metrics-collector-kafka-09</artifactId>
+			<version>${spring-cloud-metrics-collector.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>metrics-collector-kafka-10</artifactId>
+			<version>${spring-cloud-metrics-collector.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
