@@ -10,7 +10,7 @@
 	<parent>
 		<groupId>org.springframework.cloud</groupId>
 		<artifactId>spring-cloud-dataflow-parent</artifactId>
-		<version>1.2.0.RC1</version>
+		<version>1.2.0.RC2</version>
 		<relativePath />
 	</parent>
 
@@ -18,7 +18,7 @@
 		<spring-framework.version>4.3.7.RELEASE</spring-framework.version>
 		<spring-cloud-deployer-yarn.version>1.2.0.RC1</spring-cloud-deployer-yarn.version>
 		<spring-cloud-stream.version>1.0.2.RELEASE</spring-cloud-stream.version>
-		<spring-cloud-dataflow.version>1.2.0.RC1</spring-cloud-dataflow.version>
+		<spring-cloud-dataflow.version>1.2.0.RC2</spring-cloud-dataflow.version>
 		<spring-statemachine.version>1.1.0.RELEASE</spring-statemachine.version>
 		<spring-data-hadoop.version>2.4.0.RELEASE</spring-data-hadoop.version>
 		<spring-cloud-metrics-collector.version>1.0.0.M1</spring-cloud-metrics-collector.version>

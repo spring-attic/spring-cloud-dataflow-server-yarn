@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2016-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,18 +16,18 @@
 
 package org.springframework.cloud.dataflow.yarn.client;
 
-import static java.util.Arrays.asList;
-
 import java.util.List;
 import java.util.Properties;
+
+import joptsimple.OptionSet;
+import joptsimple.OptionSpec;
 
 import org.springframework.cloud.deployer.spi.yarn.YarnCloudAppService.CloudAppType;
 import org.springframework.yarn.boot.app.ClientApplicationRunner;
 import org.springframework.yarn.boot.cli.AbstractApplicationCommand;
 import org.springframework.yarn.boot.cli.CliSystemConstants;
 
-import joptsimple.OptionSet;
-import joptsimple.OptionSpec;
+import static java.util.Arrays.asList;
 
 /**
  * Command pushing an application package into hdfs.

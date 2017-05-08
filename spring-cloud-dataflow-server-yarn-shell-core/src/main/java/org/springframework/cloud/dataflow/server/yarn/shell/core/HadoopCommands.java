@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 the original author or authors.
+ * Copyright 2016-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ import java.util.Date;
 
 import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.Path;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.hadoop.fs.FsShell;
 import org.springframework.shell.core.CommandMarker;
@@ -89,7 +90,7 @@ public class HadoopCommands implements CommandMarker {
 			@CliOption(key = { "", PATH }, mandatory = true, unspecifiedDefaultValue = ".", help = "file name to be shown") final String path) {
 		return shell.cat(path).toString();
 	}
-	
+
 	@CliCommand(value = PREFIX + "copyFromLocal", help = "Copy single src, or multiple srcs from local file system to the destination file system.")
 	public void copyFromLocal(
 			@CliOption(key = { FROM }, mandatory = true, help = SOURCE_FILE_NAMES) final String source,
@@ -117,13 +118,13 @@ public class HadoopCommands implements CommandMarker {
 			@CliOption(key = { TO }, mandatory = true, help = DESTINATION_PATH_NAME) final String dest) {
 		shell.mv(source, dest);
 	}
-	
+
 	@CliCommand(value = PREFIX + "mkdir", help = "Create a new directory")
 	public void mkdir(
 			@CliOption(key = { "", DIR }, mandatory = true, help = "directory name") final String dir) {
 		shell.mkdir(dir);
 	}
-	
+
 	private static TableBuilder applySimpleListStyle(TableBuilder builder) {
 		builder
 			.paintBorder(BorderStyle.air, BorderSpecification.INNER_VERTICAL)
