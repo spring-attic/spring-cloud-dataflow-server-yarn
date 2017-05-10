@@ -308,7 +308,21 @@ Push happens automatically when stream is deployer or task
 launched.
 ====
 
+=== Using Metric Collectors
+We package three different metrics collector implementations, one for
+_RabbitMQ_ and two for different _Kafka_ versions. There can be
+started using shell scripts,
+`dataflow-server-metrics-collector-kafka-09`,
+`dataflow-server-metrics-collector-kafka-10` and
+`dataflow-server-metrics-collector-rabbit` respectively. These
+applications are not using `servers.yml` file for config, instead
+`collectors.yml` is used where custom settings can be placed.
 
+[NOTE]
+====
+With `Kafka 0.10.1` and later, `kafka-10` should be used. With `Kafka
+0.10.0` and earlier, `kafka-09` should be used.
+====
 
 [[yarn-deploying-on-ambari]]
 == Deploying on AMBARI
@@ -403,7 +417,7 @@ as shown in below screenshot. After these settings are modified, all
 related services needs to be restarted.
 
 .Custom Datasource Config
-image::{dataflow-server-yarn-asciidoc}/images/ambari-custom-scdf-site-dbconfig.png[Custom Datasource Config, scaledwidth="50%"]
+image::ambari-custom-scdf-site-dbconfig.png[Custom Datasource Config, scaledwidth="90%"]
 
 [NOTE]
 ====
@@ -489,6 +503,16 @@ logging:
     org.apache.hadoop: INFO
     org.springframework.yarn: INFO
 ----
+
+=== Configure Metrics
+If metrics are enabled, needed settings are written into `servers.yml`
+files used by applications. Also specific settings are written into
+`collectors.yml` used by _SCDF Metrics Collector_ service. You need to
+choose a correct collector type, its service port and output channel
+name.
+
+.Metrics Config
+image::ambari-metrics-config.png[Metrics Config, scaledwidth="90%"]
 
 === Global YARN Memory Settings
 YARN Nodemanager is continously tracking how much memory is used by
