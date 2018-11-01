@@ -1,8 +1,8 @@
 == Spring Cloud Data Flow Server for Apache Yarn
 
-image:https://build.spring.io/plugins/servlet/buildStatusImage/SCD-YARNBMASTER[Build Status, link=https://build.spring.io/browse/SCD-YARNBMASTER] image:https://badge.waffle.io/spring-cloud/spring-cloud-dataflow-server-yarn.svg?label=ready&title=Ready[Stories in Ready, link=http://waffle.io/spring-cloud/spring-cloud-dataflow-server-yarn]
-image:https://badge.waffle.io/spring-cloud/spring-cloud-dataflow-server-yarn.svg?label=In%20Progress&title=In%20Progress[Stories in Progress,
-link=http://waffle.io/spring-cloud/spring-cloud-dataflow-server-yarn]
+The Spring Cloud Data Flow team have been happy stewards of this project, but we are focusing our efforts towards Local, Kubernetes and Cloud Foundry implementations going forward, so the Spring Cloud Data Flow team will no longer maintain it.
+
+However, we are looking to donate the project to the community. If you are interested in forking the project to continue to develop and maintaining it, we would be happy to cross-link and promote your forked project. Please ping us at https://gitter.im/spring-cloud/spring-cloud-dataflow[Gitter] to discuss it.
 
 === Building 
 
