@@ -72,7 +72,7 @@ spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-server-yarn-
 $ submitted
   APPLICATION ID                  USER          NAME                            QUEUE    TYPE      STARTTIME       FINISHTIME  STATE    FINALSTATUS  ORIGINAL TRACKING URL
   ------------------------------  ------------  ------------------------------  -------  --------  --------------  ----------  -------  -----------  --------------------------
-  application_1447944262603_0003  jvalkealahti  spring-cloud-dataflow-yarn-app  default  DATAFLOW  19/11/15 15:49  N/A         RUNNING  UNDEFINED    http://172.16.14.143:45566
+  application_1447944262603_0003  jvalkealahti  spring-cloud-dataflow-yarn-app  default  DATAFLOW  19/11/15 15:49  N/A         RUNNING  UNDEFINED    https://172.16.14.143:45566
 
 $ kill -a application_1447944262603_0003
 Kill request for application_1447944262603_0003 sent
