@@ -33,7 +33,7 @@ includes the Server and the Shell apps:
 
 [source,text,subs="attributes"]
 ----
-$ wget http://repo.spring.io/{version-type-lowercase}/org/springframework/cloud/dist/spring-cloud-dataflow-server-yarn-dist/{revnumber-version}/spring-cloud-dataflow-server-yarn-dist-{revnumber-version}.zip
+$ wget https://repo.spring.io/{version-type-lowercase}/org/springframework/cloud/dist/spring-cloud-dataflow-server-yarn-dist/{revnumber-version}/spring-cloud-dataflow-server-yarn-dist-{revnumber-version}.zip
 ----
 
 Unzip the distribution ZIP file and change to the directory containing the deployment files.
@@ -110,7 +110,7 @@ review how to <<streams.adoc#spring-cloud-dataflow-register-apps, register appli
 
 [source,text]
 ----
-dataflow:>app import --uri http://bit.ly/stream-applications-rabbit-maven
+dataflow:>app import --uri https://bit.ly/stream-applications-rabbit-maven
 ----
 
 ==== Sourcing Applications from HDFS
@@ -193,7 +193,7 @@ $ submitted
 $ submitted
   APPLICATION ID                  USER          NAME                     QUEUE    TYPE      STARTTIME       FINISHTIME  STATE    FINALSTATUS  ORIGINAL TRACKING URL
   ------------------------------  ------------  -----------------------  -------  --------  --------------  ----------  -------  -----------  -------------------------
-  application_1461658614481_0001  jvalkealahti  scdstream:app:foostream  default  DATAFLOW  26/04/16 16:27  N/A         RUNNING  UNDEFINED    http://192.168.1.96:58580
+  application_1461658614481_0001  jvalkealahti  scdstream:app:foostream  default  DATAFLOW  26/04/16 16:27  N/A         RUNNING  UNDEFINED    https://192.168.1.96:58580
 ----
 
 More info about internals for stream apps can be queried by
@@ -231,7 +231,7 @@ executing its batch jobs:
 $ submitted -v
   APPLICATION ID                  USER          NAME                     QUEUE    TYPE      STARTTIME       FINISHTIME      STATE     FINALSTATUS  ORIGINAL TRACKING URL
   ------------------------------  ------------  -----------------------  -------  --------  --------------  --------------  --------  -----------  -------------------------
-  application_1461658614481_0002  jvalkealahti  scdtask:timestamp        default  DATAFLOW  26/04/16 16:29  N/A             RUNNING   UNDEFINED    http://192.168.1.96:39561
+  application_1461658614481_0002  jvalkealahti  scdtask:timestamp        default  DATAFLOW  26/04/16 16:29  N/A             RUNNING   UNDEFINED    https://192.168.1.96:39561
   application_1461658614481_0001  jvalkealahti  scdstream:app:foostream  default  DATAFLOW  26/04/16 16:27  26/04/16 16:28  FINISHED  SUCCEEDED
 
 $ submitted -v 
@@ -283,7 +283,7 @@ ambari server which adds needed service definitions.
 ----
 [root@ambari-1 ~]# yum -y install ambari-server
 [root@ambari-1 ~]# ambari-server setup -s
-[root@ambari-1 ~]# wget -nv http://repo.spring.io/yum-{version-type-lowercase}-local/scdf/1.0/scdf-{version-type-lowercase}-1.0.repo -O /etc/yum.repos.d/scdf-{version-type-lowercase}-1.0.repo
+[root@ambari-1 ~]# wget -nv https://repo.spring.io/yum-{version-type-lowercase}-local/scdf/1.0/scdf-{version-type-lowercase}-1.0.repo -O /etc/yum.repos.d/scdf-{version-type-lowercase}-1.0.repo
 [root@ambari-1 ~]# yum -y install scdf-plugin-hdp
 [root@ambari-1 ~]# ambari-server start
 ----
@@ -298,7 +298,7 @@ Ambari plugin only works for redhat6/redhat7 and related centos based systems fo
 When you create your cluster and choose a stack, make sure that
 `redhat6` or/and `redhat7` sections contains repository named
 `SCDF-1.0` and that it points to
-`http://repo.spring.io/yum-{version-type-lowercase}-local/scdf/1.0`.
+`https://repo.spring.io/yum-{version-type-lowercase}-local/scdf/1.0`.
 
 `Ambari 2.4` contains major rewrites for stack definitions and how it
 is possible to integrate with those from external contributions. Our
@@ -781,7 +781,7 @@ Install plugin repository.
 
 [source,text,subs="attributes"]
 ----
-$ wget -nv http://repo.spring.io/yum-{version-type-lowercase}-local/scdf/1.0/scdf-{version-type-lowercase}-1.0.repo -O /etc/yum.repos.d/scdf-{version-type-lowercase}-1.0.repo
+$ wget -nv https://repo.spring.io/yum-{version-type-lowercase}-local/scdf/1.0/scdf-{version-type-lowercase}-1.0.repo -O /etc/yum.repos.d/scdf-{version-type-lowercase}-1.0.repo
 ----
 
 Install plugin.
