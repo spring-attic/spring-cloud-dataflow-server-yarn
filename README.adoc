@@ -1,8 +1,8 @@
 == Spring Cloud Data Flow Server for Apache Yarn
 
-image:https://build.spring.io/plugins/servlet/buildStatusImage/SCD-YARNBMASTER[Build Status, link=https://build.spring.io/browse/SCD-YARNBMASTER] image:https://badge.waffle.io/spring-cloud/spring-cloud-dataflow-server-yarn.svg?label=ready&title=Ready[Stories in Ready, link=http://waffle.io/spring-cloud/spring-cloud-dataflow-server-yarn]
+image:https://build.spring.io/plugins/servlet/buildStatusImage/SCD-YARNBMASTER[Build Status, link=https://build.spring.io/browse/SCD-YARNBMASTER] image:https://badge.waffle.io/spring-cloud/spring-cloud-dataflow-server-yarn.svg?label=ready&title=Ready[Stories in Ready, link=https://waffle.io/spring-cloud/spring-cloud-dataflow-server-yarn]
 image:https://badge.waffle.io/spring-cloud/spring-cloud-dataflow-server-yarn.svg?label=In%20Progress&title=In%20Progress[Stories in Progress,
-link=http://waffle.io/spring-cloud/spring-cloud-dataflow-server-yarn]
+link=https://waffle.io/spring-cloud/spring-cloud-dataflow-server-yarn]
 
 === Building 
 
@@ -72,7 +72,7 @@ spring-cloud-dataflow-server-yarn-1.0.0.BUILD-SNAPSHOT/bin/dataflow-server-yarn-
 $ submitted
   APPLICATION ID                  USER          NAME                            QUEUE    TYPE      STARTTIME       FINISHTIME  STATE    FINALSTATUS  ORIGINAL TRACKING URL
   ------------------------------  ------------  ------------------------------  -------  --------  --------------  ----------  -------  -----------  --------------------------
-  application_1447944262603_0003  jvalkealahti  spring-cloud-dataflow-yarn-app  default  DATAFLOW  19/11/15 15:49  N/A         RUNNING  UNDEFINED    http://172.16.14.143:45566
+  application_1447944262603_0003  jvalkealahti  spring-cloud-dataflow-yarn-app  default  DATAFLOW  19/11/15 15:49  N/A         RUNNING  UNDEFINED    https://172.16.14.143:45566
 
 $ kill -a application_1447944262603_0003
 Kill request for application_1447944262603_0003 sent
