@@ -1,3 +1,5 @@
+# spring-cloud-dataflow-server-yarn is no longer actively maintained by VMware, Inc.
+
 == Spring Cloud Data Flow Server for Apache Yarn
 
 The Spring Cloud Data Flow team have been happy stewards of this project, but we are focusing our efforts towards Local, Kubernetes and Cloud Foundry implementations going forward, so the Spring Cloud Data Flow team will no longer maintain it.
